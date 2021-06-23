@@ -15,11 +15,17 @@
         <div class="overlay"></div>
       </div>
       <div class="hero">
+         <a class="navbar-brand me-2" href="#">
+      <p><img src="https://scontent.xx.fbcdn.net/v/t1.15752-0/p206x206/207068843_498974621378006_8840947028308824016_n.png?_nc_cat=109&ccb=1-3&_nc_sid=aee45a&_nc_eui2=AeEES1hsBXC9Khbz9lRKPtoZmJxyC32ut7WYnHILfa63te-BP4IEbp6GyeoaaV4dHrvfEGbPTYDt_qcLihzUF1h6&_nc_ohc=1Mm9Ks8f6QAAX9L_NUA&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&tp=30&oh=9f84f641a0909f37cb48bc0dc8f9bf85&oe=60D725AE" alt="bmlogo" width="270" height="270" style="display: block; margin-left: auto; margin-right: auto;" >
+      </p>
+    </a>
         <hgroup>
-          <h1>We are happy to serve you</h1>
-          <h3>Order now!</h3>
+          <font style="font-size: 100px; letter-spacing:4.6px; text-shadow: #474747 3px 5px 2px, 2px 4px 2px rgba(81,72,0,0.28); color: white;">
+           <strong> <img src="" style="width: 10%; height: auto;" alt="">
+            BURGER MANIA</strong></font>
+          <h2 style="color: white;"><font style="letter-spacing: 6px">Burgers - Pasta - Fries</font></h2>
+         
         </hgroup>
-        <button class="btn btn-hero btn-lg" role="button">See all menu</button>
       </div>
     </div>
    
@@ -81,13 +87,12 @@ Image credits: unsplash.com
 /********************************/
 .hero {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     z-index: 3;
     color: #fff;
     text-align: center;
     text-transform: uppercase;
-    text-shadow: 1px 1px 0 rgba(0,0,0,.75);
       -webkit-transform: translate3d(-50%,-50%,0);
          -moz-transform: translate3d(-50%,-50%,0);
           -ms-transform: translate3d(-50%,-50%,0);
@@ -126,7 +131,6 @@ Image credits: unsplash.com
     width: 100%;
     height: 100%;
     z-index: 2;
-    background-color: #080d15;
     opacity: .7;
 }
 
@@ -154,9 +158,10 @@ Image credits: unsplash.com
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  opacity: 0.7;
 }
 .fade-carousel .slides .slide-1 {
-  background-image: url(https://ununsplash.imgix.net/photo-1416339134316-0e91dc9ded92?q=75&fm=jpg&s=883a422e10fc4149893984019f63c818); 
+  background-image: url(https://scontent.fmnl16-1.fna.fbcdn.net/v/t1.15752-9/204156274_4019352851497132_8201507836755536948_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeEjVNWHx40tJmi2aIOsx8VAMekFEy1bQB0x6QUTLVtAHW6bMsU15Zy9awUPqynieJUiqpZJeJgvlGO3mkB3LF7A&_nc_ohc=cnfzIU4npkIAX98RWuS&_nc_ht=scontent.fmnl16-1.fna&oh=02dc2f59fe2ae013cb08ca6304c37b00&oe=60D73889); 
 }
 /* .fade-carousel .slides .slide-2 {
   background-image: url(https://ununsplash.imgix.net/photo-1416339684178-3a239570f315?q=75&fm=jpg&s=c39d9a3bf66d6566b9608a9f1f3765af);

@@ -43,6 +43,19 @@
                                         </el-input>
                                 </div>
                                 <div class="col-sm">
+                                    <label>Product category</label>
+                                      <el-select v-model="productTask.productcategory" style="width: 100%;" filterable placeholder="Select category">
+                                        <el-option
+                                        v-for="item in categoryoptions"
+                                        :key="item.categoryname"
+                                        :label="item.categoryname"
+                                        :value="item.categoryname">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                                <!-- must show if enable on settings -->
+                                <div v-show="false">
+                                    <div class="col-sm">
                                     <label>Product supplier</label>
                                       <el-select v-model="productTask.productSupplier" style="width: 100%;" filterable placeholder="Select supplier">
                                         <el-option
@@ -52,6 +65,7 @@
                                         :value="item.value">
                                         </el-option>
                                     </el-select>
+                                </div>
                                 </div>
                             </div>
                             <el-card style="margin-top: 30px;" shadow="always">
@@ -71,9 +85,15 @@
                                                <div class="col-md-9">
                                                    <p>Product Code : <el-tag effect="dark">{{productTask.productCode}}</el-tag></p>
                                                     <h4>Product Name : {{productTask.productName}}</h4>
+                                                    <p>Product Category : {{productTask.productcategory}}</p>
                                                     <p>Product Quantity : {{productTask.productQuantity}}</p>
                                                     <p>Product price : &#8369; {{productTask.productPrice}}</p>
+                                                    <div v-if="productTask.productSupplier == ''">
+
+                                                    </div>
+                                                    <div v-else>
                                                     <p>Product supplier : {{productTask.productSupplier}}</p>
+                                                    </div>
                                                     <p>Administrator added : {{preview.previewData | moment('calendar')}}</p>
                                                     <p>Status : <el-tag effect="dark" type="danger">Inactive</el-tag></p>
                                                     <div style="margin-top: 20px;">
@@ -204,6 +224,25 @@
                                         </el-card>
                                    </div>
                                </div>
+                               <div class="row" style="margin-top: 30px;">
+                                   <div class="col-sm">
+                                        <el-card shadow="hover" id="filter3">
+                                            <h5>Search by category</h5>
+                                             
+                                      <el-select v-model="morefilter.filterbycateg" style="width: 100%;" filterable placeholder="Select category">
+                                        <el-option
+                                        v-for="item in categoryoptions"
+                                        :key="item.categoryname"
+                                        :label="item.categoryname"
+                                        :value="item.categoryname">
+                                        </el-option>
+                                    </el-select>
+                                        </el-card>
+                                   </div>
+                                   <div class="col-sm">
+                                     
+                                   </div>
+                               </div>
                                 </div>
                                 <span slot="footer" class="dialog-footer">
                                     <el-button @click="dialogVisible = false">Cancel</el-button>
@@ -232,9 +271,15 @@
                                     <div class="col-md-9">
                                         <p>Product Code : <el-tag effect="dark">{{item.productCode}}</el-tag></p>
                                                     <h4>Product Name : {{item.productName}}</h4>
+                                                    <p>Product Category : {{item.product_category}}</p>
                                                     <p>Product Quantity : {{item.product_quantity}}</p>
                                                     <p>Product price : &#8369; {{item.product_price}}</p>
-                                                    <p>Product supplier : {{item.product_supplier}}</p>
+                                                    <div v-if="productTask.productSupplier == ''">
+
+                                                    </div>
+                                                    <div v-else>
+                                                    <p>Product supplier : {{productTask.product_supplier}}</p>
+                                                    </div>
                                                     <p>Administrator added : {{item.createdAt | moment('calendar')}}</p>
                                                     <p>Status : <el-tag effect="dark" type="danger">Inactive</el-tag></p>
                                                     <div style="margin-top: 20px;">
@@ -251,7 +296,8 @@
                                                                     item.product_price,
                                                                     item.product_quantity,
                                                                     item.product_supplier,
-                                                                    item.productimgurl
+                                                                    item.productimgurl,
+                                                                    item.product_category
                                                                 )"
                                                                 >Modify</el-button>
                                                             
@@ -303,16 +349,31 @@
                                                                                 </el-input>
                                                                         </div>
                                                                         <div class="col-sm">
-                                                                            <label>Product supplier</label>
-                                                                            <el-select v-model="modifyTask.modifyproductsupplier" style="width: 100%;" filterable placeholder="Select supplier">
-                                                                                <el-option
-                                                                                v-for="item in options"
-                                                                                :key="item.value"
-                                                                                :label="item.label"
-                                                                                :value="item.value">
-                                                                                </el-option>
-                                                                            </el-select>
-                                                                        </div>
+                                    <label>Product category</label>
+                                      <el-select v-model="modifyTask.modifycategory" style="width: 100%;" filterable placeholder="Select category">
+                                        <el-option
+                                        v-for="item in categoryoptions"
+                                        :key="item.categoryname"
+                                        :label="item.categoryname"
+                                        :value="item.categoryname">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                                <!-- must show if enable on settings -->
+                                <div v-show="false">
+                                    <div class="col-sm">
+                                    <label>Product supplier</label>
+                                      <el-select v-model="modifyTask.modifyproductsupplier" style="width: 100%;" filterable placeholder="Select supplier">
+                                        <el-option
+                                        v-for="item in options"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                                </div>
+                                                                        
                                                                     </div>
                                                             <span slot="footer" class="dialog-footer">
                                                                 <el-button @click="modifyDialog = false">Cancel</el-button>
@@ -346,7 +407,7 @@ fetchAllProductInventory,
 removeproduct,
 filter_by_date,
 more_filter_search,
-product_modify} from "@/store/request-common"
+product_modify, listcategory} from "@/store/request-common"
 import firebase from 'firebase';
 export default {
     props: {
@@ -357,6 +418,7 @@ export default {
             searchable: '',
             dialogVisible: false,
             modifyDialog: false,
+            categoryoptions: [],
              options: [{
           value: 'Option1',
           label: 'Option1'
@@ -396,7 +458,8 @@ export default {
                 productSupplier: '',
                 isadmin: true,
                 isstatus: false,
-                productImageUrl: ''
+                productImageUrl: '',
+                productcategory: ''
             },
             getallproductlist:[],
             filterable: {
@@ -407,7 +470,7 @@ export default {
                 filterbycode: '',
                 filterbypname: '',
                 filterbystatus1: '',
-                filterbased: false,
+                filterbased: false, filterbycateg:''
             },
             //end product task
             // end modify registered data
@@ -417,7 +480,8 @@ export default {
                 modifyproductquantity: 0,
                 modifyproductprice: '',
                 modifyproductsupplier: '',
-                modifyPID: ''
+                modifyPID: '',
+                modifycategory: ''
             },
             
             //preview area
@@ -440,8 +504,14 @@ export default {
     created(){
         this.getListProductInventory()
         this.makeproductCode(5)
+        this.getallcategories()
     },
     methods:{
+        getallcategories(){
+            listcategory().then(response => {
+                this.categoryoptions = response.data
+            })
+        },
         setPage(val){
 this.page = val
         },
@@ -505,7 +575,7 @@ this.page = val
                 })
             }
         },
-        onmodifyproduct(productID,productName,product_price,product_quantity,product_supplier,productimgurl){
+        onmodifyproduct(productID,productName,product_price,product_quantity,product_supplier,productimgurl, category){
             this.modifyDialog = true;
             this.modifyTask.modifyPID = productID
             this.modifyTask.modifyproductname = productName
@@ -514,6 +584,7 @@ this.page = val
             this.modifyTask.modifyproductsupplier = product_supplier
             this.modifyimg1 = productimgurl
             this.modifyTask.modifyproductimageurl = productimgurl
+            this.modifyTask.modifycategory = category
         },
         ongetall(){
              const loading = this.$loading({

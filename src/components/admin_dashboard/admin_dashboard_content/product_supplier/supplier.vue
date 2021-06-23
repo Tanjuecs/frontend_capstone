@@ -313,7 +313,7 @@
 
                                     <el-table-column label="Status" class-name="status-col" >
                                         <template slot-scope="{row}">
-                                        <div v-if="row.isstatus == 0">
+                                        <div v-if="row.isstatus == 1">
                                             <el-tag type="success">
                                             Active
                                         </el-tag>

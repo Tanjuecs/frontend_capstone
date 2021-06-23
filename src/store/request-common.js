@@ -172,6 +172,7 @@ export function adding_product_inventory(obj){
     productdata.append("productPrice", obj.productPrice)
     productdata.append("productSupplier", obj.productSupplier)
     productdata.append("productImageUrl", obj.productImageUrl)
+    productdata.append("productcategory", obj.productcategory)
     if(obj.isadmin === true){
         productdata.append("isadmin", 1)
     }
@@ -209,6 +210,7 @@ export function more_filter_search(obj){
                 data.append("pname", obj.filterbypname)
                 data.append("pstatus", obj.filterbystatus1)
                 data.append("filterbased", obj.filterbased)
+                data.append("filterbycateg", obj.filterbycateg)
     return httpauth.post("/api/product-inventory/more-options", data)
 }
 
@@ -225,6 +227,7 @@ export function product_modify(obj){
     modifieddata.append("modifyproductsupplier", obj.modifyproductsupplier)
     modifieddata.append("modifyproductimageurl", obj.modifyproductimageurl)
     modifieddata.append("modifyPID", obj.modifyPID)
+    modifieddata.append("modifycategory", obj.modifycategory)
     return httpauth.post(`/api/product-inventory/product-inventory-modification`, modifieddata)
 }
 
@@ -268,6 +271,9 @@ created at : 16/06/2021
 
 export function activateproduct(id){
     return httpauth.post(`/api/activation/product-activation?prodid=${id}`)
+}
+export function deactivateproduct(id){
+    return httpauth.post(`/api/activation/product-deactivation?prodid=${id}`)
 }
 
 /*
@@ -356,4 +362,98 @@ created at : 21/06/2021
 
 export function listofpurchase(){
     return httpauth.get(`/api/purchase-order/list-purchase-order`)
+}
+
+
+/*
+product category adding
+created at : 21/06/2021
+*/
+
+
+
+
+/*
+product category listing
+created at : 21/06/2021
+*/
+
+export function listcategory(){
+    return httpauth.get(`/api/product-category-management/get-list-category`)
+}
+
+/*
+system settings
+created at : 22/06/2021
+*/
+
+export function systemsettings(obj){
+    var data = new FormData();
+    var enableposettings = "";
+    if(obj.purchasesettings === false){
+        enableposettings = "0"
+    }else{
+        enableposettings = "1"
+    }
+    if(obj.purchasesettings2 === false){
+        data.append("enablepoinventory", 0)
+    }else{
+        data.append("enablepoinventory", 1)
+    }
+    if(obj.purchasesettings3 === false){
+        data.append("enablelistview", 0)
+    }else{
+        data.append("enablelistview", 1)
+    }
+    if(obj.purchasesettings4 === false){
+        data.append("viewentry", 0)
+    }else{
+        data.append("viewentry", 1)
+    }
+    return httpauth.post(`/api/system-settings/check-settings?enableposettings=${enableposettings}`, data)
+}
+
+/*
+system settings fetching
+created at : 22/06/2021
+*/
+
+export function savedsettings(){
+    return httpauth.get(`/api/system-settings/get-po-settings`)
+}
+
+/*
+category deleting
+created at : 22/06/2021
+*/
+
+export function onremovecategory(id){
+    return httpauth.post(`/api/product-category-management/remove-category?id=${id}`)
+}
+
+/*
+bulk entry purchase order
+created at : 22/06/2021
+*/
+
+export async function bulkentrypurchaseorder(obj){
+    for(var x = 0; x < obj.length; x++){
+    var result = httpauth.post(`/api/purchase-order/bulk-entry-purchase?quantity=${parseInt(obj[x].productquantity)}&price=${obj[x].productprice}&ponumber=${obj[x].ponumber}&pname=${obj[x].productname}&supplier=${obj[x].productsupplier}`, data)
+    }
+    return await result;
+}
+
+/*
+single entry purchase order
+created at : 22/06/2021
+*/
+
+export function singleentrypurchaseorder(obj){
+    var data = new FormData();
+    data.append("ponumber", obj.ponumber)
+    data.append("pname", obj.productname)
+    data.append("pquantity", obj.productQuantity)
+    data.append("pprice", obj.productprice)
+    data.append("psupplier", obj.productsupplier)
+    return httpauth.post(`/api/purchase-order/single-entry-purchase-order`, data)
 }

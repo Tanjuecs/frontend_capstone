@@ -172,7 +172,8 @@ export default {
                     productName: "Test produc name",
                     productQuantity: 0,
                     productPrice: "100",
-                    productSupplier: "Test Supplier"
+                    productSupplier: "Test Supplier",
+                    productcategory: "Test Category here"
                 },
                 ],
     json_meta: [

@@ -6,7 +6,10 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import locale from 'element-ui/lib/locale/lang/en'
-
+import Invoice from "vue-invoice";
+Vue.use(Invoice, {store})
+import VueHtmlToPaper from 'vue-html-to-paper';
+Vue.use(VueHtmlToPaper);
 // Vue.use(AdyenCheckout)
 //clip
 import VueClipboard from 'vue-clipboard2'

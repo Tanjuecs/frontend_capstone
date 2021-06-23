@@ -94,7 +94,7 @@
                                     <el-table-column label="More actions"  align="center">
                                         <template slot-scope="{row}">
                                         <div v-if="row.product_status == 1">
-                                            <el-button type="danger" style="width: 100%;">Deactivate</el-button>
+                                            <el-button type="danger" style="width: 100%;" @click="ondeactivate(row.productID)">Deactivate</el-button>
                                         </div>
                                         <div v-else>
                                             <el-button type="success" style="width: 100%;" @click="onactivate(row.productID)">Activate</el-button>
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import {fetchAllProductInventoryByFilter, activateproduct} from "@/store/request-common"
+import {fetchAllProductInventoryByFilter, activateproduct, deactivateproduct} from "@/store/request-common"
 export default {
     computed: {
           pagedTableData() {
@@ -138,6 +138,27 @@ export default {
         this.fetchproducts()
     },
     methods:{
+        ondeactivate(id){
+        const loading = this.$loading({
+                    lock: true,
+                    text: 'Deactivating, please wait...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+                setTimeout(() => {
+                deactivateproduct(id).then(response => {
+                    if(response.data === "update success"){
+                        this.$notify.success({
+                                title: 'Yey',
+                                message: 'Successfully Deactivated',
+                                offset: 100
+                                });
+                                loading.close();
+                                this.fetchproducts()
+                    }
+                })
+            }, 3000)
+        },
         onswits(){
             const loading = this.$loading({
                     lock: true,

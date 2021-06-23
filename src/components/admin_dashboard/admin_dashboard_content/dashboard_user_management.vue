@@ -261,7 +261,7 @@
                                                 <div class="col-md-8">
                                                     <h3>Cashiers</h3>
                                                     <p>Show all archives for cashiers</p>
-                                                    <el-button style="width: 100%;" type="warning">Fetch list</el-button>
+                                                    <el-button style="width: 100%;" type="warning" @click="fetch_archive_customer()">Fetch list</el-button>
                                                     <!-- cashier -->
                                                 </div>
                                             </div>
@@ -360,15 +360,18 @@
                                         </div>
                                         <div v-else-if="row.isstatus == 1 && row.istype == 2"> 
                                             <!-- cashier -->
-                                            <el-button style="width: 100%; margin-left: -2px;" type="danger" plain >Remove</el-button>
+                                            <el-button style="width: 100%; margin-left: -2px;" type="danger" plain @click="onremove(row.id)">Remove</el-button>
                                         </div>
                                         <div v-else-if="row.istype == 0 && row.isarchive == 1"> 
                                             <!-- cashier -->
                                             
                                         </div>
-                                        <div v-else>
+                                        <div v-else-if="row.isarchive == 0">
                                             <el-button style="width: 100%; margin-bottom: 4px;" type="success" plain @click="onactivate(row.id)">Activate</el-button>
-                                            <el-button style="width: 100%; margin-left: -2px;" type="danger" plain>Remove</el-button>
+                                            <el-button style="width: 100%; margin-left: -2px;" type="danger" plain @click="onremove(row.id)">Remove</el-button>
+                                        </div>
+                                        <div v-else>
+
                                         </div>
                                         </template>
                                     </el-table-column>
@@ -720,7 +723,7 @@ export default {
                 {
                     const loading = this.$loading({
                     lock: true,
-                    text: 'Activating, Please wait..',
+                    text: 'Removing, Please wait..',
                     spinner: 'el-icon-loading',
                     background: 'rgba(0, 0, 0, 0.7)'
                     });

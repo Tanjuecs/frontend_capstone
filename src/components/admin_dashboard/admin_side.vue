@@ -13,32 +13,27 @@
                                 background-color="#212529"
                                 text-color="#fff"
                                 active-text-color="#ffd04b">
-                                <el-menu-item-group title="Dashboard">
                                     <el-menu-item index="1" @click="ondashboard()">
                                     <img src="https://cdn2.iconfinder.com/data/icons/scenarium-vol-1-2/128/005_workplace_workspace_computer_desktop_dashboard_account_analytics-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Dashboard</span>
                                 </el-menu-item>
-                                    </el-menu-item-group>
-                                
-                                <el-menu-item-group title="User Management">
+
                                     <el-menu-item index="2" @click="onusermanagement()">
-                                    <img src="https://cdn2.iconfinder.com/data/icons/popicon-part-2/256/30-256.png"
+                                    <img src="https://cdn4.iconfinder.com/data/icons/productivity-5/488/5-team_up-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>User Management</span>
                                 </el-menu-item>
-                                    </el-menu-item-group>
-                                <el-menu-item-group title="Product Inventory">
+                                
                                 <el-submenu index="3">
                                     <template slot="title">
-                                    <img src="https://cdn4.iconfinder.com/data/icons/check-out-vol-1-colored/48/JD-22-256.png"
+                                    <img src="https://cdn3.iconfinder.com/data/icons/logistics-87/512/inventory-Check-list-store-product-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Product Inventory</span>
                                     </template>
-                                    <el-menu-item-group title="Inventory System">
-                                        
+                                   
                                     <el-menu-item index="3-1" @click="productinventory()">
-                                        <img src="https://cdn4.iconfinder.com/data/icons/business-1114/55/64-256.png"
+                                        <img src="https://cdn1.iconfinder.com/data/icons/e-commerce-retro-pack-vol-1/115/inventory_management-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Inventory Activation
                                         </el-menu-item>
@@ -47,51 +42,50 @@
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Add Inventory
                                     </el-menu-item>
-                                    </el-menu-item-group>
+                                    
                                     
                                 </el-submenu>
-                                </el-menu-item-group>
-                                 <el-menu-item-group title="System Settings">
+
                                 <el-submenu index="4">
                                     <template slot="title">
                                     <img src="https://cdn0.iconfinder.com/data/icons/artificial-intelligence-49/64/robot_settings_smart_future_tech-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Settings</span>
                                     </template>
-                                    <el-menu-item-group title="Excel Settings">
-                                        
                                     <el-menu-item index="4-1" @click="onexceltemplate()">
                                         <img src="https://cdn3.iconfinder.com/data/icons/logos-brands-3/24/logo_brand_brands_logos_excel-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Excel Templates
                                         </el-menu-item>
-                                       
-                                    </el-menu-item-group>
+
+                                        <el-menu-item index="4-2" @click="onmoresettings()">
+                                        <img src="https://cdn2.iconfinder.com/data/icons/business-filled-outline-style-1-set-1/256/21-256.png"
+                                     alt="no image" style="width: 15%; height:auto;">&nbsp;
+                                        More settings
+                                        </el-menu-item>
                                     
                                 </el-submenu>
-                                 </el-menu-item-group>
 
-                                <el-menu-item-group title="Product Management">
                                     <el-submenu index="5">
                                     <template slot="title">
                                     <img src="https://cdn1.iconfinder.com/data/icons/business-finance-vol-3-39/512/business_plan_product_industry-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Product Management</span>
                                     </template>
-                                    <el-menu-item-group title="Product Suppliers">
                                     <el-menu-item index="5-1" @click="onproductsupplier()">
                                         <img src="https://cdn4.iconfinder.com/data/icons/job-recruitment-5/64/Supplier-products-cargo-distributor-retail-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Suppliers
                                         </el-menu-item>
-                                       
-                                    </el-menu-item-group>
                                     
                                 </el-submenu>
-                                </el-menu-item-group>
-    <!-- div if = if true this will be shown if not hide -->
-                                <el-menu-item-group title="Product Management">
-                                    <el-submenu index="6">
+                                <!-- div if = if true this will be shown if not hide -->
+
+                                    <div v-if="identify.enablePO == 0">
+
+                                    </div>
+                                    <div v-else>
+                                        <el-submenu index="6">
                                     <template slot="title">
                                     <img src="https://cdn4.iconfinder.com/data/icons/shopping-e-commerce-10/33/order-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
@@ -103,12 +97,11 @@
                                         Purchase Order
                                         </el-menu-item>
 
-                                        
-                                    
                                 </el-submenu>
-                                </el-menu-item-group>
+                                    </div>
+
     <!-- div if end -->
-    <el-menu-item-group title="Product Category Management">
+
                                     <el-submenu index="7">
                                     <template slot="title">
                                     <img src="https://cdn1.iconfinder.com/data/icons/zake-miscellaneous-011/64/grid_view_menu_category-512.png"
@@ -121,10 +114,7 @@
                                         Category
                                         </el-menu-item>
 
-                                        
-                                    
                                 </el-submenu>
-                                </el-menu-item-group>
                                 
                                 </el-menu>
                         </div>
@@ -163,17 +153,45 @@
 </template>
 
 <script>
+import {savedsettings} from "@/store/request-common"
 export default {
     data(){
         return {
-            istypes: '1'
+            istypes: '1',
+            identify: []
         }
     },
     created(){
         JSON.parse(localStorage.getItem("oauth2_ss::_profileinfo_")).istype = this.istypes
+        this.settingsidentifier()
+        setInterval(() => {
+            this.settingsidentifier()
+        }, 5000)
     },
     methods: {
+        settingsidentifier(){
+            savedsettings().then(response => {
+                if(response.data[0] === undefined || response.data[0] === ''){
+
+                }else{
+                    this.identify = response.data[0]
+                }
+            })
+        },
         //routing
+        onmoresettings(){
+            const loading = this.$loading({
+                    lock: true,
+                    text: 'please wait..',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                    setTimeout(() => {
+                        loading.close()
+                        this.$router.push({name: 'More Settings'}).catch(() => {})
+                         
+                    }, 2000)
+        },
         onproductcategory(){
              const loading = this.$loading({
                     lock: true,
@@ -284,8 +302,8 @@ export default {
 </script>
 
 <style scoped>
-#mycustomscroll{
+/* #mycustomscroll{
     height: 100%;
     overflow: scroll;
-}
+} */
 </style>

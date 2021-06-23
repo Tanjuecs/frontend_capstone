@@ -1,17 +1,17 @@
 <template>
     <div>
          <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <!-- Container wrapper -->
   <div class="container">
     <!-- Navbar brand -->
-    <a class="navbar-brand me-2" href="https://mdbgo.com/">
+    <a class="navbar-brand me-2" href="#">
       <img
-        src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
-        height="16"
+        src=""
+        
         alt=""
         loading="lazy"
-        style="margin-top: -1px;"
+        style="margin-top: -1px; width: 5%; height:auto;"
       />
     </a>
 
@@ -33,7 +33,6 @@
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">Home</a>
         </li>
       </ul>
       <!-- Left links -->
