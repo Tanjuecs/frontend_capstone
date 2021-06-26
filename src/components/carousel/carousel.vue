@@ -23,7 +23,7 @@
           <font style="font-size: 100px; letter-spacing:4.6px; text-shadow: #474747 3px 5px 2px, 2px 4px 2px rgba(81,72,0,0.28); color: white;">
            <strong> <img src="" style="width: 10%; height: auto;" alt="">
             BURGER MANIA</strong></font>
-          <h2 style="color: white;"><font style="letter-spacing: 6px">Burgers - Pasta - Fries</font></h2>
+          <h2 style="color: white;"><font style="letter-spacing: 6px">Point-of-Sales | Inventory Management</font></h2>
          
         </hgroup>
       </div>

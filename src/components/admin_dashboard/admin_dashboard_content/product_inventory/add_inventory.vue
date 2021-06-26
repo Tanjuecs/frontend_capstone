@@ -2,7 +2,7 @@
     <div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm">
+                <div class="col-sm" v-show="inventoryform">
                     <el-card shadow="always" style="margin-bottom: 20px;">
                         <h5>Add product form</h5>
                     <div style="margin-top: 20px;"><label>Product Code :</label> <el-tag type="danger" effect="dark">{{productTask.productCode}}</el-tag></div>
@@ -54,17 +54,30 @@
                                     </el-select>
                                 </div>
                                 <!-- must show if enable on settings -->
-                                <div v-show="false">
+                                <div v-show="inventorysupplier">
                                     <div class="col-sm">
-                                    <label>Product supplier</label>
+                                    <label>Product supplier</label> <el-tag type="success" effect="dark" size="mini" style="margin-bottom: 10px; margin-top: 10px;">Enabled from settings</el-tag>
                                       <el-select v-model="productTask.productSupplier" style="width: 100%;" filterable placeholder="Select supplier">
-                                        <el-option
-                                        v-for="item in options"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                        </el-option>
+                                      <el-option
+                                            v-for="item in listofsuppliers"
+                                            :key="item.supplierfirstname"
+                                            :label="item.supplierfirstname"
+                                            :value="item.supplierfirstname">
+                                            </el-option>
                                     </el-select>
+                                </div>
+                                </div>
+                                <div v-show="inventoryexpiration">
+                                    <div class="col-sm">
+                                    <label>Product expiration</label> <el-tag type="success" effect="dark" size="mini" style="margin-bottom: 10px; margin-top: 10px;">Enabled from settings</el-tag>
+                                       <el-date-picker
+                                            style=" width: 100%; margin-bottom: 5px;"
+                                            v-model="productTask.productExpiration"
+                                            format="yyyy/MM/dd hh:mm:ss A"
+                                            value-format="yyyy/MM/dd hh:mm:ss A"
+                                            type="datetime"
+                                            placeholder="Select date and time">
+                                            </el-date-picker>
                                 </div>
                                 </div>
                             </div>
@@ -88,11 +101,8 @@
                                                     <p>Product Category : {{productTask.productcategory}}</p>
                                                     <p>Product Quantity : {{productTask.productQuantity}}</p>
                                                     <p>Product price : &#8369; {{productTask.productPrice}}</p>
-                                                    <div v-if="productTask.productSupplier == ''">
-
-                                                    </div>
-                                                    <div v-else>
-                                                    <p>Product supplier : {{productTask.productSupplier}}</p>
+                                                    <div v-show="inventorysupplier">
+                                                        <p>Product supplier : {{productTask.productSupplier}}</p>
                                                     </div>
                                                     <p>Administrator added : {{preview.previewData | moment('calendar')}}</p>
                                                     <p>Status : <el-tag effect="dark" type="danger">Inactive</el-tag></p>
@@ -133,13 +143,22 @@
                 <div class="col-sm">
                     <el-card shadow="always" id="mycustomscroll" >
                         <h5>All added products</h5>
-                        <label>Search by product name :</label>&nbsp;
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Search:</label>&nbsp;
                         <el-input
-                                    style="margin-bottom: 5px; width: 30%;"
+                                    style="margin-bottom: 5px; width: 50%;"
                                     placeholder="Search"
                                     v-model="searchable"
                                     clearable>
                                     </el-input><br>
+                            </div>
+                            <div class="col-md-6">
+                                <el-button type="warning" plain size="mini" @click="onchangeview()">{{dataview ? 'Switch to Listview' : 'Switch to Gridview'}}</el-button>
+                            </div>
+                        </div>
+
                         <label style="margin-right: 10px;">From : </label>
                         <el-date-picker
                         v-model="filterable.fromdate"
@@ -158,8 +177,9 @@
                         placeholder="Select date to">
                         </el-date-picker>
                         <div style="display: inline;">
-                            <el-button type="warning" plain size="small" @click="dialogVisible = true">More filters</el-button>
-                        <el-button type="primary" plain size="small" @click="onsearchbydate()">Search</el-button>
+                            <el-button type="warning" plain size="mini" @click="dialogVisible = true">More filters</el-button>
+                        <el-button type="primary" plain size="mini" @click="onsearchbydate()">Search</el-button>
+                        
                         </div>
                         
                         <!-- Element Dialog for More Filters -->
@@ -251,7 +271,8 @@
                                 </el-dialog>
                         <!-- Element Dialog for more filters end -->
                         <hr>
-                          <div v-if="getallproductlist == null || getallproductlist == ''">
+                          <div v-if="dataview == true">
+                              <div v-if="getallproductlist == null || getallproductlist == ''">
                               <center>
                                   <div style="margin-top: 30px;">
                                       <img src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/no_result.gif"
@@ -269,16 +290,20 @@
                                                    style="width: 100%; height: auto;" alt="NO image">
                                                </div>
                                     <div class="col-md-9">
-                                        <p>Product Code : <el-tag effect="dark">{{item.productCode}}</el-tag></p>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <p>Product Code : <el-tag effect="dark">{{item.productCode}}</el-tag></p>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <el-button type="warning" style="float: right;" @click="onviewexpiration(item.productCode, item.productName)">View expiration</el-button>
+                                            </div>
+                                        </div>
                                                     <h4>Product Name : {{item.productName}}</h4>
                                                     <p>Product Category : {{item.product_category}}</p>
                                                     <p>Product Quantity : {{item.product_quantity}}</p>
                                                     <p>Product price : &#8369; {{item.product_price}}</p>
-                                                    <div v-if="productTask.productSupplier == ''">
-
-                                                    </div>
-                                                    <div v-else>
-                                                    <p>Product supplier : {{productTask.product_supplier}}</p>
+                                                    <div v-show="inventorysupplier">
+                                                        <p>Product supplier : {{item.product_supplier}}</p>
                                                     </div>
                                                     <p>Administrator added : {{item.createdAt | moment('calendar')}}</p>
                                                     <p>Status : <el-tag effect="dark" type="danger">Inactive</el-tag></p>
@@ -360,16 +385,16 @@
                                     </el-select>
                                 </div>
                                 <!-- must show if enable on settings -->
-                                <div v-show="false">
+                                <div v-show="inventorysupplier">
                                     <div class="col-sm">
                                     <label>Product supplier</label>
                                       <el-select v-model="modifyTask.modifyproductsupplier" style="width: 100%;" filterable placeholder="Select supplier">
                                         <el-option
-                                        v-for="item in options"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                        </el-option>
+                                            v-for="item in listofsuppliers"
+                                            :key="item.supplierfirstname"
+                                            :label="item.supplierfirstname"
+                                            :value="item.supplierfirstname">
+                                            </el-option>
                                     </el-select>
                                 </div>
                                 </div>
@@ -389,9 +414,110 @@
                                 </el-timeline-item>
                             </el-timeline>
                           </div>
-                    </el-card>
-                     <el-pagination layout="prev, pager, next" :page-size="pageSize" :total="this.getallproductlist.length" @current-change="setPage">
+                            <!-- el dialog view expiration -->
+                                <el-dialog
+                                    :title="dynamicTitle"
+                                    :visible.sync="drawerviewexpiration"
+                                    width="40%"
+                                    :before-close="handleClose">
+                                    <div style="margin-top: 20px;" class="container">
+                                        <el-card shadow="always">
+                                            <h1>{{getexpirydatearry | moment('dddd, MMMM Do YYYY, h:mm:ss a')}}</h1>
+                                        </el-card>
+                                    </div>
+                                    <span slot="footer" class="dialog-footer">
+                                        <el-button @click="drawerviewexpiration = false">Close</el-button>
+                                    </span>
+                                    </el-dialog>
+                            <!-- end el dialog view expiration -->
+                          <el-pagination layout="prev, pager, next" :page-size="pageSize" :total="this.getallproductlist.length" @current-change="setPage">
                                     </el-pagination>
+                          </div>
+                          <div v-else>
+                              <!-- start table -->
+                                        <el-table
+                                    :key="0"
+                                    v-loading="listLoading"
+                                    :data="pagedTableData"
+                                    border
+                                    fit
+                                    highlight-current-row
+                                    style="width: 100%;"
+                                    
+                                    >
+                                    <el-table-column label="Product Code" prop="id" sortable="custom" align="center"  >
+                                        <template slot-scope="{row}">
+                                        <span>{{ row.productCode }}</span>
+                                        </template>
+                                    </el-table-column>
+                                    
+                                    <el-table-column label="Product Image" >
+                                        <template slot-scope="{row}">
+                                        <img :src="row.productimgurl" style="width: 100%; height: auto;" class="img-fluid" alt="No image">
+                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
+                                        </template>
+                                    </el-table-column>
+
+                                    <el-table-column label="Product Name" >
+                                        <template slot-scope="{row}">
+                                        <span class="link-type" >{{ row.productName }}</span>
+                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
+                                        </template>
+                                    </el-table-column>
+
+                                     <el-table-column label="Product Quantity" >
+                                        <template slot-scope="{row}">
+                                        <span class="link-type" >{{ row.product_quantity }}</span>
+                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
+                                        </template>
+                                    </el-table-column>
+
+                                    <el-table-column label="Product Price" >
+                                        <template slot-scope="{row}">
+                                        <span class="link-type" >&#8369;{{ row.product_price }}</span>
+                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
+                                        </template>
+                                    </el-table-column>
+
+                                     <el-table-column label="Product Total" >
+                                        <template slot-scope="{row}">
+                                            
+                                        <span class="link-type" >&#8369;{{ row.product_price * row.product_quantity }}</span>
+                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
+                                        </template>
+                                    </el-table-column>
+
+                                    
+                                    <el-table-column label="Status" class-name="status-col" >
+                                        <template slot-scope="{row}">
+                                        <div v-if="row.product_status == 1">
+                                            <el-tag type="success">
+                                            Active
+                                        </el-tag>
+                                        </div>
+                                        <div v-else>
+                                                <el-tag type="warning">
+                                            Inactive
+                                        </el-tag>
+                                        </div>
+                                        </template>
+                                    </el-table-column>
+
+                                    
+                                    <el-table-column label="Created"  align="center">
+                                        <template slot-scope="{row}">
+                                        <span>{{ row.createdAt | moment("calendar") }}</span>
+                                        </template>
+                                    </el-table-column>
+
+                                    
+                                    </el-table>
+                                    <el-pagination layout="prev, pager, next" :page-size="pageSize" :total="this.getallproductlist.length" @current-change="setPage">
+                                    </el-pagination>
+                              <!-- end table -->    
+                          </div>
+                    </el-card>
+                     
                 </div>
             </div>
         </div>
@@ -399,7 +525,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import 
 {
 adding_product_inventory,
@@ -407,7 +532,7 @@ fetchAllProductInventory,
 removeproduct,
 filter_by_date,
 more_filter_search,
-product_modify, listcategory} from "@/store/request-common"
+product_modify, listcategory, getsystemsettingsforinventory, fetchaddedsuppliers, viewingexpirationdate, productexpired} from "@/store/request-common"
 import firebase from 'firebase';
 export default {
     props: {
@@ -415,6 +540,16 @@ export default {
     },
     data(){
         return {
+            drawerviewexpiration: false,
+            listofsuppliers: [],
+             pageSize: 5,
+              page: 1,
+              listLoading: true,
+              searchable: '',
+            dataview: true,
+            inventoryform: false,
+            inventorysupplier: false,
+            inventoryexpiration: false,
             searchable: '',
             dialogVisible: false,
             modifyDialog: false,
@@ -459,7 +594,8 @@ export default {
                 isadmin: true,
                 isstatus: false,
                 productImageUrl: '',
-                productcategory: ''
+                productcategory: '',
+                productExpiration: ''
             },
             getallproductlist:[],
             filterable: {
@@ -487,6 +623,8 @@ export default {
             //preview area
             pageSize: 2,
               page: 1,
+              dynamicTitle: '',
+              getexpirydatearry: []
         }
     },
     computed: {
@@ -505,8 +643,72 @@ export default {
         this.getListProductInventory()
         this.makeproductCode(5)
         this.getallcategories()
+         this.getsavedsettingsforinventory()
+        setInterval(() => {
+            this.getsavedsettingsforinventory()
+        }, 3000)
+        this.getallsuppliers()
+        this.producthasexpired()
     },
     methods:{
+        producthasexpired(){
+            productexpired().then(response => {
+                console.log(response.data)
+            })
+        },
+        onviewexpiration(pcode, pname){
+           
+            
+             const loading = this.$loading({
+                    lock: true,
+                    text: 'please wait...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+                setTimeout(() => {
+                    viewingexpirationdate(pcode)
+                    .then(response => {
+                        console.log(response.data)
+                        this.getexpirydatearry = response.data[0].expirydate
+                        loading.close()
+                         this.drawerviewexpiration = true;
+            this.dynamicTitle = "Expiration date for " + " " + pname;
+                    })
+                }, 2000)
+        },
+          getallsuppliers(){
+            fetchaddedsuppliers().then((resolve) => {
+                this.listofsuppliers = resolve.data
+            })
+        },
+        onchangeview(){
+              if(this.dataview == true){
+               this.dataview = false
+           } else{
+               this.dataview = true
+           }
+        },
+         getsavedsettingsforinventory(){
+            getsystemsettingsforinventory()
+            .then((resolve) => {
+                if(resolve.data[0].enableinventform == 1){
+                      this.inventoryform = true;  
+                }else{
+                    this.inventoryform = false; 
+                }
+                if(resolve.data[0].enablesupplier == 1){
+                      this.inventorysupplier = true;  
+                }else{
+                    this.inventorysupplier = false; 
+                }
+                if(resolve.data[0].enableexpiration == 1){
+                    this.inventoryexpiration = true;
+                }else{
+                    this.inventoryexpiration = false;
+                }
+                
+            })
+        },
         getallcategories(){
             listcategory().then(response => {
                 this.categoryoptions = response.data
@@ -692,6 +894,7 @@ this.page = val
         },
         getListProductInventory(){
             fetchAllProductInventory().then((response) => {
+                this.listLoading = false;
                 this.getallproductlist = response.data
                 console.log(response.data)
                 this.makeproductCode(5)
@@ -699,7 +902,7 @@ this.page = val
         },
         onsaveproduct(){
             if(!this.productTask.productName ||  !this.productTask.productQuantity
-            || !this.productTask.productPrice || !this.productTask.productImageUrl){
+            || !this.productTask.productPrice || !this.productTask.productImageUrl || !this.productTask.productExpiration){
                  this.$notify.error({
                                 title: 'Oops',
                                 message: 'Something is empty, please try again.',
@@ -780,6 +983,7 @@ this.page = val
             this.imageData = event.target.files[0];
         },
         modifyonupload(){
+
             this.$confirm('Are you sure you want to upload this new image?', 'Warning', {
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
@@ -829,6 +1033,15 @@ this.page = val
                 })
         },
         onupload() {
+            if(!this.imageData){
+                this.$notify.error({
+                                title: 'Oops',
+                                message: 'Please choose image',
+                                offset: 100
+                                });
+                                return false
+            }
+            
              const loading = this.$loading({
                     lock: true,
                     text: 'Uploading Image, please wait...',

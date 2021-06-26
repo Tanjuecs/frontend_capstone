@@ -173,6 +173,7 @@ export function adding_product_inventory(obj){
     productdata.append("productSupplier", obj.productSupplier)
     productdata.append("productImageUrl", obj.productImageUrl)
     productdata.append("productcategory", obj.productcategory)
+    productdata.append("productexpiration", obj.productExpiration)
     if(obj.isadmin === true){
         productdata.append("isadmin", 1)
     }
@@ -438,7 +439,7 @@ created at : 22/06/2021
 
 export async function bulkentrypurchaseorder(obj){
     for(var x = 0; x < obj.length; x++){
-    var result = httpauth.post(`/api/purchase-order/bulk-entry-purchase?quantity=${parseInt(obj[x].productquantity)}&price=${obj[x].productprice}&ponumber=${obj[x].ponumber}&pname=${obj[x].productname}&supplier=${obj[x].productsupplier}`, data)
+    var result = httpauth.post(`/api/purchase-order/bulk-entry-purchase?quantity=${parseInt(obj[x].productquantity)}&price=${obj[x].productprice}&ponumber=${obj[x].ponumber}&pname=${obj[x].productname}&supplier=${obj[x].productsupplier}`)
     }
     return await result;
 }
@@ -456,4 +457,84 @@ export function singleentrypurchaseorder(obj){
     data.append("pprice", obj.productprice)
     data.append("psupplier", obj.productsupplier)
     return httpauth.post(`/api/purchase-order/single-entry-purchase-order`, data)
+}
+
+/*
+system settings for inventory
+created at : 23/06/2021
+*/
+
+export function systemsettingsforinventory(obj){
+    if(obj.inventorysettings === true){
+        obj.inventorysettings = "1"
+    }else{
+        obj.inventorysettings = "0"
+    }
+    if(obj.inventorysupplier === true){
+        obj.inventorysupplier = "1"
+    }else{
+        obj.inventorysupplier = "0"
+    }
+    if(obj.inventoryexpiration === true){
+        obj.inventoryexpiration = "1"
+    }else{
+        obj.inventoryexpiration = "0"
+    }
+    return httpauth.post(`/api/system-settings/update-inventory-settings?enableinvent=${obj.inventorysettings}&enablesupplier=${obj.inventorysupplier}&enableexpiration=${obj.inventoryexpiration}`)
+}
+
+/*
+get system settings for inventory
+created at : 23/06/2021
+*/
+
+export function getsystemsettingsforinventory(){
+    return httpauth.get(`/api/system-settings/get-inventory-settings`)
+}
+
+/*
+received order
+created at : 23/06/2021
+*/
+
+export function receivetheorder(obj, obj1, obj2){
+    var data = new FormData();
+    data.append("pcode", obj2.pcode)
+    data.append("pname", obj2.pname)
+    data.append("pquantity", obj2.pquantity)
+    data.append("pprice", obj2.pprice)
+    data.append("psupplier", obj2.psupplier)
+    return httpauth.post(`/api/purchase-order/received-order?id=${obj.poid}&pcode=${obj.pcode}&expiry=${obj1.expirydate}`, data)
+}
+
+/*
+viewing expiration date
+created at : 24/06/2021
+*/
+
+export function viewingexpirationdate(productCode){
+    return httpauth.get(`/api/product-invetory-view-expired/view-expiration?pcode=${productCode}`)
+}
+
+/*
+product expired
+created at : 24/06/2021
+*/
+
+export function productexpired(){
+    return httpauth.get(`/api/expired-notif/product-expired`)
+}
+
+export function productexpiredafter10days(){
+    return httpauth.get(`/api/expired-notif/check-10-days-before-expiration`)
+}
+
+/*
+get supplier image
+created at : 25/06/2021
+*/
+
+export function getimage(supplier)
+{
+    return httpauth.get(`/api/purchase-order/get-supplier-image?supplier=${supplier}`)
 }
