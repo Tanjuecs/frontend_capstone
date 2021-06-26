@@ -181,7 +181,7 @@
     <el-dialog
                     title="Purchase order details"
                     :visible.sync="invoicevisible"
-                    width="80%"
+                    width="50%"
                     :before-close="handleClose">
         <div style="margin-top: 30px;" >
             <!-- <el-button type="primary" @click="onprint()">Print</el-button> -->
@@ -335,7 +335,7 @@ import {purchasesorder, fetchaddedsuppliers, listofpurchase, bulkentrypurchaseor
           pagedTableData() {
        if(this.searchable){
       return this.singleEntryList.filter((item)=>{
-        return this.searchable.toLowerCase().split(' ').every(v => item.pnamme.toLowerCase().includes(v))
+        return this.searchable.toLowerCase().split(' ').every(v => item.pname.toLowerCase().includes(v) || item.ponumber.toString().toLowerCase().includes(v))
       })
       }else{
         return this.singleEntryList.slice(this.pageSize * this.page - this.pageSize, this.pageSize * this.page)
@@ -452,6 +452,10 @@ import {purchasesorder, fetchaddedsuppliers, listofpurchase, bulkentrypurchaseor
                                 });
                                 loading.close();
                                 this.tableData = [];
+                                this.getalllist()
+                                this.settingsidentifier()
+                                this.makeponumber(5)
+                                this.getallsuppliers()
                         }
                     })
                 }, 3000)

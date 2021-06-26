@@ -1,0 +1,24 @@
+<template>
+    <div>
+         <div class="mt-3">
+            <h3>Received Orders</h3>
+        <p>Here you can update your purchase orders to received orders</p>
+        <el-alert
+            title="Orders / Received Orders."
+            type="success" :closable="false">
+        </el-alert>
+        </div>
+        <div style="margin-top: 30px;">
+            <receiveorder />
+        </div>
+    </div>
+</template>
+
+<script>
+import receiveorder from "@/components/admin_dashboard/admin_dashboard_content/purchase_received/received_order"
+export default {
+    components: {
+        receiveorder
+    }
+}
+</script>

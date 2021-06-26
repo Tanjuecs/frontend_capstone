@@ -75,6 +75,11 @@ const routes = [
         path: '/more_settings' + makeid(200),
         name: 'More Settings',
         component: () => import("@/views/admin/dashboard_content/admin_more_settings")
+      },
+      {
+        path: '/received_orders' + makeid(200),
+        name: 'Receive Orders',
+        component: () => import("@/views/admin/dashboard_content/admin_received_order")
       }
     ]
   }

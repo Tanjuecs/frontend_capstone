@@ -4,11 +4,10 @@
             <el-tabs :tab-position="tabPosition" style="height: 100%;">
                 <el-tab-pane label="Default Settings">
                     <el-card shadow="always">
-                        <h4>Default Settings</h4>
+                        <h4>Purchase Order</h4>
                         <hr>
                         <div style="margin-top: 20px;">
                             <el-card shadow="hover">
-                                    <h3 style="margin-bottom: 20px;">Purchase Order</h3>
                                     <div v-show="needtosave">
                                         <el-alert
                                             title="You need to save this new settings update"
@@ -28,32 +27,7 @@
                                     </el-switch>
                                         </div>
                                         <div class="col-md-6">
-                                            <el-switch
-                                        style="display: block; margin-bottom: 10px;"
-                                        v-model="settings.purchasesettings2"
-                                        active-color="#13ce66"
-                                        inactive-color="#ff4949"
-                                        :disabled="ondisable1"
-                                        active-text="Enable PO in inventory"
-                                        inactive-text="Disable PO in inventory">
-                                        </el-switch>
-                                        </div>
-                                    </div>
-                                   
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                  <el-switch
-                                        style="display: block; margin-bottom: 10px;"
-                                        v-model="settings.purchasesettings3"
-                                        active-color="#13ce66"
-                                        inactive-color="#ff4949"
-                                        :disabled="ondisable2"
-                                        active-text="Enable PO listview"
-                                        inactive-text="Disable PO listview">
-                                        </el-switch>
-                                            </div>
-                                            <div class="col-md-6">
-                                                 <el-switch
+                                             <el-switch
                                         style="display: block; margin-bottom: 10px;"
                                         v-model="settings.purchasesettings4"
                                         active-color="#13ce66"
@@ -62,6 +36,23 @@
                                         active-text="Multiple Entry"
                                         inactive-text="Single Entry">
                                         </el-switch>
+                                        </div>
+                                    </div>
+                                   
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                  <!-- <el-switch
+                                        style="display: block; margin-bottom: 10px;"
+                                        v-model="settings.purchasesettings3"
+                                        active-color="#13ce66"
+                                        inactive-color="#ff4949"
+                                        :disabled="ondisable2"
+                                        active-text="Enable PO listview"
+                                        inactive-text="Disable PO listview">
+                                        </el-switch> -->
+                                            </div>
+                                            <div class="col-md-6">
+                                                
                                             </div>
                                         </div>
                                   
@@ -70,17 +61,76 @@
                         </div>
                         <el-button type="primary" plain style="float: right; margin-bottom: 10px; margin-top: 10px;" @click="onsavesettings()">Save</el-button>
                     </el-card>
+                    <!-- Inventory Settings -->
+                         <el-card shadow="always" style="margin-top: 20px;">
+                        <h4>Product Inventory</h4>
+                        <hr>
+                        <div style="margin-top: 20px;">
+                            <el-card shadow="hover">
+                                    <div v-show="needtosave1">
+                                        <el-alert
+                                            title="You need to save this new settings update"
+                                            type="warning" :closable="false">
+                                        </el-alert>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                             <el-switch
+                                    style="display: block; margin-bottom: 10px;"
+                                    v-model="settings2.inventorysettings"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949"
+                                    @change="onenable1"
+                                    active-text="Enable product inventory form"
+                                    inactive-text="Disable product inventory form">
+                                    </el-switch>
+                                        </div>
+                                        <div class="col-md-6">
+                                              <el-switch
+                                    style="display: block; margin-bottom: 10px;"
+                                    v-model="settings2.inventorysupplier"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949"
+                                    @change="onenable2"
+                                    active-text="Enable product supplier"
+                                    inactive-text="Disable product supplier">
+                                    </el-switch>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top: 20px;">
+                                        <div class="col-md-6">
+                                             <el-switch
+                                    style="display: block; margin-bottom: 10px;"
+                                    v-model="settings2.inventoryexpiration"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949"
+                                    @change="onenable3"
+                                    active-text="Enable product set expiration"
+                                    inactive-text="Disable product set expiration">
+                                    </el-switch>
+                                        </div>
+                                        <div class="col-md-6">
+                                            
+                                        </div>
+                                    </div>
+                                   
+                                </el-card>
+                        </div>
+                        <el-button type="primary" plain style="float: right; margin-bottom: 10px; margin-top: 10px;" @click="onsavesettings1()">Save</el-button>
+                    </el-card>
+                    <!-- End Inventory Settings -->
                 </el-tab-pane>
-                <el-tab-pane label="Config">Config</el-tab-pane>
+                <!-- <el-tab-pane label="Config">Config</el-tab-pane>
                 <el-tab-pane label="Role">Role</el-tab-pane>
-                <el-tab-pane label="Task">Task</el-tab-pane>
+                <el-tab-pane label="Task">Task</el-tab-pane> -->
             </el-tabs>
         </div>
     </div>
 </template>
 
 <script>
-import {systemsettings, savedsettings} from "@/store/request-common"
+import {systemsettings, savedsettings, systemsettingsforinventory, getsystemsettingsforinventory} from "@/store/request-common"
 export default {
     data(){
         return{
@@ -91,16 +141,78 @@ export default {
                 purchasesettings3: false,
                 purchasesettings4: false
             },
+            settings2: {
+                inventorysettings: false,
+                inventorysupplier: false,
+                inventoryexpiration: false,
+            },
             ondisable1: true,
             ondisable2: true,
             ondisable3: true,
-            needtosave: false
+            needtosave: false,
+            needtosave1: false
         }
     },
     created(){
         this.getsavedsettings()
+        this.getsavedsettingsforinventory()
     },  
     methods: {
+        getsavedsettingsforinventory(){
+            getsystemsettingsforinventory()
+            .then((resolve) => {
+                console.log(resolve.data)
+                this.needtosave1 = false;
+                if(resolve.data[0].enableinventform == 1){
+                    this.settings2.inventorysettings = true;
+                    
+                } 
+                else{
+                    this.settings2.inventorysettings = false;
+                    
+                }
+                if(resolve.data[0].enablesupplier == 1){
+                    this.settings2.inventorysupplier = true;
+                }
+                else{
+                    
+                    this.settings2.inventorysupplier = false;
+                }
+                if(resolve.data[0].enableexpiration == 1){
+                    this.settings2.inventoryexpiration = true;
+                }else{
+                    this.settings2.inventoryexpiration = false;
+                }
+            })
+        },
+        onsavesettings1(){
+            this.$confirm('This will save the settings. Continue?', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+                }).then(()=> {
+                    const loading = this.$loading({
+                    lock: true,
+                    text: 'Saving, please wait...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                    setTimeout(()=> {
+                        systemsettingsforinventory(this.settings2)
+                        .then((resolve) => {
+                            if(resolve.data === "success update invent"){
+                                loading.close()
+                                this.$notify.success({
+                                title: 'Yey',
+                                message: 'Successfully update',
+                                offset: 100
+                                });
+                                this.getsavedsettingsforinventory()
+                            }
+                        })
+                    }, 3000)
+                })
+        },
         getsavedsettings(){
             savedsettings().then(response => {
                 this.needtosave = false;
@@ -164,6 +276,27 @@ export default {
                         })
                     }, 3000)
                 })
+        },
+        onenable1(){
+            if(this.settings2.inventorysettings === true){
+                this.needtosave1 = true;
+            }else{
+                this.needtosave1 = true;
+            }
+        },
+        onenable2(){
+             if(this.settings2.inventorysupplier === true){
+                this.needtosave1 = true;
+            }else{
+                this.needtosave1 = true;
+            }
+        },
+        onenable3(){
+             if(this.settings2.inventoryexpiration === true){
+                this.needtosave1 = true;
+            }else{
+                this.needtosave1 = true;
+            }
         },
         onenable(){
             if(this.settings.purchasesettings === true){
