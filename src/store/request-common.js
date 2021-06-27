@@ -538,3 +538,13 @@ export function getimage(supplier)
 {
     return httpauth.get(`/api/purchase-order/get-supplier-image?supplier=${supplier}`)
 }
+
+/*
+product report
+created at : 27/06/2021
+*/
+
+export function bulkentryreportproduct(obj){
+    
+    return httpauth.post(`/api/report-problem/product-report?id=${obj.productID}&supplieremail=${obj.supplierEmail}&productname=${obj.productName}&problem1=${obj.value1[0]}&problem2=${obj.value1[1]}&problem3=${obj.value1[2]}&problem4=${obj.value1[3]}&remarks=${obj.remarks}&supplier=${obj.supplier}`)
+}

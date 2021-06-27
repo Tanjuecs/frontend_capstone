@@ -67,7 +67,7 @@
                                         )">
                                             Received Order
                                         </el-button>
-                                        <el-button @click="onreturnorder(row.psupplier)" style="width: 100%; margin-left: -5px;" type="danger" plain>
+                                        <el-button @click="onreturnorder(row.psupplier, row.poid, row.pname)" style="width: 100%; margin-left: -5px;" type="danger" plain>
                                             Return Order
                                         </el-button>
                                         </template>
@@ -96,7 +96,7 @@
                                         </el-alert>
                                          <el-card shadow="always" style="margin-bottom: 20px;">
                                              <h6>Select type of problem</h6>
-                                             <el-select v-model="value1" style="width: 100%;" multiple placeholder="Select type of problem">
+                                             <el-select v-model="productReportTask.value1" style="width: 100%;" multiple placeholder="Select type of problem">
                                                     <el-option
                                                     v-for="item in options"
                                                     :key="item.value"
@@ -110,7 +110,7 @@
                                                     style="width: 100%;"
                                                     :autosize="{ minRows: 2, maxRows: 4}"
                                                     placeholder="Please input remarks"
-                                                    v-model="textarea2">
+                                                    v-model="productReportTask.remarks">
                                                     </el-input>
                                          </el-card>
                                           <el-card shadow="always" style="margin-bottom: 20px;">
@@ -125,11 +125,11 @@
                                             show-icon>
                                         </el-alert>
                                          <center>
-                                             <el-avatar shape="square" :size="100" fit="fill" style="margin-bottom: 3px; margin-top: 10px;"></el-avatar>
-                                             <h4>John Doe</h4>
+                                             <el-avatar shape="square" :src="imgsupplier" :size="100" fit="fill" style="margin-bottom: 3px; margin-top: 10px;"></el-avatar>
+                                             <h4>{{productReportTask.supplier}}</h4>
                                          </center>
                                           </el-card>
-                                          <el-button type="primary" style="float: right; margin-top: 10px; margin-bottom: 10px;">Send to supplier</el-button>
+                                          <el-button type="primary" style="float: right; margin-top: 10px; margin-bottom: 10px;" @click="onsendreport()">Send report to supplier</el-button>
                                 </div>
                                 </el-drawer>
 <!-- end el drawer for return orders -->
@@ -199,10 +199,11 @@
 </template>
 
 <script>
-import {listofpurchase, receivetheorder, getimage} from "@/store/request-common"
+import {listofpurchase, receivetheorder, getimage, bulkentryreportproduct} from "@/store/request-common"
 export default {
     data(){
         return{
+            imgsupplier: '',
             returndrawer: false,
              pageSize: 5,
               page: 1,
@@ -234,7 +235,15 @@ export default {
           value: 'Incorrect Order',
           label: 'Incorrect Order'
         }],
-        value1: []
+        
+        productReportTask: {
+                value1: [],
+                supplier: '',
+                remarks: '',
+                productID: '',
+                supplierEmail: '',
+                productName: ''
+        }
         }
     },
     computed: {
@@ -254,10 +263,62 @@ export default {
         this.makeid(5)
     },
     methods: {
-        onreturnorder(supplier){
+        onsendreport(){
+            if(!this.productReportTask.value1){
+                this.$notify.warning({
+                                title: 'Uh oh',
+                                message: 'Please choose problem type.',
+                                offset: 100
+                                });
+                                return false
+            }
+            this.$confirm('Are you sure you want send this as report?', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+                }).then(() => {
+                     const loading = this.$loading({
+                    lock: true,
+                    text: 'please wait...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                    setTimeout(() => {
+                        bulkentryreportproduct(this.productReportTask)
+                        .then(response => {
+                                if(response.data === "success report"){
+                                    loading.close()
+                                    this.$notify.success({
+                                    title: 'Okay!',
+                                    message: 'Successfully send report.',
+                                    offset: 100
+                                    });
+                                    this.returndrawer = false;
+                                    this.productReportTask.value1 = []
+                                    this.fetchproducts();
+                                }
+                        }).catch(() => {
+                             loading.close()
+                                    this.$notify.success({
+                                    title: 'Okay!',
+                                    message: 'Successfully send report.',
+                                    offset: 100
+                                    });
+                                    this.returndrawer = false;
+                                    this.productReportTask.value1 = []
+                                    this.fetchproducts();
+                        })
+                    }, 3000)
+                })
+        },
+        onreturnorder(supplier, id, pname){
+            this.productReportTask.supplier = supplier;
+            this.productReportTask.productID = id;
+            this.productReportTask.productName = pname
            this.returndrawer = true;
-           getimage().then(response => {
-            //    
+           getimage(supplier).then(response => {
+            this.imgsupplier = response.data[0].supplierimgurl
+            this.productReportTask.supplierEmail = response.data[0].supplieremail
            })
         },
         onsave(){
