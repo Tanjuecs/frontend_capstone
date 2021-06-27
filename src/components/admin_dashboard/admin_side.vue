@@ -108,19 +108,27 @@
 
                                 </el-submenu>
 
-                                <el-submenu index="7">
+                                
+
+                                 <el-menu-item index="7">
+                                    <img src="https://cdn2.iconfinder.com/data/icons/picons-basic-2/57/basic2-237_line_chart_analytics-256.png"
+                                     alt="no image" style="width: 15%; height:auto;">&nbsp;
+                                    <span>Stock on hand</span>
+                                </el-menu-item>
+
+                                <el-submenu index="8">
                                     <template slot="title">
                                     <img src="https://cdn0.iconfinder.com/data/icons/artificial-intelligence-49/64/robot_settings_smart_future_tech-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Settings</span>
                                     </template>
-                                    <el-menu-item index="7-1" @click="onexceltemplate()">
+                                    <el-menu-item index="8-1" @click="onexceltemplate()">
                                         <img src="https://cdn3.iconfinder.com/data/icons/logos-brands-3/24/logo_brand_brands_logos_excel-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Excel Templates
                                         </el-menu-item>
 
-                                        <el-menu-item index="7-2" @click="onmoresettings()">
+                                        <el-menu-item index="8-2" @click="onmoresettings()">
                                         <img src="https://cdn2.iconfinder.com/data/icons/business-filled-outline-style-1-set-1/256/21-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         More settings

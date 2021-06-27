@@ -16,8 +16,8 @@
       </div>
       <div class="hero">
          <a class="navbar-brand me-2" href="#">
-      <p><img src="https://scontent.xx.fbcdn.net/v/t1.15752-0/p206x206/207068843_498974621378006_8840947028308824016_n.png?_nc_cat=109&ccb=1-3&_nc_sid=aee45a&_nc_eui2=AeEES1hsBXC9Khbz9lRKPtoZmJxyC32ut7WYnHILfa63te-BP4IEbp6GyeoaaV4dHrvfEGbPTYDt_qcLihzUF1h6&_nc_ohc=1Mm9Ks8f6QAAX9L_NUA&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&tp=30&oh=9f84f641a0909f37cb48bc0dc8f9bf85&oe=60D725AE" alt="bmlogo" width="270" height="270" style="display: block; margin-left: auto; margin-right: auto;" >
-      </p>
+      <!-- <p><img src="https://scontent.xx.fbcdn.net/v/t1.15752-0/p206x206/207068843_498974621378006_8840947028308824016_n.png?_nc_cat=109&ccb=1-3&_nc_sid=aee45a&_nc_eui2=AeEES1hsBXC9Khbz9lRKPtoZmJxyC32ut7WYnHILfa63te-BP4IEbp6GyeoaaV4dHrvfEGbPTYDt_qcLihzUF1h6&_nc_ohc=1Mm9Ks8f6QAAX9L_NUA&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&tp=30&oh=9f84f641a0909f37cb48bc0dc8f9bf85&oe=60D725AE" alt="bmlogo" width="270" height="270" style="display: block; margin-left: auto; margin-right: auto;" >
+      </p> -->
     </a>
         <hgroup>
           <font style="font-size: 100px; letter-spacing:4.6px; text-shadow: #474747 3px 5px 2px, 2px 4px 2px rgba(81,72,0,0.28); color: white;">
