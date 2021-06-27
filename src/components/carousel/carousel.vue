@@ -16,7 +16,7 @@
       </div>
       <div class="hero">
          <a class="navbar-brand me-2" href="#">
-      <p><img src="https://scontent.xx.fbcdn.net/v/t1.15752-0/p206x206/207068843_498974621378006_8840947028308824016_n.png?_nc_cat=109&ccb=1-3&_nc_sid=aee45a&_nc_eui2=AeEES1hsBXC9Khbz9lRKPtoZmJxyC32ut7WYnHILfa63te-BP4IEbp6GyeoaaV4dHrvfEGbPTYDt_qcLihzUF1h6&_nc_ohc=1Mm9Ks8f6QAAX9L_NUA&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&tp=30&oh=9f84f641a0909f37cb48bc0dc8f9bf85&oe=60D725AE" alt="bmlogo" width="270" height="270" style="display: block; margin-left: auto; margin-right: auto;" >
+      <p><img src="../../assets/logogo.gif" alt="bmlogo" width="200" height="200" style="display: block; margin-left: auto; margin-right: auto;" >
       </p>
     </a>
         <hgroup>
@@ -161,7 +161,7 @@ Image credits: unsplash.com
   opacity: 0.7;
 }
 .fade-carousel .slides .slide-1 {
-  background-image: url(https://scontent.fmnl16-1.fna.fbcdn.net/v/t1.15752-9/204156274_4019352851497132_8201507836755536948_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeEjVNWHx40tJmi2aIOsx8VAMekFEy1bQB0x6QUTLVtAHW6bMsU15Zy9awUPqynieJUiqpZJeJgvlGO3mkB3LF7A&_nc_ohc=cnfzIU4npkIAX98RWuS&_nc_ht=scontent.fmnl16-1.fna&oh=02dc2f59fe2ae013cb08ca6304c37b00&oe=60D73889); 
+  background-image: url(../../assets/bg.jpg); 
 }
 /* .fade-carousel .slides .slide-2 {
   background-image: url(https://ununsplash.imgix.net/photo-1416339684178-3a239570f315?q=75&fm=jpg&s=c39d9a3bf66d6566b9608a9f1f3765af);
