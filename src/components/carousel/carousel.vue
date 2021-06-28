@@ -16,8 +16,10 @@
       </div>
       <div class="hero">
          <a class="navbar-brand me-2" href="#">
+
       <p><img src="../../assets/logogo.gif" alt="bmlogo" width="200" height="200" style="display: block; margin-left: auto; margin-right: auto;" >
       </p>
+
     </a>
         <hgroup>
           <font style="font-size: 100px; letter-spacing:4.6px; text-shadow: #474747 3px 5px 2px, 2px 4px 2px rgba(81,72,0,0.28); color: white;">
