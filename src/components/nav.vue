@@ -39,7 +39,7 @@
 
       <div class="d-flex align-items-center">
         <el-button type="primary" plain @click="onlogin()">Login</el-button>
-        
+        <el-button type="primary" plain @click="onaboutus()">About us</el-button>
       </div>
     </div>
     <!-- Collapsible wrapper -->
@@ -104,7 +104,8 @@ export default {
         email: '', password: ''
       },
       params: {
-                    client_id: "276210162071-6vdmv9penibbvjce463suctmoddvmqkk.apps.googleusercontent.com"
+                    client_id: "276210162071-6vdmv9penibbvjce463suctmoddvmqkk.apps.googleusercontent.com" //Localhost
+                    // client_id: "276210162071-51kdasipabb443pmfi0cthgfkvrof67u.apps.googleusercontent.com" //production
                 },
                 // only needed if you want to render the button with the google ui
                 renderParams: {
@@ -122,6 +123,9 @@ export default {
     this.makeid(5)
   },
   methods: {
+    onaboutus(){
+      this.$router.push({name: 'About Us'}).catch(() => {})
+    },
     onsignin(){
       if(!this.task.email || !this.task.password){
         this.$notify.error({

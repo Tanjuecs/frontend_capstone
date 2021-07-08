@@ -19,7 +19,7 @@ export default {
           this.$router.push({name: 'admindashboard'}).catch(() => {})
         }
         else if(response.data === "homepage"){
-            this.$router.push({name: 'Index'}).catch(() => {})
+            // this.$router.push({name: 'Index'}).catch(() => {})
         }
       })
     }

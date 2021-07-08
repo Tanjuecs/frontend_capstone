@@ -5,6 +5,45 @@
                 <div class="col-sm" v-show="inventoryform">
                     <el-card shadow="always" style="margin-bottom: 20px;">
                         <h5>Add product form</h5>
+                        <el-switch
+                            style="display: block"
+                            v-model="productTask.decisionval"
+                            active-color="#13ce66"
+                            inactive-color="#ff4949"
+                            active-text="Sync on stocks"
+                            inactive-text="Sync on inventory">
+                            </el-switch>
+                            <div v-if="productTask.decisionval == false">
+                                <el-alert
+                                        style="margin-top: 20px; margin-bottom: 30px;"
+                                            title="Product Sync to inventory"
+                                            type="warning"
+                                            effect="dark"
+                                            :closable="false"
+                                            description="Sync on inventory is turned on means you are adding products directly on your inventory, this will not create a stock on hand products."
+                                            show-icon>
+                                        </el-alert>
+                            </div>
+                            <div v-else>
+                                 <el-alert
+                                        style="margin-top: 20px; margin-bottom: 10px;"
+                                            title="Product Sync to stocks (Recommended)"
+                                            type="success"
+                                            effect="dark"
+                                            :closable="false"
+                                            description="Sync on stocks is turned on means you are adding products to your stocks."
+                                            show-icon>
+                                        </el-alert>
+                                        <el-alert
+                                        style="margin-top: 10px; margin-bottom: 30px;"
+                                            title="Pull products from stocks"
+                                            type="info"
+                                            effect="dark"
+                                            :closable="false"
+                                            description="After adding the products on your stocks you can simply pull products for your inventory."
+                                            show-icon>
+                                        </el-alert>
+                            </div>
                     <div style="margin-top: 20px;"><label>Product Code :</label> <el-tag type="danger" effect="dark">{{productTask.productCode}}</el-tag></div>
                     <center>
                         <el-avatar shape="square" :size="100" fit="fill" style="margin-bottom: 3px;" :src="img1"></el-avatar>
@@ -316,10 +355,11 @@
                                                             <div class="col-sm">
                                                                 <el-button type="primary" style="width: 100%;"
                                                                 @click="onmodifyproduct(
+                                                                    item.productCode,
                                                                     item.productID,
                                                                     item.productName,
-                                                                    item.product_price,
                                                                     item.product_quantity,
+                                                                    item.product_price,
                                                                     item.product_supplier,
                                                                     item.productimgurl,
                                                                     item.product_category
@@ -328,7 +368,7 @@
                                                             
                                                             </div>
                                                             <div class="col-sm">
-                                                                <el-button type="danger" style="width: 100%;" @click="onremoveproduct(item.productID)">Remove</el-button>
+                                                                <el-button type="danger" style="width: 100%;" @click="onremoveproduct(item.productID, item.product_quantity, item.productCode)">Remove</el-button>
                                                             </div>
                                                         </div>
                                                         <!-- Modify dialog -->
@@ -337,6 +377,17 @@
                                                             :visible.sync="modifyDialog"
                                                             width="50%"
                                                             :before-close="handleClose">
+                                                            <div v-show="tagalertshow">
+                                                                <el-alert
+                                                                    style="margin-top: 20px; margin-bottom: 30px;"
+                                                                        title="Product Exist On Stock"
+                                                                        type="warning"
+                                                                        effect="dark"
+                                                                        :closable="false"
+                                                                        description="Modifying this product may also take effect on your stock on hand product"
+                                                                        show-icon>
+                                                                    </el-alert>
+                                                            </div>
                                                                 <center>
                                                                     <el-avatar shape="square" :size="100" fit="fill" style="margin-bottom: 3px;" :src="modifyimg1"></el-avatar>
                                                                         <p style="color: gray;">Preview of image will appear after the uploading.</p>
@@ -356,9 +407,10 @@
                                                                     <div class="col-sm">
                                                                         <label>Product quantity</label>
                                                                         <el-input
-                                                                            placeholder="Please input product quantity"
+                                                                            placeholder="Product Quantity"
                                                                             v-model="modifyTask.modifyproductquantity"
                                                                             type="number"
+                                                                            disabled
                                                                             clearable>
                                                                             </el-input>
                                                                     </div>
@@ -532,14 +584,17 @@ fetchAllProductInventory,
 removeproduct,
 filter_by_date,
 more_filter_search,
-product_modify, listcategory, getsystemsettingsforinventory, fetchaddedsuppliers, viewingexpirationdate, productexpired} from "@/store/request-common"
+product_modify, listcategory, getsystemsettingsforinventory, fetchaddedsuppliers, viewingexpirationdate, productexpired, CHECK_STOCK_BEFORE_MODIFY} from "@/store/request-common"
 import firebase from 'firebase';
 export default {
     props: {
-        getallproductlist: Array
+        getallproductlist: Array,
+        getallstocks: Function,
+        getListProductInventory: Function
     },
     data(){
         return {
+            
             drawerviewexpiration: false,
             listofsuppliers: [],
              pageSize: 5,
@@ -595,7 +650,8 @@ export default {
                 isstatus: false,
                 productImageUrl: '',
                 productcategory: '',
-                productExpiration: ''
+                productExpiration: '',
+                decisionval: true,
             },
             getallproductlist:[],
             filterable: {
@@ -617,14 +673,17 @@ export default {
                 modifyproductprice: '',
                 modifyproductsupplier: '',
                 modifyPID: '',
-                modifycategory: ''
+                modifycategory: '',
+                tagalert: false,
+                pcode: ''
             },
             
             //preview area
             pageSize: 2,
               page: 1,
               dynamicTitle: '',
-              getexpirydatearry: []
+              getexpirydatearry: [],
+              tagalertshow: false
         }
     },
     computed: {
@@ -649,6 +708,7 @@ export default {
         }, 3000)
         this.getallsuppliers()
         this.producthasexpired()
+        this.listLoading = false;
     },
     methods:{
         producthasexpired(){
@@ -777,16 +837,45 @@ this.page = val
                 })
             }
         },
-        onmodifyproduct(productID,productName,product_price,product_quantity,product_supplier,productimgurl, category){
-            this.modifyDialog = true;
+        onmodifyproduct(pcode,productID,productName, prodquantity,product_price,product_supplier,productimgurl, category){
+            CHECK_STOCK_BEFORE_MODIFY(pcode)
+            .then(response => {
+                if(response.data === "exist"){
+                    this.$confirm('We detect that this product is existing on your stock on hand. Continue?', 'Product Exist On Stock', {
+                        cancelButtonText: 'NO',
+                    confirmButtonText: 'YES',
+                    type: 'info'
+                    }).then(() => {
+                        this.modifyDialog = true;
+                        this.tagalertshow = true;
+                        this.modifyTask.modifyPID = productID
+                        this.modifyTask.modifyproductname = productName
+                        this.modifyTask.modifyproductprice = product_price
+                        this.modifyTask.modifyproductquantity = prodquantity
+                        this.modifyTask.modifyproductsupplier = product_supplier
+                        this.modifyimg1 = productimgurl
+                        this.modifyTask.modifyproductimageurl = productimgurl
+                        this.modifyTask.modifycategory = category
+                        this.modifyTask.pcode  = pcode
+                        this.modifyTask.tagalert = true;
+                    })
+                }
+                else{
+                    this.tagalertshow = false;
+                    this.modifyDialog = true;
+            this.modifyTask.tagalert = false;
             this.modifyTask.modifyPID = productID
             this.modifyTask.modifyproductname = productName
             this.modifyTask.modifyproductprice = product_price
-            this.modifyTask.modifyproductquantity = product_quantity
             this.modifyTask.modifyproductsupplier = product_supplier
+            this.modifyTask.modifyproductquantity = prodquantity
             this.modifyimg1 = productimgurl
             this.modifyTask.modifyproductimageurl = productimgurl
             this.modifyTask.modifycategory = category
+                }
+            })
+            
+            // console.log(this.modifyTask)
         },
         ongetall(){
              const loading = this.$loading({
@@ -858,7 +947,7 @@ this.page = val
                     }, 3000)      
             }  
         },
-        onremoveproduct(id){
+        onremoveproduct(id, quantity, pcode){
            this.$confirm('Are you sure you want to remove this product?', 'Warning', {
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
@@ -871,7 +960,7 @@ this.page = val
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
                 setTimeout(() => {
-                    removeproduct(id).then((response) => {
+                    removeproduct(id, quantity, pcode).then((response) => {
                         if(response.data === "success deletion"){
                             loading.close()
                             this.getListProductInventory()
@@ -892,14 +981,7 @@ this.page = val
                     return false; 
                 }) 
         },
-        getListProductInventory(){
-            fetchAllProductInventory().then((response) => {
-                this.listLoading = false;
-                this.getallproductlist = response.data
-                console.log(response.data)
-                this.makeproductCode(5)
-            })
-        },
+        
         onsaveproduct(){
             if(!this.productTask.productName ||  !this.productTask.productQuantity
             || !this.productTask.productPrice || !this.productTask.productImageUrl || !this.productTask.productExpiration){
@@ -939,6 +1021,7 @@ this.page = val
                                 offset: 100
                                 });
                                 this.getListProductInventory()
+                                this.getallstocks()
                         } else if(resp.data === "empty"){
                              loading.close()
                             this.$notify.error({

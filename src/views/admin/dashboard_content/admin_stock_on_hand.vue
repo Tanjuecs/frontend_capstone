@@ -1,27 +1,25 @@
 <template>
     <div>
         <div class="mt-3">
-            <h3>System Settings</h3>
-        <p>Here you can modify some settings of the system</p>
+            <h3>Stocks on hand</h3>
+        <p>Here you can do more actions with your product stocks</p>
         <el-alert
-            title="System Settings"
+            title="Stocks on hand."
             type="success" :closable="false">
         </el-alert>
         </div>
         <div id="testscroll">
-             <div style="margin-top: 30px;">
-            <moresettings />
+
+        <stocks />
         </div>
-        </div>
-       
     </div>
 </template>
 
 <script>
-import moresettings from "@/components/admin_dashboard/admin_dashboard_content/moresettings/moresystemsettings"
+import stocks from  "@/components/admin_dashboard/admin_dashboard_content/stocksonhand/stocks_on_hand"
 export default {
     components: {
-        moresettings
+        stocks
     }
 }
 </script>

@@ -8,7 +8,10 @@
             type="success" :closable="false">
         </el-alert>
         </div>
-        <dashusermanagement style="margin-top: 40px;"/>
+        <div id="testscroll">
+            <dashusermanagement style="margin-top: 40px;"/>
+        </div>
+        
     </div>  
 </template>
 
@@ -20,3 +23,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#testscroll{
+    height: 900px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+</style>

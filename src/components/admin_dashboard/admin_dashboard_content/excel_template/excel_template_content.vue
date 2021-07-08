@@ -39,8 +39,8 @@
                                     <center>
                                         <img src="https://cdn1.iconfinder.com/data/icons/e-commerce-retro-pack-vol-1/115/inventory_management-256.png" 
                                         alt="No image" style="width: 25%; height: auto; margin-bottom: 20px;">
-                                        <h5>Inventory System</h5>
-                                        <p>Export your custom excel template for your inventory system</p>
+                                        <h5>Inventory / Stocks</h5>
+                                        <p>Export your custom excel template for your inventory or stocks</p>
                                     </center>
                                     <div class="row">
                                        
@@ -55,7 +55,7 @@
                                                 <h4>Documentation</h4>
                                                </center>
                                                 
-                                                <p>View our documentation regarding with inventory system excel format</p>
+                                                <p>View our documentation regarding with inventory / stocks excel format</p>
                                                 <el-button style="width: 100%; margin-top: 10px;" type="warning">View</el-button>
                                             </el-card>
                                              <el-card shadow="always" style="margin-top: 10px;">
@@ -65,7 +65,7 @@
                                                 <h4>Export to Excel</h4>
                                                </center>
                                                 
-                                                <p>This will export the required format of inventory system excel file.</p>
+                                                <p>This is applicable for both inventory and stocks data.</p>
                                                 
                                                 <download-excel
                                             class="btn btn-default"

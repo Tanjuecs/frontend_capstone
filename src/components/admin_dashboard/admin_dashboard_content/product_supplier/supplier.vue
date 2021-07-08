@@ -192,73 +192,7 @@
                                         item.id, item.supplierfirstname, item.supplierlastname, item.supplieremail, item.suppliernumber, item.supplierimgurl
                                     )" type="primary" style="float: right; margin-bottom: 10px; margin-top: 20px; "><i class="el-icon-edit"></i> Modify</el-button>
                                 </el-card>
-                                <!-- modify supplier starts -->
-                                            <el-dialog
-                                            style="background-color: #ECEFFC;"
-                                                    title="Modify Supplier"
-                                                    :visible.sync="modifysupplierdialog"
-                                                    width="70%"
-                                                    :before-close="handleClose">
-                                                    <div class="row">
-                                                        <div class="col-sm">
-                                                            <h5>Edit form</h5>
-                                                    <span>Here you can easily edit details for supplier</span>
-                                                    <hr>
-                                                        <el-card shadow="always">
-                                                                <div class="row" style="margin-bottom: 20px;">
-                                                                    <center>
-                                                                        <el-avatar shape="square" :size="100" fit="fill" style="margin-bottom: 3px; margin-top: 10px;" :src="modifyimg1"></el-avatar>
-                                                                            <p style="color: gray;">Preview of image will appear after the uploading.</p>
-                                                                        <input type="file" class="btn btn-outline-primary" style="margin-bottom: 6px;" @change="modifypreviewImage" accept="image/*" />
-                                                                        <el-progress :text-inside="true" style="margin-bottom: 10px;" :stroke-width="26" :percentage="modifyuploadpercent"></el-progress>
-                                                                        <el-button type="primary" style=" margin-bottom: 10px;" plain @click="modifyonupload()">Upload now</el-button>
-                                                                    </center>
-                                                                    <div class="col-sm">
-                                                                        <label>Edit firstname</label>
-                                                                        <el-input
-                                                                            placeholder="Please input firstname"
-                                                                            v-model="modifySupplier.modifyfname"
-                                                                            clearable>
-                                                                            </el-input>
-                                                                    </div>
-                                                                    <div class="col-sm">
-                                                                        <label>Edit lastname</label>
-                                                                        <el-input
-                                                                            placeholder="Please input lastname"
-                                                                            v-model="modifySupplier.modifylname"
-                                                                            clearable>
-                                                                            </el-input>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row" style="margin-bottom: 20px;">
-                                                                    <div class="col-sm">
-                                                                        <label>Edit phone number</label>
-                                                                        <el-input
-                                                                            placeholder="Please input phone number"
-                                                                            v-model="modifySupplier.modifynumber"
-                                                                            clearable>
-                                                                            </el-input>
-                                                                    </div>
-                                                                    <div class="col-sm">
-                                                                        <label>Edit email</label>
-                                                                        <el-input
-                                                                            placeholder="Please input lastname"
-                                                                            v-model="modifySupplier.modifylname"
-                                                                            clearable>
-                                                                            </el-input>
-                                                                    </div>
-                                                                </div>
-                                                                <el-button type="primary" style="float: right; margin-bottom: 10px;" @click="onsavemodifysupplier()">Save</el-button>
-                                                        </el-card>
-                                                        </div>
-                                                        <div class="col-sm">
-                                                            <img src="https://cdn.dribbble.com/users/949592/screenshots/4171049/customise.jpg?compress=1&resize=800x600" 
-                                                            alt="No image" style="width: 100%; height: auto;" class="img-fluid">
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    </el-dialog>
-                                                    <!-- modify supplier ends -->
+                                
                                 <el-pagination layout="prev, pager, next" :page-size="pageSize" :total="this.suppliersList.length" @current-change="setPage">
                                     </el-pagination>
                             </div>
@@ -336,8 +270,10 @@
                                     <el-table-column label="More actions"  align="center">
                                         <template slot-scope="{row}">
                                         <div v-if="row.isstatus == 0">
-                                            <el-button type="primary" size="mini" style="width: 100%; margin-bottom: 10px;">Modify</el-button>
-                                            <el-button type="danger" size="mini" style="width: 100%; margin-left: 0px;">Remove</el-button>
+                                            <el-button type="primary" @click="onmodifysupplier(
+                                        row.id, row.supplierfirstname, row.supplierlastname, row.supplieremail, row.suppliernumber, row.supplierimgurl
+                                    )" size="mini" style="width: 100%; margin-bottom: 10px;">Modify</el-button>
+                                            <el-button type="danger" @click="onremovesupplier(row.id)" size="mini" style="width: 100%; margin-left: 0px;">Remove</el-button>
                                         </div>
                                         <div v-else>
                                         </div>
@@ -348,6 +284,73 @@
                                     <el-pagination layout="prev, pager, next" :page-size="pageSize" :total="this.suppliersList.length" @current-change="setPage">
                                     </el-pagination>
                         </div>
+                        <!-- modify supplier starts -->
+                                            <el-dialog
+                                            style="background-color: #ECEFFC;"
+                                                    title="Modify Supplier"
+                                                    :visible.sync="modifysupplierdialog"
+                                                    width="70%"
+                                                    :before-close="handleClose">
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                            <h5>Edit form</h5>
+                                                    <span>Here you can easily edit details for supplier</span>
+                                                    <hr>
+                                                        <el-card shadow="always">
+                                                                <div class="row" style="margin-bottom: 20px;">
+                                                                    <center>
+                                                                        <el-avatar shape="square" :size="100" fit="fill" style="margin-bottom: 3px; margin-top: 10px;" :src="modifyimg1"></el-avatar>
+                                                                            <p style="color: gray;">Preview of image will appear after the uploading.</p>
+                                                                        <input type="file" class="btn btn-outline-primary" style="margin-bottom: 6px;" @change="modifypreviewImage" accept="image/*" />
+                                                                        <el-progress :text-inside="true" style="margin-bottom: 10px;" :stroke-width="26" :percentage="modifyuploadpercent"></el-progress>
+                                                                        <el-button type="primary" style=" margin-bottom: 10px;" plain @click="modifyonupload()">Upload now</el-button>
+                                                                    </center>
+                                                                    <div class="col-sm">
+                                                                        <label>Edit firstname</label>
+                                                                        <el-input
+                                                                            placeholder="Please input firstname"
+                                                                            v-model="modifySupplier.modifyfname"
+                                                                            clearable>
+                                                                            </el-input>
+                                                                    </div>
+                                                                    <div class="col-sm">
+                                                                        <label>Edit lastname</label>
+                                                                        <el-input
+                                                                            placeholder="Please input lastname"
+                                                                            v-model="modifySupplier.modifylname"
+                                                                            clearable>
+                                                                            </el-input>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row" style="margin-bottom: 20px;">
+                                                                    <div class="col-sm">
+                                                                        <label>Edit phone number</label>
+                                                                        <el-input
+                                                                            placeholder="Please input phone number"
+                                                                            v-model="modifySupplier.modifynumber"
+                                                                            clearable>
+                                                                            </el-input>
+                                                                    </div>
+                                                                    <div class="col-sm">
+                                                                        <label>Edit email</label>
+                                                                        <el-input
+                                                                            placeholder="Please input lastname"
+                                                                            v-model="modifySupplier.modifylname"
+                                                                            clearable>
+                                                                            </el-input>
+                                                                    </div>
+                                                                </div>
+                                                                <el-button type="primary" style="float: right; margin-bottom: 10px;" @click="onsavemodifysupplier()">Save</el-button>
+                                                        </el-card>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <img src="https://cdn.dribbble.com/users/949592/screenshots/4171049/customise.jpg?compress=1&resize=800x600" 
+                                                            alt="No image" style="width: 100%; height: auto;" class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    </el-dialog>
+                                                    <!-- modify supplier ends -->
                     </el-card>
                 </el-tab-pane>
             </el-tabs>

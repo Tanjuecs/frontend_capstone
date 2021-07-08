@@ -166,6 +166,12 @@ Created date : 15/06/2021
 
 export function adding_product_inventory(obj){
     var productdata = new FormData();
+    if(obj.decisionval === true){
+        productdata.append("productsync", 1)
+    }
+    else{
+        productdata.append("productsync", 0)
+    }
     productdata.append("productName", obj.productName)
     productdata.append("productCode", obj.productCode)
     productdata.append("productQuantity", obj.productQuantity)
@@ -188,8 +194,8 @@ product inventory removing
 created 15/07/2021
 */
 
-export function removeproduct(id){
-    return httpauth.post(`/api/product-inventory/product-inventory-deletion?prodid=${id}`)
+export function removeproduct(id, quantity, pcode){
+    return httpauth.post(`/api/product-inventory/product-inventory-deletion?prodid=${id}&pcode=${pcode}&pquantity=${quantity}`)
 }
 
 /* 
@@ -222,6 +228,12 @@ created date: 16/06/2021
 
 export function product_modify(obj){
     var modifieddata = new FormData()
+    if(obj.tagalert === true){
+        obj.tagalert = "1";
+    }else{
+        obj.tagalert = "0";
+    }
+    modifieddata.append("pcode", obj.pcode)
     modifieddata.append("modifyproductname", obj.modifyproductname)
     modifieddata.append("modifyproductquantity", obj.modifyproductquantity)
     modifieddata.append("modifyproductprice", obj.modifyproductprice)
@@ -229,7 +241,7 @@ export function product_modify(obj){
     modifieddata.append("modifyproductimageurl", obj.modifyproductimageurl)
     modifieddata.append("modifyPID", obj.modifyPID)
     modifieddata.append("modifycategory", obj.modifycategory)
-    return httpauth.post(`/api/product-inventory/product-inventory-modification`, modifieddata)
+    return httpauth.post(`/api/product-inventory/product-inventory-modification?tagalert=${obj.tagalert}`, modifieddata)
 }
 
 /* 
@@ -250,10 +262,10 @@ Product Inventory Import Excel
 created at : 16/06/2021
 */ 
 
-export function importExcelGenerateData(file){
+export function importExcelGenerateData(file, valbool){
     var data = new FormData();
     data.append("file", file)
-    return httpauth.post(`/api/inventory-ai/artificial-intel-auto-compute`,  data)
+    return httpauth.post(`/api/inventory-ai/artificial-intel-auto-compute?valbool=${valbool}`,  data)
 }
 
 /*
@@ -547,4 +559,103 @@ created at : 27/06/2021
 export function bulkentryreportproduct(obj){
     
     return httpauth.post(`/api/report-problem/product-report?id=${obj.productID}&supplieremail=${obj.supplierEmail}&productname=${obj.productName}&problem1=${obj.value1[0]}&problem2=${obj.value1[1]}&problem3=${obj.value1[2]}&problem4=${obj.value1[3]}&remarks=${obj.remarks}&supplier=${obj.supplier}`)
+}
+
+/*
+fetch all stocks
+created at : 28/06/2021
+*/
+
+export function fetchlistofstocks(){
+    return httpauth.get(`/api/product-inventory/fetch-stocks-on-hand`)
+}
+
+/*
+pull product from stocks
+created at : 28/06/2021
+*/
+
+export function pullrequestforproduct(obj){
+        var data = new FormData();
+        data.append("prodimg", obj.prodimg)
+        return httpauth.post(`/api/pull-request-product/sync-data-to-product-inventory?id=${obj.stockID}&pname=${obj.prodname}&pcode=${obj.stocknum}&pquantity=${obj.pquantity}&pprice=${obj.prodprice}&supplier=${obj.prodsupplier}&category=${obj.prodcategory}`, data)
+}
+
+/*
+check stock if exist before modifying
+created at : 29/06/2021
+*/
+
+export function CHECK_STOCK_BEFORE_MODIFY(pcode){
+    try {
+        return httpauth.post(`/api/product-inventory/check-if-exist-in-stocks?pcode=${pcode}`)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/*
+check quantity stock empty
+created at : 29/06/2021
+*/
+
+export function STOCK_EMPTY_NOTIF(){
+    try {
+        return httpauth.get(`/api/pull-request-product/check-stock-quantity-notification`)
+    } catch (error) {
+        
+    }
+}
+/*
+get product with zero quantity
+created at : 29/06/2021
+*/
+
+export function getzero(){
+    return httpauth.get(`/api/pull-request-product/get-product-with-zero-quantity`)
+}
+
+/*
+get all stocks on hand
+created at : 29/06/2021
+*/
+
+export function getallstocks(){
+    return httpauth.get(`/api/pull-request-product/get-all-stocks-on-hand`)
+}
+
+/*
+refill quantity via select
+created at : 30/06/2021
+*/
+
+export function pushrefillbyviaselect(obj, id){
+    return httpauth.post(`/api/pull-request-product/refill-increase-quantity-by-dropdown?quantity=${obj.value}&id=${id}`)
+}
+
+/*
+refill quantity via custom input
+created at : 30/06/2021
+*/
+
+export function pushrefillbyviacustom(obj, id){
+    return httpauth.post(`/api/pull-request-product/refill-increase-quantity-by-dropdown?quantity=${obj.custominput}&id=${id}`)
+}
+
+/*
+remove zero stock product
+created at : 30/06/2021
+*/
+
+export function removezerostock(id){
+    return httpauth.post(`/api/pull-request-product/remove-zero-quantity-stocks?id=${id}`)
+}
+
+/*
+sort of expired on stocks on hand
+created at : 07/01/2021
+*/
+
+export function sorting_expired_product_stocks(valbool){
+     return httpauth.get(`/api/sort-stocks/sort-of-expired?valbool=${valbool}`)
 }
