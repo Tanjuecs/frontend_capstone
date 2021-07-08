@@ -41,7 +41,7 @@
                                     <el-menu-item index="3-2" @click="addproductinventory()">
                                         <img src="https://cdn3.iconfinder.com/data/icons/flat-icons-web/40/Plus_01-66-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                        Add Inventory
+                                        Inventory / Stocks
                                     </el-menu-item>
                                     
                                     
@@ -110,7 +110,7 @@
 
                                 
 
-                                 <el-menu-item index="7">
+                                 <el-menu-item index="7" @click="onstockonhand()">
                                     <img src="https://cdn2.iconfinder.com/data/icons/picons-basic-2/57/basic2-237_line_chart_analytics-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Stock on hand</span>
@@ -203,6 +203,19 @@ export default {
             })
         },
         //routing
+        onstockonhand(){
+             const loading = this.$loading({
+                    lock: true,
+                    text: 'please wait..',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                    setTimeout(() => {
+                        loading.close()
+                        this.$router.push({name: 'Stocks on hand'}).catch(() => {})
+                         
+                    }, 2000)
+        },
         onreceivedorder(){
             const loading = this.$loading({
                     lock: true,

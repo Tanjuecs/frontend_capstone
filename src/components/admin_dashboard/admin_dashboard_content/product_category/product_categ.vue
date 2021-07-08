@@ -25,7 +25,15 @@
                                     <el-table-column type="expand">
                                     <template slot-scope="props">
                                         <el-card shadow="always">
-                                            <h5>Add your category name</h5>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <h5>Add your category name</h5>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <el-button type="danger" style="float: right; margin-bottom: 10px;" @click="onremoverow(props.row)">Remove row</el-button>
+                                                </div>
+                                            </div>
                                             <el-input
                                                 placeholder="Please input category name"
                                                 v-model="props.row.categoryname"
@@ -40,6 +48,7 @@
                                     <el-table-column label="Status">
                                         <el-tag type="success" effect="dark">New</el-tag>
                                     </el-table-column>
+                                      
                                 </el-table>
                                 <el-button type="primary" plain style="float: right; margin-bottom: 10px; margin-top: 10px;" @click="onsavebulk()">
                                     Save
@@ -130,6 +139,9 @@ export default {
         this.getallcategories()
     },
     methods: {
+        onremoverow(row){
+            this.categorydynamicadding.splice(row,1)
+        },
         onremove(id){
         this.$confirm('This will permanently delete. Continue?', 'Warning', {
           confirmButtonText: 'OK',
@@ -194,6 +206,7 @@ export default {
                                 });
                                 this.categorydynamicadding = []
                                 this.getallcategories();
+                                
                                 }else if(response.data === "exist"){
                                     loading.close()
                                     this.$notify.warning({

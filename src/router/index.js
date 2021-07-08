@@ -27,6 +27,11 @@ const routes = [
     component: () => import("@/views/registration")
   },
   {
+    path: '/about_us',
+    name: 'About Us',
+    component: () => import("@/views/aboutus")
+  },
+  {
     path: '/admindashboard' + makeid(200),
     name: 'admindashboard',
     component: () => import('@/views/admin/admin'),
@@ -80,13 +85,19 @@ const routes = [
         path: '/received_orders' + makeid(200),
         name: 'Receive Orders',
         component: () => import("@/views/admin/dashboard_content/admin_received_order")
+      },
+      {
+        path: '/stocks_on_hand' + makeid(200),
+        name: 'Stocks on hand',
+        component: () => import("@/views/admin/dashboard_content/admin_stock_on_hand")
       }
     ]
   }
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 })
 
 export default router

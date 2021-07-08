@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-    // baseURL: 'https://capstonebackend20210621232104.azurewebsites.net' // live site
+    // baseURL: 'https://capstonebackend20210621232104.azurewebsites.net', // live site
     
     baseURL: 'https://localhost:44370',// local host site
      headers: {

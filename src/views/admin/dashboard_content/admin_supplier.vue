@@ -8,9 +8,12 @@
             type="success" :closable="false">
         </el-alert>
         </div>
-        <div style="margin-top: 30px;">
+        <div id="testscroll">
+            <div style="margin-top: 30px;">
             <psupplier />
         </div>
+        </div>
+        
     </div>
 </template>
 
@@ -22,3 +25,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#testscroll{
+    height: 900px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+</style>
