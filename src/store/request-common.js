@@ -659,3 +659,16 @@ created at : 07/01/2021
 export function sorting_expired_product_stocks(valbool){
      return httpauth.get(`/api/sort-stocks/sort-of-expired?valbool=${valbool}`)
 }
+
+/*
+remove purchase order
+created at : 07/09/2021
+*/
+
+export function removepurchase(ponumber){
+    try {
+        return httpauth.post(`/api/purchase-order/remove-po?ponum=${ponumber}`)
+    } catch (error) {
+        console.log(error)
+    }
+}

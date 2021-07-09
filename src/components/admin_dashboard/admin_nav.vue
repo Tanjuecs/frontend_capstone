@@ -2,7 +2,7 @@
     <div>
          <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <p class="navbar-brand ps-3">Burger Mania</p>
+            <p class="navbar-brand ps-5" style=" font-size:17px;">&nbsp;&nbsp;&nbsp;&nbsp; BURGER MANIA</p>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" @click="sidebarToggle()"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->

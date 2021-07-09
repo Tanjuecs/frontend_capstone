@@ -6,7 +6,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav" id="mycustomscroll">
                            <el-menu
-                                default-active="2"
+                                default-active="1"
                                 class="el-menu-vertical-demo"
                                 @open="handleOpen"
                                 @close="handleClose"
@@ -142,7 +142,7 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div v-if="this.istypes == '1'">
-                            <div class="small">Logged in as: <el-tag type="success">Administrator</el-tag></div>
+                            <div class="small ps-5">Logged in as: &nbsp;&nbsp;<el-tag type="success">Administrator</el-tag></div>
                         </div>
                     </div>
                 </nav>
