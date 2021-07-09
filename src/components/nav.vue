@@ -104,7 +104,7 @@ export default {
         email: '', password: ''
       },
       params: {
-                    client_id: "276210162071-6vdmv9penibbvjce463suctmoddvmqkk.apps.googleusercontent.com" //Localhost
+                    client_id: "276210162071-n2n48b9329du9fgm4rkjrc0gmuj9buk7.apps.googleusercontent.com" //Localhost
                     // client_id: "276210162071-51kdasipabb443pmfi0cthgfkvrof67u.apps.googleusercontent.com" //production
                 },
                 // only needed if you want to render the button with the google ui
