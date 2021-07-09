@@ -1,7 +1,7 @@
 <template>
     <div>
          <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <!-- Container wrapper -->
   <div class="container">
     <!-- Navbar brand -->
@@ -48,9 +48,9 @@
 </nav>
 <!-- Dialog Box -->
 <el-dialog
-  title="Welcome please login or sign up"
+  title="Welcome! Please login."
   :visible.sync="dialogVisible"
-  width="50%"
+  width="35%"
   :before-close="handleClose">
   
  <el-input
@@ -72,7 +72,7 @@
 <el-link style="margin-bottom: 10px; margin-top: 5px;" @click="onnavigateRegister()" type="primary">Register</el-link>
 </div> -->
 <!-- Google Button -->
-<center>
+<center><br>
   <div>
   <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
 </div>

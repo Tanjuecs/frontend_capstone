@@ -70,6 +70,10 @@
                                         <el-button @click="onreturnorder(row.psupplier, row.poid, row.pname)" style="width: 100%; margin-left: -5px;" type="danger" plain>
                                             Return Order
                                         </el-button>
+                                       
+                                        <el-button type="danger"  style="margin-top: 5px; width: 100%; margin-left: -5px;" @click="onremove(row.ponumber)">Remove</el-button>
+                                 
+                                        
                                         </template>
                                     </el-table-column>
 
@@ -199,7 +203,7 @@
 </template>
 
 <script>
-import {listofpurchase, receivetheorder, getimage, bulkentryreportproduct} from "@/store/request-common"
+import {listofpurchase, receivetheorder, getimage, bulkentryreportproduct, removepurchase} from "@/store/request-common"
 export default {
     data(){
         return{
@@ -263,6 +267,34 @@ export default {
         this.makeid(5)
     },
     methods: {
+        onremove(ponum){
+             this.$confirm('Are you sure you want remove this order?', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+                }).then(() => {
+                                       const loading = this.$loading({
+                    lock: true,
+                    text: 'please wait...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                    setTimeout(() => {
+                        removepurchase(ponum).then((response) => {
+                            if(response.data === "Success delete"){
+                                this.fetchproducts();
+                                loading.close()
+                                this.$notify.success({
+                                    title: 'Okay!',
+                                    message: 'Successfully deleted.',
+                                    offset: 100
+                                    });
+                            }
+                    })
+                    }, 2000)
+                    
+                })
+        },
         onsendreport(){
             if(!this.productReportTask.value1){
                 this.$notify.warning({
@@ -394,7 +426,10 @@ export default {
             charactersLength)));
             }
             return this.syncinventoryTask.pcode = result.join('');
-            }
+            },
+            onremoverow(row){
+            this.tableData.splice(row,1)
+        },
     }
 }
 </script>
