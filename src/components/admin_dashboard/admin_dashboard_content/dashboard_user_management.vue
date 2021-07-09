@@ -445,10 +445,7 @@ export default {
                     }, {
                     value: '2',
                     label: 'Cashiers'
-                    }, {
-                    value: '0',
-                    label: 'Customers'
-                    }],
+                    }, ],
                     value: ''
           }
       },

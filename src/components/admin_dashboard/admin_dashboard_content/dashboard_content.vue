@@ -18,7 +18,7 @@
                             style="width: 90%; margin-top: 10px; height: auto;" class="img-fluid" alt="no image">
                                 </div>
                                 <div class="col-sm-8">
-                                    <h5>Active Customers</h5>
+                                    <h5>Active Products</h5>
                                     <hr>
                                     <h5>50</h5>
                                 </div>
@@ -48,7 +48,7 @@
                             style="width: 90%; margin-top: 10px; height: auto;" class="img-fluid" alt="no image">
                                 </div>
                                 <div class="col-sm-8">
-                                    <h5>Active Products</h5>
+                                    <h5>Total Products</h5>
                                     <hr>
                                     <h5>1000</h5>
                                 </div>
@@ -63,7 +63,7 @@
                             style="width: 90%; margin-top: 10px; height: auto;" class="img-fluid" alt="no image">
                                 </div>
                                 <div class="col-sm-8">
-                                    <h5>Pending Payments</h5>
+                                    <h5>Pending Deliveries</h5>
                                     <hr>
                                     <h5>500</h5>
                                 </div>
@@ -76,9 +76,9 @@
                 </el-card>
                 </div>
                 </el-tab-pane>
-                </el-tabs>
-        </div>
-    </div>
+              </el-tabs>
+      </div>
+  </div>
 </template>
 
 <script>
