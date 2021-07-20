@@ -32,6 +32,11 @@ const routes = [
     component: () => import("@/views/aboutus")
   },
   {
+    path: '/forgot_account',
+    name: 'Forgot Password',
+    component: () => import("@/views/forgot")
+  },
+  {
     path: '/admindashboard' + makeid(200),
     name: 'admindashboard',
     component: () => import('@/views/admin/admin'),
@@ -90,6 +95,21 @@ const routes = [
         path: '/stocks_on_hand' + makeid(200),
         name: 'Stocks on hand',
         component: () => import("@/views/admin/dashboard_content/admin_stock_on_hand")
+      },
+      {
+        path: '/product_final' + makeid(200),
+        name: 'Product Final',
+        component: () => import("@/views/admin/dashboard_content/admin_product_final")
+      },
+      {
+        path: '/product_activator' + makeid(200),
+        name: 'Product Activator',
+        component: () => import("@/views/admin/dashboard_content/admin_product_activation")
+      },
+      {
+        path: '/product_history' + makeid(200),
+        name: 'Product History',
+        component: () => import("@/views/admin/dashboard_content/admin_histories")
       }
     ]
   }

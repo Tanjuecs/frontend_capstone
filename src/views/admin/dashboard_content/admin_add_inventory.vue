@@ -70,14 +70,6 @@
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
-
-                                    <el-table-column label="Product Price" >
-                                        <template slot-scope="{row}">
-                                        <span class="link-type" >&#8369;{{ row.productprice }}</span>
-                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
-                                        </template>
-                                    </el-table-column>
-
                                     
                                     <el-table-column label="Status" class-name="status-col" >
                                         <template slot-scope="{row}">

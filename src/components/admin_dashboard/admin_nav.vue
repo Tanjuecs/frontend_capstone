@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {userLogout} from "@/store/request-common"
+import {userLogout, logouthistory} from "@/store/request-common"
 // import {mapGetters} from 'vuex';
 export default {
     computed: {
@@ -44,7 +44,14 @@ export default {
         }
     },
    methods: {
-      
+      addinglogouthistory(email){
+          logouthistory(email)
+          .then(res => {
+              if(res.data.message === "success"){
+                  console.log(res.data)
+              }
+          })
+      },
        sidebarToggle(){
            document.body.classList.toggle('sb-sidenav-toggled');
            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
@@ -67,9 +74,11 @@ export default {
                         )
                         .then(response => {
                             if(response.data === "logout"){
+                                this.addinglogouthistory(localStorage.getItem("oauth2_ss::_ss_"))
                                 loading.close()
                                 localStorage.removeItem("oauth2_ss::_ss_")
                                 localStorage.removeItem("oauth2_ss::_profileinfo_")
+                                
                                 this.$router.push({name: 'Index'}).catch(() => {})
                             }
                         })

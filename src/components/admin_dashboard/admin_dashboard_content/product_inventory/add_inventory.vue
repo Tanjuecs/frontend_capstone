@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 20px;">
-                                <div class="col-sm">
+                                <!-- <div class="col-sm">
                                     <label>Product price</label>
                                     <el-input
                                         placeholder="Please input product price"
@@ -80,7 +80,7 @@
                                         type="number"
                                         clearable>
                                         </el-input>
-                                </div>
+                                </div> -->
                                 <div class="col-sm">
                                     <label>Product category</label>
                                       <el-select v-model="productTask.productcategory" style="width: 100%;" filterable placeholder="Select category">
@@ -139,14 +139,13 @@
                                                     <h4>Product Name : {{productTask.productName}}</h4>
                                                     <p>Product Category : {{productTask.productcategory}}</p>
                                                     <p>Product Quantity : {{productTask.productQuantity}}</p>
-                                                    <p>Product price : &#8369; {{productTask.productPrice}}</p>
                                                     <div v-show="inventorysupplier">
                                                         <p>Product supplier : {{productTask.productSupplier}}</p>
                                                     </div>
                                                     <p>Administrator added : {{preview.previewData | moment('calendar')}}</p>
                                                     <p>Status : <el-tag effect="dark" type="danger">Inactive</el-tag></p>
                                                     <div style="margin-top: 20px;">
-                                                        <h4>Total Price : {{productTask.productPrice * productTask.productQuantity}}</h4>
+                                                        <!-- <h4>Total Price : {{productTask.productPrice * productTask.productQuantity}}</h4> -->
                                                     </div>
                                                </div>
                                            </div>
@@ -216,7 +215,7 @@
                         placeholder="Select date to">
                         </el-date-picker>
                         <div style="display: inline;">
-                            <el-button type="warning" plain size="mini" @click="dialogVisible = true">More filters</el-button>
+                            <!-- <el-button type="warning" plain size="mini" @click="dialogVisible = true">More filters</el-button> -->
                         <el-button type="primary" plain size="mini" @click="onsearchbydate()">Search</el-button>
                         
                         </div>
@@ -340,14 +339,13 @@
                                                     <h4>Product Name : {{item.productName}}</h4>
                                                     <p>Product Category : {{item.product_category}}</p>
                                                     <p>Product Quantity : {{item.product_quantity}}</p>
-                                                    <p>Product price : &#8369; {{item.product_price}}</p>
                                                     <div v-show="inventorysupplier">
                                                         <p>Product supplier : {{item.product_supplier}}</p>
                                                     </div>
                                                     <p>Administrator added : {{item.createdAt | moment('calendar')}}</p>
                                                     <p>Status : <el-tag effect="dark" type="danger">Inactive</el-tag></p>
                                                     <div style="margin-top: 20px;">
-                                                        <h4>Total Price : &#8369; {{item.product_price * item.product_quantity}}</h4>
+                                                        <!-- <h4>Total Price : &#8369; {{item.product_price * item.product_quantity}}</h4> -->
                                                     </div>
                                                     <el-card shadow="always" style="background-color: #2D2D30; color: white; border-radius: 20px;">
                                                         <h5>More Actions</h5>
@@ -416,7 +414,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="row" style="margin-top: 20px;">
-                                                                        <div class="col-sm">
+                                                                        <!-- <div class="col-sm">
                                                                             <label>Product price</label>
                                                                             <el-input
                                                                                 placeholder="Please input product price"
@@ -424,7 +422,7 @@
                                                                                 type="number"
                                                                                 clearable>
                                                                                 </el-input>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <div class="col-sm">
                                     <label>Product category</label>
                                       <el-select v-model="modifyTask.modifycategory" style="width: 100%;" filterable placeholder="Select category">
@@ -524,21 +522,7 @@
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="Product Price" >
-                                        <template slot-scope="{row}">
-                                        <span class="link-type" >&#8369;{{ row.product_price }}</span>
-                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
-                                        </template>
-                                    </el-table-column>
-
-                                     <el-table-column label="Product Total" >
-                                        <template slot-scope="{row}">
-                                            
-                                        <span class="link-type" >&#8369;{{ row.product_price * row.product_quantity }}</span>
-                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
-                                        </template>
-                                    </el-table-column>
-
+                                   
                                     
                                     <el-table-column label="Status" class-name="status-col" >
                                         <template slot-scope="{row}">
@@ -983,15 +967,14 @@ this.page = val
         },
         
         onsaveproduct(){
-            if(!this.productTask.productName ||  !this.productTask.productQuantity
-            || !this.productTask.productPrice || !this.productTask.productImageUrl || !this.productTask.productExpiration){
+            if(!this.productTask.productName ||  !this.productTask.productQuantity || !this.productTask.productImageUrl || !this.productTask.productExpiration){
                  this.$notify.error({
                                 title: 'Oops',
                                 message: 'Something is empty, please try again.',
                                 offset: 100
                                 });   
                                 return false;
-            } else if(this.productTask.productQuantity <= 0 || this.productTask.productPrice <= 0){
+            } else if(this.productTask.productQuantity <= 0){
                  this.$notify.error({
                                 title: 'Oops',
                                 message: 'This is invalid quantity or product price.',
@@ -1022,6 +1005,7 @@ this.page = val
                                 });
                                 this.getListProductInventory()
                                 this.getallstocks()
+                                this.makeproductCode(5)
                         } else if(resp.data === "empty"){
                              loading.close()
                             this.$notify.error({
