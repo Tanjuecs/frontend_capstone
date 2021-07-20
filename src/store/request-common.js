@@ -154,8 +154,8 @@ export function fetchAllProductInventory(){
     return httpauth.get(`/api/product-inventory/fetchinginventory`)
 }
 
-export function fetchAllProductInventoryByFilter(filter){
-    return httpauth.get(`/api/product-inventory/fetchinginventory-filter-by-bool?filter=${filter}`)
+export function fetchAllProductInventoryByFilter(){
+    return httpauth.get(`/api/product-inventory/fetchinginventory-filter-by-bool`)
 }
 
 
@@ -670,5 +670,461 @@ export function removepurchase(ponumber){
         return httpauth.post(`/api/purchase-order/remove-po?ponum=${ponumber}`)
     } catch (error) {
         console.log(error)
+    }
+}
+
+/*
+product finalization
+created at : 07/12/2021
+*/
+
+export function prod_final_get_all_categories(){
+    try {
+        return httpauth.get(`/api/product-finalization/list-of-categories`)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/*
+product finalization - adding
+created at : 07/12/2021
+*/
+
+export function addproductfinal(obj){
+    try {
+        var data = new FormData();
+        data.append("prodimg", obj.productImageUrl)
+        return httpauth.post(`/api/product-finalization/product-add?prodname=${obj.prodname}&prodquantity=${obj.prodquantity}&prodcategory=${obj.prodcategory}&prodprice=${obj.prodprice}&prodcode=${obj.prodcode}`, data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/*
+product finalization - fetching all stocks
+created at : 07/12/2021
+*/
+
+export function getallstocksfinalization(){
+    return httpauth.get(`/api/product-finalization/list-of-stocks`)
+}
+
+/*
+product finalization - select raw materials
+created at : 07/12/2021
+*/
+
+export function selectedrawmat(pname, stock, pimage){
+    try {
+        var data = new FormData()
+        data.append("prodimg", pimage)
+        return httpauth.post(`/api/product-finalization/selected-product?pname=${pname}&pcode=${stock}`, data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/*
+product finalization - list of selected raw materials
+created at : 07/12/2021
+*/
+
+export function listofselectedrawmat(){
+    try {
+        return httpauth.get(`/api/product-finalization/get-selected-raw`)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/*
+product finalization - list of selected raw materials remove
+created at : 07/12/2021
+*/
+
+export function getridselection(id){
+    try {
+        return httpauth.post(`/api/product-finalization/deletion-selection?id=${id}`)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/*
+product finalization - get all product code for selected raw
+created at : 07/12/2021
+*/
+
+export function getallpcodeforselectedraw(){
+    try {
+        return httpauth.get(`/api/product-finalization/get-product-code-selected-raw`)        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/*
+product finalization - deduction of selected raw
+created at : 07/12/2021
+*/
+
+export async function product_quantity_deduction(quantity, obj){
+    for(var x = 0; x < obj.length; x++){
+        console.log(obj)
+        var result = httpauth.post(`/api/product-finalization/update-deduct-quantity-product?quantity=${quantity}&pcode=${obj[x].productCode}`)
+    }
+    return await result;
+}
+
+/*
+product finalization - clear selected raw
+created at : 07/12/2021
+*/
+
+export function clearallraws(){
+    return httpauth.post(`/api/product-finalization/clear-selected-raws`)
+}
+/*
+product finalization - filter table
+created at : 07/13/2021
+*/
+export function filterrawmats(val){
+    try {
+        return httpauth.get(`/api/product-finalization/filter-list-ingredients?category=${val}`)
+    }catch (e) {
+        console.log(e);
+    }
+
+}
+/*
+product finalization - get all finalize product
+created at : 07/13/2021
+*/
+
+export function getallfinalize(){
+    try{
+        return httpauth.get(`/api/product-finalization/get-all-finalize-product`)
+    }catch (e) {
+        console.log(e)
+    }
+}
+/*
+product finalization - graph first test
+created at : 07/13/2021
+*/
+export function graphcheck(filtergraph){
+    try{
+        return httpauth.get(`/api/product-finalization/get-all-finalize-graph?filter=${filtergraph}`)
+    }catch (e) {
+        console.log(e)
+    }
+}
+
+/*
+product finalization - product activator - activate
+created at : 07/16/2021
+*/
+export function activate_product_finalization(id){
+    try{
+        return httpauth.post(`/api/product-finalization/product-finalization-activator?id=${id}`)
+    }catch(e){
+        console.log(e)
+    }
+}
+
+/*
+product finalization - product activator - deactivate
+created at : 07/16/2021
+*/
+
+export function deactivate_product_finalization(id){
+    try{
+        return httpauth.post(`/api/product-finalization/product-finalization-deactivator?id=${id}`)
+    }catch(e){
+        console.log(e)
+    }
+}
+
+/*
+product finalization - product activator - get activated
+created at : 07/16/2021
+*/
+
+export function getactivatedproducts(){
+    try{
+        return httpauth.get(`/api/product-finalization/product-finalization-get-activated-products`)
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+/*
+product finalization - product activator - get deactivated
+created at : 07/16/2021
+*/
+
+export function getdeactivatedproducts(){
+    try{
+        return httpauth.get(`/api/product-finalization/product-finalization-get-deactivated-products`)
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+/*
+product finalization - product activator - remove product
+created at : 07/16/2021
+*/
+
+export function removeproductfinalization(id, pcode){
+    try{
+        return httpauth.post(`/api/product-finalization/product-finalization-remove?id=${id}&pcode=${pcode}`)
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+/*
+product finalization - product raw mats history
+created at : 07/16/2021
+*/
+
+export async function product_finalization_history_raw_mats(createdCode, obj){
+    try {
+          for(var i = 0; i < obj.length; i++)
+          {
+            var result = httpauth.post(`/api/product-finalization/product-finalization-raw-history?createdpcode=${createdCode}&inventorycode=${obj[i].productCode}`)
+          }  
+          return await result;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/*
+product finalization - get and identify product code ingredients and raw
+created at : 07/16/2021
+*/
+
+export function getrawpercreatedproducts(pcode){
+    try {
+        return httpauth.get(`/api/product-finalization/identify-product-code?pcode=${pcode}`)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/*
+product finalization - get all product from inventory based on product code
+created at : 07/16/2021
+*/
+
+export function getallproductfinalize(pcode){
+    try {
+        return httpauth.get(`/api/product-finalization/get-all-product-from-inventory-via-code?inventorycode=${pcode}`)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/*
+product finalization - product inventory ascending
+created at : 07/17/2021
+*/
+
+export function ascendquantity(quantity, obj){
+    try {
+        for(var x = 0; x < obj.length; x++){
+            console.log(obj)
+            var result = httpauth.post(`/api/product-finalization/asceding-quantity-product-inventory?quantity=${quantity}&pcode=${obj[x].productCode}`)
+        }
+        return result;
+    } catch (error) {
+        alert("error in ascending" + error);
+    }
+}
+
+/*
+Account - forgot password
+created at : 07/17/2021
+*/
+
+export function email_finder(email){
+    try {
+        return httpauth.post(`/api/forgot-password/email-finder?email=${email}`)
+    } catch (error) {
+        alert("error in email finder" + error)
+    }
+}
+
+/*
+Account - forgot password send code
+created at : 07/17/2021
+*/
+
+export function sendForgotEmail(email, code){
+    try {
+        return httpauth.post(`/api/forgot-password/verification-email-send?email=${email}&vcode=${code}`)
+    } catch (error) {
+        alert("Error in sending code" + error)
+    }
+}
+
+/*
+Account - forgot password add history
+created at : 07/17/2021
+*/
+
+export function forgotpassword_add_history(vcode){
+    try {
+        return httpauth.post(`/api/forgot-password/add-forgot-history?vcode=${vcode}`)
+    } catch (error) {
+        alert("error in adding forgot history" + error)
+    }
+}
+
+/*
+Account - forgot password identify code
+created at : 07/17/2021
+*/
+
+export function identify_code_entry(vcode){
+    try {
+        return httpauth.post(`/api/forgot-password/identify-code?vcode=${vcode}`)
+    } catch (error) {
+        alert("error in identifying code" + error)
+    }
+}
+
+/*
+Account - forgot password - change password
+created at : 07/17/2021
+*/
+
+export function forgot_change_password(password, email){
+    try {
+        return httpauth.post(`/api/forgot-password/change-password?password=${password}&email=${email}`)
+    } catch (error) {
+        alert("error in changing password" + error)
+    }
+}
+
+
+/*
+Login - login history adding
+created at : 07/20/2021
+*/
+
+export function loginhistory(email){
+    try {
+        var data = new FormData();
+        data.append("email", email)
+        data.append("message", "This user has been logged in")
+        data.append("status", "1");
+        return httpauth.post(`/api/login-history-management/add-login-history`, data)
+    } catch (error) {
+        alert("error in adding login history" + error)
+    }
+}
+
+/*
+Login - list of histories
+created at : 07/20/2021
+*/
+
+export function listofhistorieslogin(){
+    try {
+        return httpauth.get(`/api/login-history-management/list-of-login-histories`)
+    } catch (error) {
+        alert("error in fetching login history" + error)
+    }
+}
+
+/*
+remove login history 
+created at : 07/20/2021
+*/
+
+export function remove_login_history(id){
+    try {
+        return httpauth.post(`/api/login-history-management/remove-list-history-login?id=${id}`)
+    } catch (error) {
+        alert("error in removing login history" + error)
+    }
+}
+
+/*
+remove logout history 
+created at : 07/20/2021
+*/
+
+export function logouthistory(email){
+    try {
+        var data = new FormData()
+        data.append("email", email)
+        data.append("message" , "This user has been logout")
+        data.append("status", "0")
+        return httpauth.post(`/api/login-history-management/add-logout-history`, data)
+    } catch (error) {
+        alert("error in logout history" + error)
+    }
+}
+
+/*
+add activity log user management
+created at : 07/20/2021
+*/
+
+export function activitylog_usermanagement(code){
+    try {
+        var data = new FormData()
+        data.append("message", "The Administrator added another administrator")
+        data.append("status", "User Management")
+        data.append("code", code)
+        return httpauth.post(`/api/activity-log-management/add-activity-log-user-management`, data)
+    } catch (error) {
+        alert("error in activity log adding" + error)
+    }
+}
+
+export function activitylog_usermanagement_remove(code){
+    try {
+        var data = new FormData()
+        data.append("message", "The Administrator removed an account")
+        data.append("status", "User Management")
+        data.append("code", code)
+        return httpauth.post(`/api/activity-log-management/add-activity-log-user-management`, data)
+    } catch (error) {
+        alert("error in activity log adding" + error)
+    }
+}
+
+/*
+remove user in user management list
+created at : 07/20/2021
+*/
+
+export function remove_user(id){
+    try {
+        return httpauth.post(`/api/user-management/remove-permanent-user?id=${id}`)
+    } catch (error) {
+        alert("error in removing" + error)
+    }
+}
+
+/*
+list of user management logs
+created at : 07/20/2021
+*/
+
+export function usermanagementlogs(){
+    try {
+        return httpauth.get(`/api/activity-log-management/get-all-user-management-logs`)
+    } catch (error) {
+        alert("error in user management list of logs" + error)
     }
 }

@@ -234,7 +234,7 @@
 
                                     
 
-                                    <el-popover
+                                    <!-- <el-popover
                                         placement="right"
                                         width="400"
                                         trigger="click">
@@ -248,7 +248,7 @@
                                                     <h3>Administrator</h3>
                                                     <p>Show all archives for administrator</p>
                                                     <el-button @click="fetch_archive_admin()" style="width: 100%;" type="warning">Fetch list</el-button>
-                                                    <!-- admin -->
+                                                    
                                                 </div>
                                             </div>
                                         </el-card>
@@ -262,13 +262,13 @@
                                                     <h3>Cashiers</h3>
                                                     <p>Show all archives for cashiers</p>
                                                     <el-button style="width: 100%;" type="warning" @click="fetch_archive_customer()">Fetch list</el-button>
-                                                    <!-- cashier -->
+                                                   
                                                 </div>
                                             </div>
                                         </el-card>
                                         
                                         <el-button type="warning" slot="reference">Show archives</el-button>
-                                    </el-popover>&nbsp;
+                                    </el-popover>&nbsp; -->
                                     <el-button @click="fetch_all()"  type="info">Fetch all</el-button>
                                   </div>
                                     <h3>{{dynamicTitle}}</h3>
@@ -348,31 +348,10 @@
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="More actions"  align="center">
+                                    <el-table-column width="400" label="More actions"  align="center">
                                         <template slot-scope="{row}">
-                                        <div v-if="row.isstatus == 1 && row.istype == 1">
-                                           <!-- admin -->
-                                        </div>
-                                        <div v-else-if="row.isstatus == 1 && row.istype == 0 && row.isarchive == 0">
-                                            <!-- Customers -->
-                                             <el-button style="width: 100%; margin-bottom: 4px;" type="danger" plain @click="ondeactivate(row.id)">Deactivate</el-button>
-                                            <el-button style="width: 100%; margin-left: -2px;" type="danger" plain @click="onremove(row.id)">Remove</el-button>
-                                        </div>
-                                        <div v-else-if="row.isstatus == 1 && row.istype == 2"> 
-                                            <!-- cashier -->
-                                            <el-button style="width: 100%; margin-left: -2px;" type="danger" plain @click="onremove(row.id)">Remove</el-button>
-                                        </div>
-                                        <div v-else-if="row.istype == 0 && row.isarchive == 1"> 
-                                            <!-- cashier -->
-                                            
-                                        </div>
-                                        <div v-else-if="row.isarchive == 0">
-                                            <el-button style="width: 100%; margin-bottom: 4px;" type="success" plain @click="onactivate(row.id)">Activate</el-button>
-                                            <el-button style="width: 100%; margin-left: -2px;" type="danger" plain @click="onremove(row.id)">Remove</el-button>
-                                        </div>
-                                        <div v-else>
-
-                                        </div>
+                                        <el-button @click="onremoveuser(row.id)" type="danger" size="small">Remove</el-button>&nbsp;
+                                        <el-button type="warning" size="small">Change Password</el-button>
                                         </template>
                                     </el-table-column>
 
@@ -391,7 +370,7 @@ deactivate_user,
 activate_user,
 filter_user, 
 archive_user,
-fetch_archive_list, add_admin,add_cashier
+fetch_archive_list, add_admin,add_cashier, activitylog_usermanagement, activitylog_usermanagement_remove, remove_user
 } from "@/store/request-common";
 //import dialogusermanagement from "@/components/admin_dashboard/admin_dashboard_content/usrmngmnt_modal/dialog_usermanagement";
 export default {
@@ -446,7 +425,8 @@ export default {
                     value: '2',
                     label: 'Cashiers'
                     }, ],
-                    value: ''
+                    value: '',
+                    codeactivity: ''
           }
       },
     computed: {
@@ -463,8 +443,59 @@ export default {
     },
     created(){
         this.fetchAllUsersdata()
+        this.makeid(5)
     },
     methods: {
+        onremoveuser(uid){
+            this.$confirm('Are you sure you want to remove this user?', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+                }).then(() => 
+                {
+                    const loading = this.$loading({
+                    lock: true,
+                    text: 'Removing, Please wait..',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                    setTimeout(()=> {
+                        remove_user(uid).then((response) => {
+                            if(response.data === "success delete"){
+                                loading.close()
+                                this.$notify.success({
+                                title: 'Success',
+                                message: 'Successfully remove',
+                                offset: 100
+                                });
+                                this.fetchAllUsersdata();
+                                activitylog_usermanagement_remove(this.codeactivity).then(res => {
+                                        if(res.data.message === "success"){
+                                            this.makeid(5)
+                                        }
+                                    })
+                            }
+                        })
+                    }, 3000)
+                }).catch(() => {
+                        this.$notify.info({
+                            title: 'Info',
+                            message: 'Cancel remove',
+                            offset: 100
+                            });
+                            return false;
+                })
+        },
+        makeid(length) {
+            var result           = [];
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result.push(characters.charAt(Math.floor(Math.random() *
+            charactersLength)));
+            }
+            return this.codeactivity = result.join('');
+            },
         onsubmitcashier(){
             this.$confirm('Are you sure you want to add this user as cashier?', 'Warning', {
                 confirmButtonText: 'OK',
@@ -675,6 +706,11 @@ export default {
                                         type: 'success'
                                     })
                                     this.fetchAllUsersdata();
+                                    activitylog_usermanagement(this.codeactivity).then(res => {
+                                        if(res.data.message === "success"){
+                                            this.makeid(5)
+                                        }
+                                    })
                                     //clear fields - assign to jastine or sherilyn
                                 }
                             })

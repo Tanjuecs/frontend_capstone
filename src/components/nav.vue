@@ -38,6 +38,7 @@
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
+        <el-button type="primary" plain @click="onhome()">Home</el-button>
         <el-button type="primary" plain @click="onlogin()">Login</el-button>
         <el-button type="primary" plain @click="onaboutus()">About us</el-button>
       </div>
@@ -67,6 +68,7 @@
   clearable show-password>
 </el-input>
 
+<el-link @click="onforgot()" type="primary">Forgot password ?</el-link>
 <!-- <div >
   <span>Don't have an account ? </span>
 <el-link style="margin-bottom: 10px; margin-top: 5px;" @click="onnavigateRegister()" type="primary">Register</el-link>
@@ -90,7 +92,7 @@
 <script>
 import GoogleLogin from 'vue-google-login';
 //import function from request common
-import {csrf_google_login, csrf_session_indicator, standardLogin} from "@/store/request-common"
+import {csrf_google_login, csrf_session_indicator, standardLogin, loginhistory} from "@/store/request-common"
 import routers from "@/router/index";
 
 export default {
@@ -123,8 +125,28 @@ export default {
     this.makeid(5)
   },
   methods: {
+    historyloginmanagement(){
+      loginhistory(this.task.email).then(response => {
+        if(response.data.message === "success"){
+          console.log(response.data.message)
+        }
+      })
+    },
+    googleloginhistory(email){
+      loginhistory(email).then(response => {
+        if(response.data.message === "success"){
+          console.log(response.data.message)
+        }
+      })
+    },
     onaboutus(){
       this.$router.push({name: 'About Us'}).catch(() => {})
+    },
+    onforgot(){
+      this.$router.push({name: 'Forgot Password'}).catch(() => {})
+    },
+    onhome(){
+      this.$router.push({name: 'Index'}).catch(() => {})
     },
     onsignin(){
       if(!this.task.email || !this.task.password){
@@ -180,7 +202,10 @@ export default {
                             return false;
                         }
                         else if(rs.data.message === "SUCCESS"){
+                          localStorage.setItem("oauth2_ss::_ss_", this.task.email)
+                          sessionStorage.setItem("oauth2_ss::_ss_", this.task.email)
                           loading.close()
+                          this.historyloginmanagement()
                            var logObject = { 
                             firstname: rs.data.databulk.firstname,
                             lastname: rs.data.databulk.lastname,
@@ -190,7 +215,7 @@ export default {
                           }
                    localStorage.setItem("oauth2_ss::_profileinfo_", JSON.stringify(logObject))
                           sessionStorage.setItem("oauth2_ss::_ss_", this.task.email)
-                          localStorage.setItem("oauth2_ss::_ss_", this.task.email)
+                          
                           this.sessionTask.sessionEmail = this.task.email;
                           this.session_update_or_add();
                           routers.push({name: 'admindashboard'})
@@ -219,6 +244,7 @@ export default {
             .then((response) => {
               if(response.data.response_message === "proceed login admin") {
                 //route to dashboard admin
+                this.googleloginhistory(googleUser.getBasicProfile().It)
                 const loading = this.$loading({
                     lock: true,
                     text: 'Redirecting, please wait..',

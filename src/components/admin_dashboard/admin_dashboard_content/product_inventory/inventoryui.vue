@@ -53,20 +53,9 @@
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="Product Price" >
-                                        <template slot-scope="{row}">
-                                        <span class="link-type" >&#8369;{{ row.product_price }}</span>
-                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
-                                        </template>
-                                    </el-table-column>
+                                    
 
-                                     <el-table-column label="Product Total" >
-                                        <template slot-scope="{row}">
-                                            
-                                        <span class="link-type" >&#8369;{{ row.product_price * row.product_quantity }}</span>
-                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
-                                        </template>
-                                    </el-table-column>
+                                    
 
                                     
                                     <el-table-column label="Status" class-name="status-col" >
@@ -91,16 +80,19 @@
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="More actions"  align="center">
+                                    <el-table-column label="More Actions" class-name="status-col" >
                                         <template slot-scope="{row}">
                                         <div v-if="row.product_status == 1">
-                                            <el-button type="danger" style="width: 100%;" @click="ondeactivate(row.productID)">Deactivate</el-button>
+                                           
                                         </div>
                                         <div v-else>
-                                            <el-button type="success" style="width: 100%;" @click="onactivate(row.productID)">Activate</el-button>
+                                               <el-button @click="onactivate(row.productID)" type="success" style="width: 100%;" size="medium">
+                                                   Activate
+                                               </el-button>
                                         </div>
                                         </template>
                                     </el-table-column>
+                                    
 
                                     </el-table>
                                     <el-pagination layout="prev, pager, next" :page-size="pageSize" :total="this.productArray.length" @current-change="setPage">
