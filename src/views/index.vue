@@ -6,7 +6,7 @@
        </div>
        <div class="container">
            <center>
-               <h3>Featured</h3>
+              
                
            </center>
            <uicontent style="margin-bottom: 20px;"/>

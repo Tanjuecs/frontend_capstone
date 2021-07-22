@@ -67,12 +67,12 @@
                                     <template slot="title">
                                     <img src="https://cdn0.iconfinder.com/data/icons/smashicons-business-yellow-vol-1/60/53_-Finalize_Sale-_business_finance_marketing-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                    <span>finalization</span>
+                                    <span>Finalization</span>
                                     </template>
                                     <el-menu-item index="5-1" @click="onproductfinal()">
                                         <img src="https://cdn2.iconfinder.com/data/icons/scenarium-vol-3-1/128/020_crate_delivery_parachute_present_product_air_cloud-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                        Product finalization 
+                                        Product Finalization 
                                         </el-menu-item>
                                   <el-menu-item index="5-2" @click="onproductactivator()">
                                     <img src="https://cdn3.iconfinder.com/data/icons/marketing-management-7/64/activation-marketing-process-business-256.png"
@@ -132,7 +132,7 @@
                                  <el-menu-item index="8" @click="onstockonhand()">
                                     <img src="https://cdn2.iconfinder.com/data/icons/picons-basic-2/57/basic2-237_line_chart_analytics-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                    <span>Stock on hand</span>
+                                    <span>Stock on Hand</span>
                                 </el-menu-item>
 
                                   <el-submenu index="9">

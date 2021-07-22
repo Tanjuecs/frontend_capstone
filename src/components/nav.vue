@@ -37,10 +37,9 @@
       </ul>
       <!-- Left links -->
 
-      <div class="d-flex align-items-center">
-        <el-button type="primary" plain @click="onhome()">Home</el-button>
-        <el-button type="primary" plain @click="onlogin()">Login</el-button>
-        <el-button type="primary" plain @click="onaboutus()">About us</el-button>
+      <div class="d-flex align-items-center" id=btnnavbar>
+        <el-button id="homebtn" type="info" plain size="medium" @click="onhome()">Home</el-button>
+        <el-button id="homebtn" type="primary" plain @click="onaboutus()">About us</el-button>
       </div>
     </div>
     <!-- Collapsible wrapper -->
@@ -48,42 +47,7 @@
   <!-- Container wrapper -->
 </nav>
 <!-- Dialog Box -->
-<el-dialog
-  title="Welcome! Please login."
-  :visible.sync="dialogVisible"
-  width="35%"
-  :before-close="handleClose">
-  
- <el-input
- style="margin-bottom: 10px;"
-  placeholder="Please input email"
-  v-model="task.email"
-  clearable>
-</el-input>
 
-<el-input
-  placeholder="Please input password"
-  v-model="task.password"
-  type="password"
-  clearable show-password>
-</el-input>
-
-<el-link @click="onforgot()" type="primary">Forgot password ?</el-link>
-<!-- <div >
-  <span>Don't have an account ? </span>
-<el-link style="margin-bottom: 10px; margin-top: 5px;" @click="onnavigateRegister()" type="primary">Register</el-link>
-</div> -->
-<!-- Google Button -->
-<center><br>
-  <div>
-  <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
-</div>
-</center>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">Cancel</el-button>
-    <el-button type="primary" @click="onsignin()">Confirm</el-button>
-  </span>
-</el-dialog>
 <!-- End Dialog Box -->
 <!-- Navbar -->
     </div>
@@ -331,3 +295,20 @@ export default {
   }
 }
 </script>
+<style scoped>
+
+.btnnavbar:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#btnhome{
+  display: inline-block;
+  color: black;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+  font-size: 17px;
+  border-radius: 5px;
+}
+</style>
