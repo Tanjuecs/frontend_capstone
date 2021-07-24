@@ -110,6 +110,11 @@ const routes = [
         path: '/product_history' + makeid(200),
         name: 'Product History',
         component: () => import("@/views/admin/dashboard_content/admin_histories")
+      },
+      {
+        path: '/return_orders' + makeid(200),
+        name: 'Return Orders',
+        component: () => import("@/views/admin/dashboard_content/admin_return_orders")
       }
     ]
   }

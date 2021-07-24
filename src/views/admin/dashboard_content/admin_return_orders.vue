@@ -1,26 +1,24 @@
 <template>
     <div>
         <div class="mt-3">
-
-            <h1>System Reports</h1>
-        <p style="font-size: 15px">Here you can view all histories from reports module.</p>
-
+            <h3>Return Orders</h3>
+        <p>Here you can check your return orders</p>
         <el-alert
-            title="Reports / Histories."
+            title="Return Orders."
             type="success" :closable="false">
         </el-alert>
         </div>
         <div id="testscroll">
-            <history />
+            <returnorders />
         </div>
     </div>
 </template>
 
 <script>
-import history from "@/components/admin_dashboard/admin_dashboard_content/system_histories/histories"
+import returnorders from "@/components/admin_dashboard/admin_dashboard_content/return_orders_content/returnOrders"
 export default {
     components: {
-        history
+        returnorders
     }
 }
 </script>

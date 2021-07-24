@@ -45,7 +45,8 @@
 </template>
 
 <script>
-import {listofhistorieslogin, remove_login_history} from "@/store/request-common"
+import {listofhistorieslogin} from "@/store/request-common"
+import {mapGetters} from 'vuex'
 export default {
     props: {
         fetchalllogindatahistories: Array
@@ -59,6 +60,9 @@ export default {
       }
     },
     computed: {
+      ...mapGetters({
+        get_response_from_remove_user_login_history: 'get_response_from_remove_user_login_history'
+        }),
           pagedTableData() {
        if(this.searchable){
       return this.listofhistorieslogindata.filter((item)=>{
@@ -67,18 +71,18 @@ export default {
       }else{
         return this.listofhistorieslogindata.slice(this.pageSize * this.page - this.pageSize, this.pageSize * this.page)
       }
-       
+
      }
     },
     created(){
-      this.fetchalllogindatahistories()
+      this.getallhistoriesforuserlogin()
     },
     methods: {
       setPage(val){
         this.page = val
       },
-      fetchalllogindatahistories(){
-        listofhistorieslogin().then(response => {
+    getallhistoriesforuserlogin(){
+listofhistorieslogin().then(response => {
             this.listofhistorieslogindata = response.data
             console.log(response.data)
         })
@@ -96,19 +100,33 @@ export default {
             background: 'rgba(0, 0, 0, 0.7)'
           });
           setTimeout(() => {
-            remove_login_history(id).then(response => {
-              if(response.data.message === "success"){
-                loading.close()
-                this.$notify.success({
-                  title: 'Success',
-                  message: 'Successfully removed',
-                  offset: 100
-                });
-                this.fetchalllogindatahistories()
-              }
-            })
+           this.$store.dispatch('ACTIONS_REMOVE_LOGIN_HISTORY', {
+             self: this,
+             id,
+             loading
+           })
           }, 3000)
         })
+    },
+    removehistory_response(loading){
+      if(this.get_response_from_remove_user_login_history === "invalid id"){
+        loading.close()
+        this.$notify.error({
+                            title: 'Error',
+                            message: 'Invalid id',
+                            offset: 100
+                            });
+                            return false
+      }else{
+        loading.close()
+        this.$notify.success({
+                            title: 'Success',
+                            message: 'Successfully removed',
+                            offset: 100
+                            });
+                            this.getallhistoriesforuserlogin()
+
+      }
     }
     }
 }

@@ -103,6 +103,7 @@
 
 <script>
 import {fetchAllProductInventoryByFilter, activateproduct, deactivateproduct} from "@/store/request-common"
+import {mapGetters} from 'vuex'
 export default {
     computed: {
           pagedTableData() {
@@ -114,7 +115,10 @@ export default {
         return this.productArray.slice(this.pageSize * this.page - this.pageSize, this.pageSize * this.page)
       }
        
-     }
+     },
+     ...mapGetters({
+         get_response_product_history_activation: 'get_response_product_history_activation'
+     })
     },
     data(){
         return {
@@ -123,11 +127,13 @@ export default {
               page: 1,
               listLoading: true,
               productArray: [],
-              searchable: ''
+              searchable: '',
+              activitylog_code: ''
         }
     },
     created(){
         this.fetchproducts()
+        this.makeactivation_code(5)
     },
     methods:{
         ondeactivate(id){
@@ -163,6 +169,16 @@ export default {
                     loading.close()
                 }, 2000)
         },
+        makeactivation_code(length) {
+            var result           = [];
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result.push(characters.charAt(Math.floor(Math.random() *
+            charactersLength)));
+            }
+            return this.activitylog_code = result.join('');
+            },
         onactivate(id){
             const loading = this.$loading({
                     lock: true,
@@ -180,9 +196,18 @@ export default {
                                 });
                                 loading.close();
                                 this.fetchproducts()
+                            this.$store.dispatch(`ACTIONS_PRODUCT_HISTORY_ACTIVATION`, {
+                                self: this,
+                                code: this.activitylog_code
+                            })
                     }
                 })
             }, 3000)
+        },
+        activity_log_product_activation_response(){
+            if(this.get_response_product_history_activation === "success"){
+                console.log(this.get_response_product_history_activation)
+            }
         },
         fetchproducts(){
             fetchAllProductInventoryByFilter(this.value2).then(response => {
