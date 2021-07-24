@@ -359,12 +359,19 @@ export default {
                     setTimeout(() => {
                         sorting_expired_product_stocks(this.sortofexpired)
                             .then(res => {
-                                console.log(res.data)
+                                if(res.data === "not exist expiry"){
+                                    this.productArray=[]
+                                    this.listLoading = false
+                                loading.close()
+                                }else{
+                                    console.log(res.data)
                                 this.product_status_indicator = res.data.msg
                                 console.log("test" + this.product_status_indicator)
                                 this.productArray = res.data.bulk
                                 this.listLoading = false
                                 loading.close()
+                                }
+                                
                             })
                     }, 1000)
             

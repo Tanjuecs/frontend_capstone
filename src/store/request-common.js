@@ -24,7 +24,7 @@ export function userRegistration(obj){
     data.append("lastname", obj.lastname)
     data.append("municipality", obj.municipality)
     data.append("province", obj.province)
-    data.append("address", 
+    data.append("address",
     obj.floor + obj.street + obj.baranggay + obj.building
     )
     data.append("company_name", obj.company_name)
@@ -67,12 +67,12 @@ export function userLogout(email){
 //getall users admin sire
 
 export function listofuseres(){
-    return httpauth.get("/api/user-management/getall-users")
+    return httpauth.get("/api/user-management/getall-users?email=" + localStorage.getItem("oauth2_ss::_ss_"))
 }
 
 //user updater
 
-/* 
+/*
 deactivate
 */
 export function deactivate_user(id, indicator){
@@ -83,7 +83,7 @@ export function activate_user(id, indicator){
     return httpauth.post(`/api/user-management/update-user-status?id=${id}&indicator=${indicator}`);
 }
 
-/* 
+/*
 user filtering
 */
 
@@ -189,7 +189,7 @@ export function adding_product_inventory(obj){
     return httpauth.post("/api/product-inventory/adding-product-inventory", productdata)
 }
 
-/* 
+/*
 product inventory removing
 created 15/07/2021
 */
@@ -198,7 +198,7 @@ export function removeproduct(id, quantity, pcode){
     return httpauth.post(`/api/product-inventory/product-inventory-deletion?prodid=${id}&pcode=${pcode}&pquantity=${quantity}`)
 }
 
-/* 
+/*
 product inventory filter search
 created date : 16/06/2021
 */
@@ -244,7 +244,7 @@ export function product_modify(obj){
     return httpauth.post(`/api/product-inventory/product-inventory-modification?tagalert=${obj.tagalert}`, modifieddata)
 }
 
-/* 
+/*
 system settings - excel import and save
 created at : 17/06/2021
 */
@@ -254,13 +254,13 @@ export function saveExcel(obj){
     data.append("templatename", obj.templatename)
     data.append("templateurl", obj.templateURL)
     return httpauth.post(`/api/save-excel/data-save`, data)
-    
+
 }
 
 /*
 Product Inventory Import Excel
 created at : 16/06/2021
-*/ 
+*/
 
 export function importExcelGenerateData(file, valbool){
     var data = new FormData();
@@ -271,7 +271,7 @@ export function importExcelGenerateData(file, valbool){
 /*
 Fetch excel list templates
 created at : 16/06/2021
-*/ 
+*/
 
 export function getlisttemplates(){
     return httpauth.get(`/api/inventory-ai/get-list-excel-save`)
@@ -339,7 +339,7 @@ export function getduplicates(){
 }
 
 /*
-product modify 
+product modify
 created at : 18/06/2021
 */
 
@@ -355,7 +355,7 @@ export function modifysupplier(obj){
 }
 
 /*
-purchase order loop behind 
+purchase order loop behind
 created at : 21/06/2021
 */
 
@@ -556,9 +556,9 @@ product report
 created at : 27/06/2021
 */
 
-export function bulkentryreportproduct(obj){
-    
-    return httpauth.post(`/api/report-problem/product-report?id=${obj.productID}&supplieremail=${obj.supplierEmail}&productname=${obj.productName}&problem1=${obj.value1[0]}&problem2=${obj.value1[1]}&problem3=${obj.value1[2]}&problem4=${obj.value1[3]}&remarks=${obj.remarks}&supplier=${obj.supplier}`)
+export function bulkentryreportproduct(obj, pcode){
+
+    return httpauth.post(`/api/report-problem/product-report?id=${obj.productID}&supplieremail=${obj.supplierEmail}&productname=${obj.productName}&problem1=${obj.value1[0]}&problem2=${obj.value1[1]}&problem3=${obj.value1[2]}&problem4=${obj.value1[3]}&remarks=${obj.remarks}&supplier=${obj.supplier}&ponumber=${obj.ponum}`)
 }
 
 /*
@@ -578,7 +578,7 @@ created at : 28/06/2021
 export function pullrequestforproduct(obj){
         var data = new FormData();
         data.append("prodimg", obj.prodimg)
-        return httpauth.post(`/api/pull-request-product/sync-data-to-product-inventory?id=${obj.stockID}&pname=${obj.prodname}&pcode=${obj.stocknum}&pquantity=${obj.pquantity}&pprice=${obj.prodprice}&supplier=${obj.prodsupplier}&category=${obj.prodcategory}`, data)
+        return httpauth.post(`/api/pull-request-product/sync-data-to-product-inventory?id=${obj.stockID}&pname=${obj.prodname}&pcode=${obj.stocknum}&pquantity=${obj.pquantity}&pprice=${obj.prodprice}&supplier=${obj.prodsupplier}&category=${obj.prodcategory}&expiration=${obj.expirationprod}`, data)
 }
 
 /*
@@ -603,7 +603,7 @@ export function STOCK_EMPTY_NOTIF(){
     try {
         return httpauth.get(`/api/pull-request-product/check-stock-quantity-notification`)
     } catch (error) {
-        
+
     }
 }
 /*
@@ -758,7 +758,7 @@ created at : 07/12/2021
 
 export function getallpcodeforselectedraw(){
     try {
-        return httpauth.get(`/api/product-finalization/get-product-code-selected-raw`)        
+        return httpauth.get(`/api/product-finalization/get-product-code-selected-raw`)
     } catch (error) {
         console.log(error)
     }
@@ -898,7 +898,7 @@ export async function product_finalization_history_raw_mats(createdCode, obj){
           for(var i = 0; i < obj.length; i++)
           {
             var result = httpauth.post(`/api/product-finalization/product-finalization-raw-history?createdpcode=${createdCode}&inventorycode=${obj[i].productCode}`)
-          }  
+          }
           return await result;
     } catch (error) {
         console.log(error)
@@ -1045,7 +1045,7 @@ export function listofhistorieslogin(){
 }
 
 /*
-remove login history 
+remove login history
 created at : 07/20/2021
 */
 
@@ -1058,7 +1058,7 @@ export function remove_login_history(id){
 }
 
 /*
-remove logout history 
+remove logout history
 created at : 07/20/2021
 */
 
@@ -1127,4 +1127,39 @@ export function usermanagementlogs(){
     } catch (error) {
         alert("error in user management list of logs" + error)
     }
+}
+
+/*
+archive users delete
+created at : 07/21/2021
+*/
+
+export function archive_users(uid, firstname, lastname, type, arrid){
+    try {
+        var data = new FormData()
+        data.append("archiveid", arrid)
+        data.append("firstname", firstname)
+        data.append("lastname", lastname)
+        data.append("type", type)
+        data.append("clientid", uid)
+        data.append("message", "Administrator removed a user")
+        return httpauth.post(`/api/archive-users-management/add-archive?id=${uid}`, data)
+    } catch (error) {
+        alert("error in archive users" + error)
+    }
+}
+
+/*
+archive users list
+created at : 07/21/2021
+*/
+
+export function getallarchivesusers(){
+  try {
+    return httpauth.get(`/api/archive-users-management/get-all-archives-users`)
+  } catch (e) {
+    alert("error in fetching all archives" + e)
+  } finally {
+    alert("fetch in finally")
+  }
 }

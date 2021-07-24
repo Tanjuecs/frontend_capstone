@@ -36,7 +36,7 @@
                                     <el-menu-item index="3-1" @click="productinventory()">
                                         <img src="https://cdn1.iconfinder.com/data/icons/e-commerce-retro-pack-vol-1/115/inventory_management-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                        Inventory Viewing
+                                        Inventory Activation
                                         </el-menu-item>
                                     <el-menu-item index="3-2" @click="addproductinventory()">
                                         <img src="https://cdn3.iconfinder.com/data/icons/flat-icons-web/40/Plus_01-66-256.png"
@@ -103,7 +103,7 @@
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Received Order
                                         </el-menu-item>
-                                        <el-menu-item index="6-3">
+                                        <el-menu-item index="6-3" @click="onreturnorders()">
                                         <img src="https://cdn2.iconfinder.com/data/icons/miscellaneous-7-color-shadow/128/return_order_product-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Return Orders
@@ -242,6 +242,19 @@ export default {
             })
         },
         //routing
+        onreturnorders(){
+            const loading = this.$loading({
+          lock: true,
+          text: 'please wait..',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        setTimeout(() => {
+          loading.close()
+          this.$router.push({name: 'Return Orders'}).catch(() => {})
+
+        }, 2000)
+        },
         onhistory(){
             const loading = this.$loading({
           lock: true,

@@ -67,7 +67,7 @@
                                         )">
                                             Received Order
                                         </el-button>
-                                        <el-button @click="onreturnorder(row.psupplier, row.poid, row.pname)" style="width: 100%; margin-left: -5px;" type="danger" plain>
+                                        <el-button @click="onreturnorder(row.psupplier, row.poid, row.pname, row.ponumber)" style="width: 100%; margin-left: -5px;" type="danger" plain>
                                             Return Order
                                         </el-button>
                                        
@@ -246,7 +246,8 @@ export default {
                 remarks: '',
                 productID: '',
                 supplierEmail: '',
-                productName: ''
+                productName: '',
+                ponum: ''
         }
         }
     },
@@ -343,10 +344,11 @@ export default {
                     }, 3000)
                 })
         },
-        onreturnorder(supplier, id, pname){
+        onreturnorder(supplier, id, pname, ponumber){
             this.productReportTask.supplier = supplier;
             this.productReportTask.productID = id;
             this.productReportTask.productName = pname
+            this.productReportTask.ponum = ponumber
            this.returndrawer = true;
            getimage(supplier).then(response => {
             this.imgsupplier = response.data[0].supplierimgurl

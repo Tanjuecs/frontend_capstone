@@ -182,7 +182,7 @@ export default {
             this.getafter10daysexpiration();
             this.exactdateexpired();
             this.checkquantity()
-        }, 600000)
+        }, 10000)
         this.checkquantity()
     },
     methods: {
@@ -238,21 +238,21 @@ export default {
         },
         exactdateexpired(){
             productexpired().then(response => {
-                // console.log(response.data)
-                // if(response.data == "not exist expiry"){
-                //      this.dialogVisible = false;
-                //      this.listLoading = false;
-                //      this.productArray = response.data
-                // }
-                // else if(response.data[0] == null || response.data[0] == ''){
-                //     this.dialogVisible = false;
-                //     this.listLoading = false;
-                //     this.productArray = response.data
-                // }else{
-                //     this.dialogVisible = true;
-                //     this.listLoading = false;
-                //     this.productArray = response.data
-                // }
+                console.log(response.data)
+                if(response.data == "not exist expiry"){
+                     this.dialogVisible = false;
+                     this.listLoading = false;
+                     this.productArray = response.data
+                }
+                else if(response.data[0] == null || response.data[0] == ''){
+                    this.dialogVisible = false;
+                    this.listLoading = false;
+                    this.productArray = response.data
+                }else{
+                    this.dialogVisible = true;
+                    this.listLoading = false;
+                    this.productArray = response.data
+                }
             })
         },
         getafter10daysexpiration(){

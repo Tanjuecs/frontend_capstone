@@ -116,7 +116,8 @@
                                                             row.productprice,
                                                             row.productsupplier,
                                                             row.productimgurl,
-                                                            row.productcategory
+                                                            row.productcategory,
+                                                            row.expirationprod
                                                             )">Confirm</el-button>
                                                 </el-card>
                                                  <el-button slot="reference" type="success" style="width: 100%;">Pull</el-button>
@@ -209,7 +210,8 @@ export default {
                   prodcategory: '',
                   prodtotal: '',
                   stockID: '',
-                  prodsupplier: ''
+                  prodsupplier: '',
+                  expirationprod: ''
               },
               stocksornotchecked: false
         }
@@ -256,7 +258,7 @@ export default {
          setPage (val) {
         this.page = val
       }, 
-        onconfirmpullproduct(id, pcode, pname, pquantity, pprice, psupplier, pimg, pcategory){
+        onconfirmpullproduct(id, pcode, pname, pquantity, pprice, psupplier, pimg, pcategory, expirationprod){
             
             if(!this.task.pquantity){
                 this.$notify.error({
@@ -283,6 +285,7 @@ export default {
                 this.task.prodsupplier = psupplier
                 this.task.prodimg = pimg
                 this.task.prodcategory = pcategory
+                this.task.expirationprod = expirationprod
                 console.log(this.task)
                 this.$confirm('Are you sure you want to pull this product?', 'Warning', {
                 confirmButtonText: 'OK',

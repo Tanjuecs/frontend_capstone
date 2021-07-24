@@ -88,14 +88,33 @@
                                         </template>
                                     </el-table-column>
 
-                                     <el-table-column label="" >
+                                     <el-table-column width="200" label="Actions" >
                                         <template slot-scope="{row}">
-                                        <el-button type="danger" size="small" @click="onremove(row.id)">Remove</el-button>
-                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
+                                        <el-button type="danger" size="small" @click="onremove(row.id)">Remove</el-button>&nbsp;
+                                        <el-button type="primary" @click="onedit(row.id, row.categoryname)" size="small">Edit</el-button>
                                         </template>
                                     </el-table-column>
 
                                     </el-table>
+                                    <!-- edit dialog -->
+                                            <el-dialog
+                                        title="Edit Category"
+                                        :visible.sync="dialogVisible"
+                                        width="30%"
+                                        :before-close="handleClose">
+                                        <span>Enter new category name</span>
+                                        <el-input
+                                        placeholder="Enter new category name"
+                                        clearable
+                                        v-model="modifyTask.categoryname"
+                                        style="margin-top: 10px; margin-bottom: 10px;"
+                                        ></el-input>
+                                        <span slot="footer" class="dialog-footer">
+                                            <el-button @click="dialogVisible = false">Cancel</el-button>
+                                            <el-button type="primary" @click="onconfirmmodify()">Confirm</el-button>
+                                        </span>
+                                        </el-dialog>
+                                    <!-- close edit dialog -->
                                      <el-pagination layout="prev, pager, next" :page-size="pageSize" :total="this.categoryList.length" @current-change="setPage">
                                     </el-pagination>
                        </div>
@@ -106,6 +125,7 @@
 
 <script>
 import {listcategory, onremovecategory} from "@/store/request-common"
+import {mapGetters} from 'vuex'
 import axios from 'axios'
 export default {
     data(){
@@ -120,7 +140,11 @@ export default {
             },
             categoryList: [],
             categorydynamicadding: [],
-            searchable: ''
+            searchable: '',
+            modifyTask: {
+                id: '',
+                categoryname: ''
+            }
         }
     },
     computed: {
@@ -133,12 +157,51 @@ export default {
         return this.categoryList.slice(this.pageSize * this.page - this.pageSize, this.pageSize * this.page)
       }
        
-     }
+     },
+     ...mapGetters({
+         get_response_category_modify: 'get_response_category_modify',
+         get_response_category_adding_loop: 'get_response_category_adding_loop'
+        })
     },
     created(){
         this.getallcategories()
     },
     methods: {
+        onconfirmmodify(){
+            this.$confirm('Are you sure you want to update this category?', 'Warning', {
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+            }).then(() => {
+                const loading = this.$loading({
+                    lock: true,
+                    text: 'Please wait..',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                    setTimeout(() => {
+                        this.$store.dispatch(`ACTIONS_EDIT_CATEGORY`, {
+                            object: this.modifyTask
+                        }).then(() => {
+                            if(this.get_response_category_modify === "success update"){
+                                loading.close()
+                                this.$notify.success({
+                                title: 'Success',
+                                message: 'Update Successfully',
+                                offset: 100
+                                });
+                                this.getallcategories()
+                                this.dialogVisible = false
+                            }
+                        })
+                    }, 3000)
+            })
+        },
+        onedit: function(id, categoryname){
+            this.dialogVisible = true
+            this.modifyTask.id = id
+            this.modifyTask.categoryname = categoryname
+        },
         onremoverow(row){
             this.categorydynamicadding.splice(row,1)
         },
@@ -193,11 +256,10 @@ export default {
                     background: 'rgba(0, 0, 0, 0.7)'
                     });
             setTimeout(() => {
-                for(var x = 0; x < this.categorydynamicadding.length; x++){
-                    var request = axios.post(`https://localhost:44370/api/product-category-management/add-category?categoryname=${this.categorydynamicadding[x].categoryname}`);
-                }
-                request.then(response => {
-                      if(response.data === "success"){
+                this.$store.dispatch(`ACTIONS_CATEGORY_LOOP_ADD`, {
+                    Arrayable: this.categorydynamicadding
+                }).then(() => {
+                      if(this.get_response_category_adding_loop === "success"){
                                     loading.close()
                                     this.$notify.success({
                                 title: 'Success',
@@ -216,7 +278,7 @@ export default {
                                 });
                                 return false
                                 }
-                                else if(response.data === "empty"){
+                                else if(this.get_response_category_adding_loop === "empty"){
                                     loading.close()
                                     this.$notify.error({
                                 title: 'Oops',
