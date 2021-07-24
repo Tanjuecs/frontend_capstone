@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="mt-3">
-            <h3>Product Inventory Activation</h3>
-        <p>Here you can activate the status of the product and it can be added on product management</p>
+            <h1>Product Inventory Activation</h1>
+        <p style="font-size: 15px">Here you can activate the status of the product and it can be added on product management</p>
         <el-alert
-            title="Product management / Inventory."
+            title="Product Management / Inventory"
             type="success" :closable="false">
         </el-alert>
         </div>

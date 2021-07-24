@@ -3,8 +3,8 @@
         <div class="container-fluid">
              <div class="container" style="margin-bottom: 20px;">
                  <div style="display: inline;">
-                     <el-button style="margin-bottom: 5px;" type="primary" @click="onadd_admin()">Add administrator</el-button>
-                     <el-button style="margin-bottom: 5px;" type="primary" @click="onadd_cashier()">Add cashier</el-button>
+                     <el-button style="margin-bottom: 5px;" type="primary" @click="onadd_admin()">Add Administrator</el-button>
+                     <el-button style="margin-bottom: 5px;" type="primary" @click="onadd_cashier()">Add Cashier</el-button>
                  </div>
                 <!-- Add Admin Dialog -->
                  <el-drawer
@@ -25,14 +25,14 @@
                         <div class="col-sm">
 
                             <el-input
-                            placeholder="Please input firstname"
+                            placeholder="Please input first name"
                             v-model="add_admin_task.adminfirstname"
                             clearable>
                             </el-input>
                         </div>
                         <div class="col-sm">
                             <el-input
-                            placeholder="Please input lastname"
+                            placeholder="Please input last name"
                             v-model="add_admin_task.adminlastname"
                             clearable>
                             </el-input>
@@ -129,14 +129,14 @@
                         <div class="col-sm">
 
                             <el-input
-                            placeholder="Please input firstname"
+                            placeholder="Please input first name"
                             v-model="add_cashier_task.cashierfirstname"
                             clearable>
                             </el-input>
                         </div>
                         <div class="col-sm">
                             <el-input
-                            placeholder="Please input lastname"
+                            placeholder="Please input last name"
                             v-model="add_cashier_task.cashierlastname"
                             clearable>
                             </el-input>
@@ -282,27 +282,37 @@
                                     style="width: 100%;"
 
                                     >
-                                    <el-table-column label="ID" prop="id" sortable="custom" align="center"  >
+                                    <el-table-column label="ID" prop="id" align="center"  >
                                         <template slot-scope="{row}">
                                         <span>{{ row.id }}</span>
                                         </template>
                                     </el-table-column>
 
+                                    
+                                    <el-table-column label="First name" align="center" >
+
+
                                     <el-table-column label="Firstname" >
+
                                         <template slot-scope="{row}">
                                         <span class="link-type" >{{ row.firstname }}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
-                                     <el-table-column label="Lastname" >
+                                     <el-table-column label="Last name"  align="center">
                                         <template slot-scope="{row}">
                                         <span class="link-type" >{{ row.lastname }}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="Status" class-name="status-col" >
+                                    
+                                    <el-table-column label="Status"  align="center">
+
+
+                                    <el-table-column label="Status"  >
+
                                         <template slot-scope="{row}">
                                         <div v-if="row.isstatus == 1 && row.isarchive == 0">
                                             <el-tag type="success">
@@ -322,7 +332,7 @@
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="Verified" class-name="status-col" >
+                                    <el-table-column label="Verified" align="center">
                                         <template slot-scope="{row}">
                                         <div v-if="row.isverified == 1 && row.isarchive == 0">
                                             <el-tag type="success">
@@ -348,7 +358,7 @@
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column width="400" label="More actions"  align="center">
+                                    <el-table-column width="400" label="More Actions"  align="center">
                                         <template slot-scope="{row}">
                                         <el-button @click="onremoveuser(row.id, row.firstname, row.lastname, row.istype)" type="danger" size="small">Remove</el-button>&nbsp;
                                         <el-button type="warning" size="small">Change Password</el-button>

@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="mt-3">
-            <h3>Product Inventory | Add Inventory / Stocks</h3>
-        <p>Here you can add products for your inventory</p>
+            <h1>Product Inventory | Add Inventory / Stocks</h1>
+        <p style="font-size: 15px">Here you can add products for your inventory.</p>
         <el-alert
             title="Product management / Adding inventory / stocks."
             type="success" :closable="false">
@@ -11,7 +11,7 @@
             <div style="margin-top: 20px;">
                 
             <el-button  type="primary" plain @click="onimportexcel()">Import Excel</el-button>
-            <el-button  type="warning" plain @click="pullproductsdialogVisible = true">Pull products from stocks</el-button>
+            <el-button  type="warning" plain @click="pullproductsdialogVisible = true">Pull Products from Stocks</el-button>
             <!-- Dialog for pull product from stocks -->
                 <el-dialog
                     title="Pull products from stocks"
@@ -137,7 +137,7 @@
             <!-- End Dialog for pull product from stocks -->
             <!-- Dialog for import excel -->
             <el-dialog
-                title="Invetory Import from excel"
+                title="Invetory Import from Excel"
                 :visible.sync="exceldialogsheet"
                 width="60%"
                 :before-close="handleClose">
@@ -155,7 +155,7 @@
                     <p>Upon uploading excel the system will generate data from excel to database, please be patience while waiting.</p>
                     <div v-if="exldata != ''">
                         <el-alert
-                            title="Nice! now you can click the upload button!"
+                            title="Nice! Now you can click the upload button!"
                             type="success" :closable="false">
                         </el-alert>
                     </div>

@@ -18,9 +18,9 @@
                             style="width: 90%; margin-top: 10px; height: auto;" class="img-fluid" alt="no image">
                                 </div>
                                 <div class="col-sm-8">
-                                    <h5>Active Products</h5>
+                                    <h2>Active Products</h2>
                                     <hr>
-                                    <h5>50</h5>
+                                    <h3>50</h3>
                                 </div>
                             </div>
                         </el-card>
@@ -33,9 +33,9 @@
                             style="width: 90%; margin-top: 10px; height: auto;" class="img-fluid" alt="no image">
                                 </div>
                                 <div class="col-sm-8">
-                                    <h5>System Users</h5>
+                                    <h2>System Users</h2>
                                     <hr>
-                                    <h5>2</h5>
+                                    <h3>3</h3>
                                 </div>
                             </div>
                         </el-card>
@@ -48,9 +48,9 @@
                             style="width: 90%; margin-top: 10px; height: auto;" class="img-fluid" alt="no image">
                                 </div>
                                 <div class="col-sm-8">
-                                    <h5>Total Products</h5>
+                                    <h2>Total Products</h2>
                                     <hr>
-                                    <h5>1000</h5>
+                                    <h3>62</h3>
                                 </div>
                             </div>
                         </el-card>
@@ -63,9 +63,9 @@
                             style="width: 90%; margin-top: 10px; height: auto;" class="img-fluid" alt="no image">
                                 </div>
                                 <div class="col-sm-8">
-                                    <h5>Pending Deliveries</h5>
+                                    <h2>Pending Deliveries</h2>
                                     <hr>
-                                    <h5>500</h5>
+                                    <h3>8</h3>
                                 </div>
                             </div>
                         </el-card>
@@ -84,45 +84,45 @@
 <script>
 const dataSource = {
   chart: {
-    caption: "Countries With Most Oil Reserves [2017-18]",
-    subcaption: "In MMbbl = One Million barrels",
-    xaxisname: "Country",
-    yaxisname: "Reserves (MMbbl)",
-    numbersuffix: "K",
+    caption: "Burger Mania - Calamba Branch",
+    subcaption: "Graph Report",
+    xaxisname: "Product",
+    yaxisname: "Number of Sales",
+    numbersuffix: "",
     theme: "fusion"
   },
   data: [
     {
-      label: "Venezuela",
-      value: "290"
+      label: "Pretty Patty",
+      value: "213"
     },
     {
-      label: "Saudi",
-      value: "260"
+      label: "The Cheesy Bae",
+      value: "183"
     },
     {
-      label: "Canada",
+      label: "That's My Bae",
       value: "180"
     },
     {
-      label: "Iran",
-      value: "140"
+      label: "Hotdog Classic",
+      value: "228"
+    },
+     {
+      label: "The Bully Hotdog",
+      value: "210"
     },
     {
-      label: "Russia",
-      value: "115"
+      label: "Cheesy Bae Hotdog",
+      value: "260"
     },
     {
-      label: "UAE",
-      value: "100"
+      label: "Big Bad Bully",
+      value: "173"
     },
     {
-      label: "US",
-      value: "30"
-    },
-    {
-      label: "China",
-      value: "30"
+      label: "Mental Black",
+      value: "249"
     }
   ]
 };

@@ -74,21 +74,24 @@
                                         </template>
                                     </el-table-column>
                                     
-                                    <el-table-column label="category name" >
+                                    <el-table-column label="Category Name" align="center">
                                         <template slot-scope="{row}">
                                         <span>{{row.categoryname}}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="Created" >
+                                    <el-table-column label="Created" align="center">
                                         <template slot-scope="{row}">
                                         <span class="link-type" >{{ row.createdAt | moment('calendar') }}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
+
+                                    
                                      <el-table-column width="200" label="Actions" >
+
                                         <template slot-scope="{row}">
                                         <el-button type="danger" size="small" @click="onremove(row.id)">Remove</el-button>&nbsp;
                                         <el-button type="primary" @click="onedit(row.id, row.categoryname)" size="small">Edit</el-button>

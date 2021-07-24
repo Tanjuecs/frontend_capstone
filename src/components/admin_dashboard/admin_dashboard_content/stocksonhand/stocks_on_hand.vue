@@ -72,21 +72,21 @@
                                         </template>
                                     </el-table-column>
                                     
-                                    <el-table-column label="Product Image" >
+                                    <el-table-column label="Product Image" align="center">
                                         <template slot-scope="{row}">
                                         <img :src="row.productimgurl" style="width: 100%; height: auto;" class="img-fluid" alt="No image">
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="Product Name" >
+                                    <el-table-column label="Product Name" align="center">
                                         <template slot-scope="{row}">
                                         <span class="link-type" >{{ row.productname }}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
-                                     <el-table-column label="Product Quantity" >
+                                     <el-table-column label="Product Quantity" align="center">
                                         <template slot-scope="{row}" >
                                         <span class="link-type" >{{ row.productquantity }}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
@@ -96,7 +96,7 @@
                                     
 
                                     
-                                    <el-table-column label="Quantity Status" class-name="status-col" >
+                                    <el-table-column label="Quantity Status" class-name="status-col" align="center">
                                         <template slot-scope="{row}">
                                           <div v-if="row.productquantity <= 0 || row.productquantity <= 20">
                                               <el-tag type="danger" size="medium" effect="dark">Critical</el-tag>
@@ -105,7 +105,7 @@
                                               <el-tag type="warning" size="medium" effect="dark">Warning</el-tag>
                                           </div>
                                           <div v-else>
-                                              <el-tag type="success" size="medium" effect="dark">Healthy</el-tag>
+                                              <el-tag type="success" size="medium" effect="dark">Good</el-tag>
                                           </div>
                                         </template>
                                     </el-table-column>
