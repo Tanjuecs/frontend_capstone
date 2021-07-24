@@ -32,21 +32,21 @@
                                         </template>
                                     </el-table-column>
                                     
-                                    <el-table-column label="Product Image" >
+                                    <el-table-column label="Product Image" align="center">
                                         <template slot-scope="{row}">
                                         <img :src="row.productimgurl" style="width: 100%; height: auto;" class="img-fluid" alt="No image">
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="Product Name" >
+                                    <el-table-column label="Product Name" align="center">
                                         <template slot-scope="{row}">
                                         <span class="link-type" >{{ row.productName }}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
-                                     <el-table-column label="Product Quantity" >
+                                     <el-table-column label="Product Quantity" align="center">
                                         <template slot-scope="{row}">
                                         <span class="link-type" >{{ row.product_quantity }}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
@@ -58,7 +58,7 @@
                                     
 
                                     
-                                    <el-table-column label="Status" class-name="status-col" >
+                                    <el-table-column label="Status" class-name="status-col" align="center">
                                         <template slot-scope="{row}">
                                         <div v-if="row.product_status == 1">
                                             <el-tag type="success">
@@ -80,7 +80,7 @@
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="More Actions" class-name="status-col" >
+                                    <el-table-column label="More Actions" align="center"class-name="status-col" >
                                         <template slot-scope="{row}">
                                         <div v-if="row.product_status == 1">
                                            

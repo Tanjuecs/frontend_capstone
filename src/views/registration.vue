@@ -13,7 +13,7 @@
                     <h3>Registration</h3>
                     <div id="component-container"></div>
                     <!-- <div id="dropin-container"></div> -->
-                    <p>After filling up you may use login with google on your next login.</p>
+                    <p>After filling up you may use login with Google on your next login.</p>
                     <!-- Stepper -->
                    <el-steps :active="active" align-center style="margin-top: 30px;">
   <el-step title="Step 1" description="Personal Information"></el-step>

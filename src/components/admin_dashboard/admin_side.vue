@@ -25,7 +25,7 @@
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>User Management</span>
                                 </el-menu-item>
-                                
+                                <hr>
                                 <el-submenu index="3">
                                     <template slot="title">
                                     <img src="https://cdn3.iconfinder.com/data/icons/logistics-87/512/inventory-Check-list-store-product-256.png"
@@ -44,7 +44,7 @@
                                         Inventory / Stocks
                                     </el-menu-item>
                                     
-                                    
+                                <hr>   
                                 </el-submenu>
 
                                 
@@ -62,7 +62,7 @@
                                         </el-menu-item>
                                     
                                 </el-submenu>
-
+                                <hr>
                                 <el-submenu index="5">
                                     <template slot="title">
                                     <img src="https://cdn0.iconfinder.com/data/icons/smashicons-business-yellow-vol-1/60/53_-Finalize_Sale-_business_finance_marketing-256.png"
@@ -79,7 +79,7 @@
                                          alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     Product Activation
                                   </el-menu-item>
-                                    
+                                <hr>    
                                 </el-submenu>
                                 <!-- div if = if true this will be shown if not hide -->
 
@@ -108,7 +108,7 @@
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Return Orders
                                         </el-menu-item>
-                                </el-submenu>
+                                </el-submenu><hr>
                                     </div>
 
     <!-- div if end -->
@@ -123,7 +123,7 @@
                                         <img src="https://cdn1.iconfinder.com/data/icons/e-commerce-stuff/300/search_product_category-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Category
-                                        </el-menu-item>
+                                        </el-menu-item><hr>
 
                                 </el-submenu>
 
@@ -133,7 +133,7 @@
                                     <img src="https://cdn2.iconfinder.com/data/icons/picons-basic-2/57/basic2-237_line_chart_analytics-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Stock on Hand</span>
-                                </el-menu-item>
+                                </el-menu-item><hr>
 
                                   <el-submenu index="9">
                                     <template slot="title">
@@ -145,7 +145,7 @@
                                         <img src="https://cdn2.iconfinder.com/data/icons/time-and-date-1/48/Past-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Histories
-                                        </el-menu-item>
+                                        </el-menu-item><hr>
 
                                         <!-- <el-menu-item index="10-2" @click="onmoresettings()">
                                         <img src="https://cdn2.iconfinder.com/data/icons/business-filled-outline-style-1-set-1/256/21-256.png"

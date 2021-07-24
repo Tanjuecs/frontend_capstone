@@ -54,7 +54,7 @@
                     </center>
                             <div class="row" style="margin-top: 50px;">
                                 <div class="col-sm">
-                                    <label>Product name</label>
+                                    <label>Product Name</label>
                                     <el-input
                                         placeholder="Please input product name"
                                         v-model="productTask.productName"
@@ -62,7 +62,7 @@
                                         </el-input>
                                 </div>
                                 <div class="col-sm">
-                                    <label>Product quantity</label>
+                                    <label>Product Quantity</label>
                                     <el-input
                                         placeholder="Please input product quantity"
                                         v-model="productTask.productQuantity"
@@ -82,7 +82,7 @@
                                         </el-input>
                                 </div> -->
                                 <div class="col-sm">
-                                    <label>Product category</label>
+                                    <label>Product Category</label>
                                       <el-select v-model="productTask.productcategory" style="width: 100%;" filterable placeholder="Select category">
                                         <el-option
                                         v-for="item in categoryoptions"
@@ -95,7 +95,7 @@
                                 <!-- must show if enable on settings -->
                                 <div v-show="inventorysupplier">
                                     <div class="col-sm">
-                                    <label>Product supplier</label> <el-tag type="success" effect="dark" size="mini" style="margin-bottom: 10px; margin-top: 10px;">Enabled from settings</el-tag>
+                                    <label>Product Supplier</label> <el-tag type="success" effect="dark" size="mini" style="margin-bottom: 10px; margin-top: 10px;">Enabled from settings</el-tag>
                                       <el-select v-model="productTask.productSupplier" style="width: 100%;" filterable placeholder="Select supplier">
                                       <el-option
                                             v-for="item in listofsuppliers"
@@ -108,7 +108,7 @@
                                 </div>
                                 <div v-show="inventoryexpiration">
                                     <div class="col-sm">
-                                    <label>Product expiration</label> <el-tag type="success" effect="dark" size="mini" style="margin-bottom: 10px; margin-top: 10px;">Enabled from settings</el-tag>
+                                    <label>Product Expiration</label> <el-tag type="success" effect="dark" size="mini" style="margin-bottom: 10px; margin-top: 10px;">Enabled from settings</el-tag>
                                        <el-date-picker
                                             style=" width: 100%; margin-bottom: 5px;"
                                             v-model="productTask.productExpiration"
@@ -180,11 +180,11 @@
                 </div>
                 <div class="col-sm">
                     <el-card shadow="always" id="mycustomscroll" >
-                        <h5>All added products</h5>
+                        <h5>All Added Products</h5>
                         
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Search:</label>&nbsp;
+                                <label>Search :</label>&nbsp;
                         <el-input
                                     style="margin-bottom: 5px; width: 50%;"
                                     placeholder="Search"
@@ -193,7 +193,7 @@
                                     </el-input><br>
                             </div>
                             <div class="col-md-6">
-                                <el-button type="warning" plain size="mini" @click="onchangeview()">{{dataview ? 'Switch to Listview' : 'Switch to Gridview'}}</el-button>
+                                <el-button type="warning" plain size="mini" @click="onchangeview()">{{dataview ? 'Switch to List View' : 'Switch to Grid View'}}</el-button>
                             </div>
                         </div>
 

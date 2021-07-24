@@ -37,9 +37,10 @@
       </ul>
       <!-- Left links -->
 
-      <div class="d-flex align-items-center" id=btnnavbar>
-        <el-button id="homebtn" type="info" plain size="medium" @click="onhome()">Home</el-button>
-        <el-button id="homebtn" type="primary" plain @click="onaboutus()">About us</el-button>
+      <div class="d-flex align-items-center">
+        <el-button type="text" round size="medium" class="bhome" @click="onhome()">Home</el-button>
+        <el-button type="text" round size="medium" class="blog" @click="onlogin()">Login</el-button>
+        <el-button type="text" round size="medium" class="babout" @click="onaboutus()">About us</el-button>
       </div>
     </div>
     <!-- Collapsible wrapper -->
@@ -47,7 +48,42 @@
   <!-- Container wrapper -->
 </nav>
 <!-- Dialog Box -->
+<el-dialog
+  title="Welcome! Please login."
+  :visible.sync="dialogVisible"
+  width="35%"
+  :before-close="handleClose">
+  
+ <el-input
+ style="margin-bottom: 10px;"
+  placeholder="Please input email"
+  v-model="task.email"
+  clearable>
+</el-input>
 
+<el-input
+  placeholder="Please input password"
+  v-model="task.password"
+  type="password"
+  clearable show-password>
+</el-input>
+
+<el-link @click="onforgot()" type="primary">Forgot password?</el-link>
+<!-- <div >
+  <span>Don't have an account ? </span>
+<el-link style="margin-bottom: 10px; margin-top: 5px;" @click="onnavigateRegister()" type="primary">Register</el-link>
+</div> -->
+<!-- Google Button -->
+<center><br>
+  <div>
+  <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
+</div>
+</center>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">Cancel</el-button>
+    <el-button type="primary" @click="onsignin()">Confirm</el-button>
+  </span>
+</el-dialog>
 <!-- End Dialog Box -->
 <!-- Navbar -->
     </div>
@@ -254,7 +290,7 @@ export default {
               else if(response.data === "email not exists") {
                 this.$notify.error({
                             title: 'Uh oh!',
-                            message: 'We cant find this account. please register',
+                            message: 'We cant find this account. Please register.',
                             offset: 100
                             });
                             return false;
@@ -268,14 +304,14 @@ export default {
               routers.push({name: 'admindashboard'})
               this.$notify.success({
                             title: 'Welcome!',
-                            message: 'Successfully logged in',
+                            message: 'Successfully logged in.',
                             offset: 100
                             });
             } else if(response.data === "update session") { 
               routers.push({name: 'admindashboard'})
               this.$notify.success({
                             title: 'Welcome!',
-                            message: 'Successfully logged in',
+                            message: 'Successfully logged in.',
                             offset: 100
                             });
             }
@@ -296,19 +332,70 @@ export default {
 }
 </script>
 <style scoped>
-
-.btnnavbar:hover {
-  background-color: #ddd;
-  color: black;
+.bhome{
+	background-color:transparent;
+	border-radius:15px;
+	display:inline-block;
+	cursor:pointer;
+	color: #4e9bf9;
+	font-family:Arial;
+	font-size:15px;
+  font-weight: bold;
+	padding:10px 20px;
+	text-decoration:none;
 }
+.bhome:hover {
+  color:#C4DEFD;
+	background-color: #34312D ;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 
-#btnhome{
-  display: inline-block;
-  color: black;
-  text-align: center;
-  padding: 14px;
-  text-decoration: none;
-  font-size: 17px;
-  border-radius: 5px;
+}
+.bhome:active {
+	position:relative;
+	top:1px;
+}
+.blog{
+	background-color:transparent;
+	border-radius:15px;
+	display:inline-block;
+	cursor:pointer;
+	color: #4e9bf9;
+	font-family:Arial;
+	font-size:15px;
+  font-weight: bold;
+	padding:10px 20px;
+	text-decoration:none;
+}
+.blog:hover {
+  color:#C4DEFD;
+	background-color: #34312D ;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+.blog:active {
+	position:relative;
+	top:1px;
+}
+.babout{
+	background-color:transparent;
+	border-radius:15px;
+	display:inline-block;
+	cursor:pointer;
+	color: #4e9bf9;
+	font-family:Arial;
+	font-size:15px;
+  font-weight: bold;
+	padding:10px 20px;
+	text-decoration:none;
+}
+.babout:hover {
+  color:#C4DEFD;
+	background-color: #34312D ;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+.babout:active {
+	position:relative;
+	top:1px;
 }
 </style>

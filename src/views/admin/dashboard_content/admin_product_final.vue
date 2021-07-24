@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="mt-3">
-            <h3>Product Finalization</h3>
-        <p>Here you finalize your product and it will show up on POS system</p>
+            <h1>Product Finalization</h1>
+        <p style="font-size: 15px">Here you finalize your product and it will show up on POS system.</p>
         <el-alert
             title="Product finalization"
             type="success" :closable="false">

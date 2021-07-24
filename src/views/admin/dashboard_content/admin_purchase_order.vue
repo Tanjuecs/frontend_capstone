@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="mt-3">
-            <h3>Purchase Orders</h3>
-        <p>Here you can add your purchase orders</p>
+            <h1>Purchase Orders</h1>
+        <p style="font-size: 15px">Here you can add your purchase orders</p>
         <el-alert
             title="Purchase Orders"
             type="success" :closable="false">

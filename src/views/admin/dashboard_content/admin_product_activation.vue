@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="mt-3">
-      <h3>Product Activation</h3>
-      <p>Here you can activate product so it may appear on your POS System</p>
+      <h1>Product Activation</h1>
+      <p style="font-size: 15px">Here you can activate product so it may appear on your POS System.</p>
       <el-alert
           title="Product Activation"
           type="success" :closable="false">

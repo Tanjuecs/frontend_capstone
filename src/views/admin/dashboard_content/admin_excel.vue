@@ -4,9 +4,9 @@
             <div style="display: inline;">
                 <img src="https://cdn3.iconfinder.com/data/icons/logos-brands-3/24/logo_brand_brands_logos_excel-256.png"
                                      alt="no image" style="width: 3%; height:auto;">&nbsp;
-            <h3>Excel Templates | Upload excel template</h3>
+            <h1>Excel Templates | Upload Excel Template</h1>
             </div>
-        <p>Here you can upload system required excel template.</p>
+        <p style="font-size: 15px">Here you can upload system required excel template.</p>
         <el-alert
             title="You need to upload the exact excel template file to be able to generate report in your database."
             type="warning" :closable="false">

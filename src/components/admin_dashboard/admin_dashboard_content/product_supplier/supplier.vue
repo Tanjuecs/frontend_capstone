@@ -26,13 +26,13 @@
                         <div v-else-if="stepsactive == 1">
                             <el-card shadow="always" style="padding: 20px; margin-top: 20px; margin-bottom: 20px;">
                                 <div>
-                                    <h5>Suppliers Identification Code</h5>
+                                    <h3>Suppliers Identification Code</h3>
                        <el-tag type="danger">Suppliers IC (Required)</el-tag>&nbsp;
                        <el-tooltip content="This identification code is for search feature" placement="top">
   <i class="el-icon-info"></i>
 </el-tooltip>
                        <br>
-                       <label style="margin-top: 10px;">Identification Code</label>
+                       <label style="margin-top: 10px; font-size:16px">Identification Code</label>
                                <el-input
                                     placeholder="Please input identification code"
                                     v-model="supplierTask.supplierIC"
@@ -41,21 +41,21 @@
                                 </div>
                               <div style="margin-top: 20px;">
                                   <hr>
-                                    <h5>Suppliers Details</h5>
+                                    <h3>Suppliers Details</h3>
                        <el-tag type="danger">Suppliers Details (Required)</el-tag>
                        <div class="row" style="margin-top: 20px;">
                            <div class="col-sm">
-                               <label>Firstname</label>
+                               <label style="font-size:16px">First name</label>
                                <el-input
-                                    placeholder="Please input firstname"
+                                    placeholder="Please input first name"
                                     v-model="supplierTask.supplierfirstname"
                                     clearable>
                                     </el-input>
                            </div>
                            <div class="col-sm">
-                               <label>Lastname</label>
+                               <label style="font-size:16px">Last name</label>
                                <el-input
-                                    placeholder="Please input lastname"
+                                    placeholder="Please input last name"
                                     v-model="supplierTask.supplierlastname"
                                     clearable>
                                     </el-input>
@@ -64,10 +64,10 @@
                               </div>
                            <div style="margin-top: 20px;">
                                <hr>
-                               <h5>Suppliers Address</h5>
+                               <h3>Suppliers Address</h3>
                        <el-tag type="danger">Suppliers Address (Required)</el-tag>
                        <div style="margin-top: 20px;">
-                           <label>Primary Address</label>
+                           <label style="font-size:16px">Primary Address</label>
                            <el-input
                             type="textarea"
                             style="margin-bottom: 20px;"
@@ -75,7 +75,7 @@
                             placeholder="Please input primary address"
                             v-model="supplierTask.supplierprimary">
                             </el-input>
-                            <label>Secondary Address (Optional)</label>
+                            <label style="font-size:16px">Secondary Address (Optional)</label>
                            <el-input
                             type="textarea"
                             :autosize="{ minRows: 2, maxRows: 4}"
@@ -85,11 +85,11 @@
                        </div>
                        <div style="margin-top: 20px;">
                            <hr>
-                               <h5>Suppliers Contact Details</h5>
+                               <h3>Suppliers Contact Details</h3>
                        <el-tag type="danger">Suppliers Contact Details (Required)</el-tag>
                            <div class="row" style="margin-top: 20px;">
                                <div class="col-sm">
-                                   <label>Mobile Number</label>
+                                   <label style="font-size:16px">Mobile Number</label>
                                    <el-input
                                     placeholder="Please input mobile number"
                                     v-model="supplierTask.suppliernumber"
@@ -97,7 +97,7 @@
                                     </el-input>
                                </div>
                                <div class="col-sm">
-                                   <label>Email</label>
+                                   <label style="font-size:16px">Email</label>
                                    <el-input
                                     placeholder="Please input email address"
                                     v-model="supplierTask.supplieremail"
@@ -224,14 +224,14 @@
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="Firstname" >
+                                    <el-table-column label="First name" >
                                         <template slot-scope="{row}">
                                         <span class="link-type" >{{ row.supplierfirstname }}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
-                                     <el-table-column label="Lastname" >
+                                     <el-table-column label="Last name" >
                                         <template slot-scope="{row}">
                                         <span class="link-type" >{{ row.supplierlastname }}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->

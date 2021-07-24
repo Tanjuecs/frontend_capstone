@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="mt-3">
-            <h3>Stocks on hand</h3>
-        <p>Here you can do more actions with your product stocks</p>
+            <h1>Stocks on Hand</h1>
+        <p style="font-size: 15px">Here you can do more actions with your product stocks</p>
         <el-alert
-            title="Stocks on hand."
+            title="Stocks on Hand."
             type="success" :closable="false">
         </el-alert>
         </div>

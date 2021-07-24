@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="mt-3">
-            <h3>Product Suppliers</h3>
-        <p>Here you can add your product suppliers</p>
+            <h1>Product Suppliers</h1>
+        <p style="font-size: 15px">Here you can add your product suppliers.</p>
         <el-alert
             title="Product Management / Suppliers."
             type="success" :closable="false">

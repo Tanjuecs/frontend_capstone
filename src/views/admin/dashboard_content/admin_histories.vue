@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="mt-3">
-            <h3>System Reports</h3>
-        <p>Here you can view all histories from reports module</p>
+            <h1>System Reports</h1>
+        <p style="font-size: 15px">Here you can view all histories from reports module.</p>
         <el-alert
             title="Reports / Histories."
             type="success" :closable="false">

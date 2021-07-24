@@ -1,8 +1,8 @@
 <template>
     <div>
          <div class="mt-3">
-            <h3>Received Orders</h3>
-        <p>Here you can update your purchase orders to received orders</p>
+            <h1>Received Orders</h1>
+        <p style="font-size: 15px">Here you can update your purchase orders to received orders.</p>
         <el-alert
             title="Orders / Received Orders."
             type="success" :closable="false">

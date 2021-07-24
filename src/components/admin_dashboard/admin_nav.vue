@@ -2,7 +2,7 @@
     <div>
          <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <p class="navbar-brand ps-5" style=" font-size:17px;">&nbsp;&nbsp;&nbsp;&nbsp; BURGER MANIA</p>
+            <p class="navbar-brand ps-1" style=" font-size:24px;">&nbsp;&nbsp;&nbsp;&nbsp;BURGER MANIA</p>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" @click="sidebarToggle()"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -10,17 +10,17 @@
                 
             </form>
             <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div style="color: white;">
+                <div style="color: white; font-size: 16px">
                     {{fullnameSetter}}
                 </div>
             </div>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown"  href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-2x "></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" >
+                        <li><a class="dropdown-item" href="#!"><font size="3px;">Settings</font></a></li>
+                        <li><a class="dropdown-item" href="#!"><font size="3px;">Activity Log</font></a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
                             <center>
@@ -64,7 +64,7 @@ export default {
         }).then(() => {
             const loading = this.$loading({
                     lock: true,
-                    text: 'Please wait..',
+                    text: 'Please wait...',
                     spinner: 'el-icon-loading',
                     background: 'rgba(0, 0, 0, 0.7)'
                     });

@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="mt-3">
-            <h3>System Settings</h3>
-        <p>Here you can modify some settings of the system</p>
+            <h1>System Settings</h1>
+        <p style="font-size: 15px">Here you can modify some settings of the system.</p>
         <el-alert
             title="System Settings"
             type="success" :closable="false">
