@@ -21,53 +21,50 @@
                                 </el-menu-item>
 
                                     <el-menu-item index="2" @click="onusermanagement()">
-                                    <img src="https://cdn4.iconfinder.com/data/icons/productivity-5/488/5-team_up-256.png"
+                                    <img src="../../assets/user.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>User Management</span>
                                 </el-menu-item>
                                 <hr>
                                 <el-submenu index="3">
                                     <template slot="title">
-                                    <img src="https://cdn3.iconfinder.com/data/icons/logistics-87/512/inventory-Check-list-store-product-256.png"
+                                    <img src="../../assets/productinventory.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Product Inventory</span>
                                     </template>
                                    
-                                    <el-menu-item index="3-1" @click="productinventory()">
+                                    
+                                    <el-menu-item index="3-1" @click="addproductinventory()">
+                                        <img src="../../assets/inventory.png"
+                                     alt="no image" style="width: 15%; height:auto;">&nbsp;
+                                        Inventory / Stocks
+                                    </el-menu-item>
+
+                                    <el-menu-item index="3-2" @click="onstockonhand()">
+                                    <img src="../../assets/stockonhand.png"
+                                     alt="no image" style="width: 15%; height:auto;">&nbsp;
+                                    <span>Stock on Hand</span></el-menu-item>
+
+                                    <el-menu-item index="3-3" @click="productinventory()">
                                         <img src="https://cdn1.iconfinder.com/data/icons/e-commerce-retro-pack-vol-1/115/inventory_management-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Inventory Activation
                                         </el-menu-item>
-                                    <el-menu-item index="3-2" @click="addproductinventory()">
-                                        <img src="https://cdn3.iconfinder.com/data/icons/flat-icons-web/40/Plus_01-66-256.png"
-                                     alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                        Inventory / Stocks
-                                    </el-menu-item>
                                     
-                                <hr>   
-                                </el-submenu>
-
-                                
-
-                                    <el-submenu index="4">
-                                    <template slot="title">
-                                    <img src="https://cdn1.iconfinder.com/data/icons/business-finance-vol-3-39/512/business_plan_product_industry-256.png"
+                                    <el-menu-item index="3-4" @click="onproductcategory()">
+                                        <img src="../../assets/category.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                    <span>Product Resource</span>
-                                    </template>
-                                    <el-menu-item index="5-1" @click="onproductsupplier()">
-                                        <img src="https://cdn4.iconfinder.com/data/icons/job-recruitment-5/64/Supplier-products-cargo-distributor-retail-256.png"
-                                     alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                        Suppliers
+                                       Product Category
                                         </el-menu-item>
                                     
+                                  
                                 </el-submenu>
-                                <hr>
-                                <el-submenu index="5">
+
+                                <el-submenu index="4">
                                     <template slot="title">
-                                    <img src="https://cdn0.iconfinder.com/data/icons/smashicons-business-yellow-vol-1/60/53_-Finalize_Sale-_business_finance_marketing-256.png"
+                                    <img src="../../assets/completions.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                    <span>Finalization</span>
+                                    <span>Completions</span>
                                     </template>
                                     <el-menu-item index="5-1" @click="onproductfinal()">
                                         <img src="https://cdn2.iconfinder.com/data/icons/scenarium-vol-3-1/128/020_crate_delivery_parachute_present_product_air_cloud-256.png"
@@ -79,69 +76,56 @@
                                          alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     Product Activation
                                   </el-menu-item>
-                                <hr>    
+                                   
                                 </el-submenu>
+
+                                
                                 <!-- div if = if true this will be shown if not hide -->
 
                                     <div v-if="identify.enablePO == 0">
 
                                     </div>
                                     <div v-else>
-                                        <el-submenu index="6">
+                                        <el-submenu index="5">
                                     <template slot="title">
                                     <img src="https://cdn4.iconfinder.com/data/icons/shopping-e-commerce-10/33/order-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                    <span>Orders</span>
+                                    <span>Product Resource</span>
                                     </template>
-                                    <el-menu-item index="6-1" @click="onpurchaseorder()">
+                                    <el-menu-item index="5-1" @click="onproductsupplier()">
+                                        <img src="https://cdn4.iconfinder.com/data/icons/job-recruitment-5/64/Supplier-products-cargo-distributor-retail-256.png"
+                                     alt="no image" style="width: 15%; height:auto;">&nbsp;
+                                        Suppliers
+                                        </el-menu-item>
+                                    <el-menu-item index="5-2" @click="onpurchaseorder()">
                                         <img src="https://cdn2.iconfinder.com/data/icons/flat-seo-web-ikooni/128/flat_seo3-25-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Purchase Order
                                         </el-menu-item>
-                                        <el-menu-item index="6-2" @click="onreceivedorder()">
+                                        <el-menu-item index="5-3" @click="onreceivedorder()">
                                         <img src="https://cdn1.iconfinder.com/data/icons/delivery-19/90/received_a_box-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Received Order
                                         </el-menu-item>
-                                        <el-menu-item index="6-3" @click="onreturnorders()">
+                                        <el-menu-item index="5-4" @click="onreturnorders()">
                                         <img src="https://cdn2.iconfinder.com/data/icons/miscellaneous-7-color-shadow/128/return_order_product-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Return Orders
                                         </el-menu-item>
+                                    
                                 </el-submenu><hr>
                                     </div>
 
     <!-- div if end -->
 
-                                    <el-submenu index="7">
-                                    <template slot="title">
-                                    <img src="https://cdn1.iconfinder.com/data/icons/zake-miscellaneous-011/64/grid_view_menu_category-512.png"
-                                     alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                    <span>Product Category</span>
-                                    </template>
-                                    <el-menu-item index="7-1" @click="onproductcategory()">
-                                        <img src="https://cdn1.iconfinder.com/data/icons/e-commerce-stuff/300/search_product_category-256.png"
-                                     alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                        Category
-                                        </el-menu-item><hr>
 
-                                </el-submenu>
-
-                                
-
-                                 <el-menu-item index="8" @click="onstockonhand()">
-                                    <img src="https://cdn2.iconfinder.com/data/icons/picons-basic-2/57/basic2-237_line_chart_analytics-256.png"
-                                     alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                    <span>Stock on Hand</span>
-                                </el-menu-item><hr>
-
-                                  <el-submenu index="9">
+                                  <el-submenu index="6">
                                     <template slot="title">
                                     <img src="https://cdn4.iconfinder.com/data/icons/popicon-business-bluetone-part-3-5/256/42-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Reports</span>
                                     </template>
-                                    <el-menu-item index="9-1" @click="onhistory()">
+                                    <el-menu-item index="6-1" @click="onhistory()">
                                         <img src="https://cdn2.iconfinder.com/data/icons/time-and-date-1/48/Past-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Histories
@@ -155,19 +139,19 @@
                                     
                                 </el-submenu>
 
-                                <el-submenu index="10">
+                                <el-submenu index="7">
                                     <template slot="title">
                                     <img src="https://cdn0.iconfinder.com/data/icons/artificial-intelligence-49/64/robot_settings_smart_future_tech-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Settings</span>
                                     </template>
-                                    <el-menu-item index="10-1" @click="onexceltemplate()">
+                                    <el-menu-item index="7-1" @click="onexceltemplate()">
                                         <img src="https://cdn3.iconfinder.com/data/icons/logos-brands-3/24/logo_brand_brands_logos_excel-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Excel Templates
                                         </el-menu-item>
 
-                                        <el-menu-item index="10-2" @click="onmoresettings()">
+                                        <el-menu-item index="7-2" @click="onmoresettings()">
                                         <img src="https://cdn2.iconfinder.com/data/icons/business-filled-outline-style-1-set-1/256/21-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         More settings
@@ -190,8 +174,8 @@
                 <!-- content -->
                 <main>
                     <div class="container-fluid px-4">
-                        <router-view></router-view>
-                        
+                       
+                         <router-view></router-view>
                     </div>
                 </main>
                 

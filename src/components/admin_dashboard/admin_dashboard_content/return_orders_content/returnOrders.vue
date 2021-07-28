@@ -21,7 +21,13 @@
                                     >
                                     <el-table-column label="Issue 1" prop="id" sortable="custom" align="center"  >
                                         <template style="background: red;" slot-scope="{row}">
-                                        <span>{{ row.problem1 }}</span>
+                                        
+                                        <div v-if="row.problem1 == 'undefined'">
+
+                                        </div>
+                                        <div v-else>
+                                            <span>{{ row.problem1 }}</span>
+                                        </div>
                                         </template>
                                     </el-table-column>
                                     
@@ -29,14 +35,25 @@
 
                                     <el-table-column label="Issue 2" >
                                         <template slot-scope="{row}">
-                                        <span class="link-type" >{{ row.problem2 }}</span>
+                                        <div v-if="row.problem2 == 'undefined'">
+
+                                        </div>
+                                        <div v-else>
+                                            <span class="link-type" >{{ row.problem2 }}</span>
+                                        </div>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
                                      <el-table-column label="Issue 3" >
                                         <template slot-scope="{row}">
-                                        <span class="link-type" >{{ row.problem3 }}</span>
+                                        
+                                         <div v-if="row.problem3 == 'undefined'">
+
+                                        </div>
+                                        <div v-else>
+                                            <span class="link-type" >{{ row.problem3 }}</span>
+                                        </div>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
@@ -44,14 +61,30 @@
                                     
                                         <el-table-column label="Issue 4" >
                                         <template slot-scope="{row}">
-                                        <span class="link-type" >{{ row.problem4 }}</span>
+                                        
+                                        <div v-if="row.problem4 == 'undefined'">
+
+                                        </div>
+                                        <div v-else>
+                                            <span class="link-type" >{{ row.problem4 }}</span>
+                                        </div>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>
 
                                     <el-table-column label="Remarks" >
                                         <template slot-scope="{row}">
-                                        <span class="link-type" >{{ row.remarks }}</span>
+                                        
+                                        <el-popover
+                                            placement="left"
+                                            width="400"
+                                            trigger="click">
+                                            <el-card shadow="always">
+                                                <h3>Remarks</h3>
+                                                <p>{{ row.remarks }}</p>
+                                            </el-card>
+                                            <el-button slot="reference">More Details</el-button>
+                                            </el-popover>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
                                         </template>
                                     </el-table-column>

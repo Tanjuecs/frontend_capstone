@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="margin-top: 30px;" class="container">
+        <div style="margin-top: 30px;" class="container-fluid">
             <el-steps :active="activesteps" align-center>
             <el-step title="Product finalization / adding" description="Create a product finalization"></el-step>
             <el-step title="Select raw products/ingredients" description="Select raw products, this will deduct the quantity based on your input."></el-step>
@@ -20,7 +20,7 @@
                                             show-icon>
                                         </el-alert>
                                         <center>
-                                        <el-avatar shape="square" :size="100" fit="fill" style="margin-bottom: 3px;" :src="img1"></el-avatar>
+                                        <el-avatar shape="square" :size="100" fit="fill" style="margin-bottom: 3px;" :src="taskfinalization.productImageUrl"></el-avatar>
                                             <p style="color: gray;">Preview of image will appear after the uploading.</p>
                                         <input type="file" class="btn btn-outline-primary" style="margin-bottom: 6px;" @change="previewImage" accept="image/*" />
                                         <el-progress :text-inside="true" style="margin-bottom: 10px;" :stroke-width="26" :percentage="uploadpercent"></el-progress>
@@ -72,7 +72,7 @@
                     </el-card>
             </div>
             <div v-else-if="activesteps == 1" style="margin-top: 20px;">
-              <div class="container">
+              <div class="container-fluid">
                 <el-input
                     style="margin-bottom: 5px; width: 30%; margin-right: 10px;"
                     placeholder="Search"
@@ -88,18 +88,25 @@
                   </el-option>
                 </el-select>
                 <el-button @click="ongetall()" type="warning" plain>Get All</el-button>
-                <el-table
+                <div class="row">
+                  <div class="col-md-6">
+                    <el-card shadow="always">
+                      <el-table
+                
                     ref="multipleTable"
                     :data="pagedTableData"
                     style="width: 100%"
-                    @selection-change="handleSelectionChange">
+                    :cell-style="tableRowClassName"
+                    @selection-change="handleSelectionChange"
+                    >
                   <el-table-column
                       type="selection"
+                      :selectable="selectable"
                       width="55">
                   </el-table-column>
                   <el-table-column
                       label="Product Image"
-                      width="300">
+                      width="200">
                     <template slot-scope="scope">
                       <img :src="scope.row.productimgurl"
                       alt="No image" style="width: 50%; height: auto;"
@@ -108,7 +115,7 @@
                   </el-table-column>
                   <el-table-column
                       label="Product Name"
-                      style="width: 100%;">
+                      width="150">
                     <template slot-scope="scope">
                      {{scope.row.productName}}
                     </template>
@@ -120,9 +127,54 @@
                       {{scope.row.product_quantity}}
                     </template>
                   </el-table-column>
+
+                  <el-table-column
+                      label="Invalid Quantities"
+                      style="width: 100%;">
+                    <template slot-scope="scope">
+                      <div v-if="scope.row.product_quantity < taskfinalization.prodquantity">
+                        <el-tag
+                        type="danger"
+                        >Invalid Quantity</el-tag>
+                      </div>
+                      <div v-else>
+                        <el-tag
+                        type="success"
+                        >Quantity Good Condition</el-tag>
+                      </div>
+                    </template>
+                  </el-table-column>
+
                 </el-table>
                 <el-pagination layout="prev, pager, next" :page-size="pageSize" :total="this.allstockslist.length" @current-change="setPage">
                 </el-pagination>
+                    </el-card>
+                  </div>
+                  <div class="col-md-6">
+                    <el-card shadow="always">
+                      <center>
+                        <h2>Preview : from your product finalization form</h2>
+                      <el-avatar shape="square" :size="100" fit="fill" style="margin-bottom: 3px;" :src="taskfinalization.productImageUrl"></el-avatar>
+                      </center>
+                      <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-6">
+                          <h3>Product name : {{taskfinalization.prodname}}</h3>
+                        </div>
+                        <div class="col-md-6">
+                          <h3>Product Quantity : {{taskfinalization.prodquantity}}</h3>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-6">
+                          <h3>Product category : {{taskfinalization.prodcategory}}</h3>
+                        </div>
+                        <div class="col-md-6">
+                          <h3>Product Code : {{taskfinalization.prodcode}}</h3>
+                        </div>
+                      </div>
+                    </el-card>
+                  </div>
+                </div>
               </div>
                 <div style="display: inline;">
                     <el-button @click="onnextfinalization1()" type="primary" plain style="float: right; margin-bottom: 20px; margin-top: 20px;">Next</el-button>
@@ -191,7 +243,8 @@ export default {
               page: 1,
               listLoading: true,
               searchable: '',
-              listofrawmats: [], searchableselected: ''
+              listofrawmats: [], searchableselected: '',
+              selectionshit: 'selection'
         }
     },
     computed: {
@@ -252,7 +305,23 @@ export default {
 
       },
       onstartover(){
+        this.getallcategories()
+        this.makeid(10)
+        this.takeallstocks()
+        this.allrawmats()
+        this.taskfinalization.prodprice = 0
+        this.taskfinalization.prodname = ""
+        this.taskfinalization.prodquantity = 0
+        this.taskfinalization.prodcategory = ""
+        this.taskfinalization.productImageUrl = ""
         this.activesteps = 0
+      },
+      selectable(row, index){
+        if(row.product_quantity < this.taskfinalization.prodquantity){
+            return false
+          }else{
+            return true
+          }
       },
         handleSelectionChange(val) {
         this.multipleSelection = val;
@@ -274,21 +343,28 @@ export default {
             
         },
         onnextfinalization1(){
-          product_quantity_deduction(this.taskfinalization.prodquantity, this.multipleSelection)
+           product_quantity_deduction(this.taskfinalization.prodquantity, this.multipleSelection)
               .then(resp => {
-                if(resp.data === "invalid quantity"){
-                  this.$notify.warning({
-                    title: 'Oops',
-                    message: 'Invalid quantity',
-                    offset: 100
-                  });
-                  return false
-                }else if(resp.data === "success"){
-
+                if(resp.data === "success"){
                   this.onsaveproductfinal()
-
+                } else if(resp.data === "invalid quantity"){
+                  this.$notify.warning({
+                                title: 'Oops',
+                                message: 'Invalid Quantity',
+                                offset: 100
+                                }); 
+                                return false
+                }
+                else{
+                  this.$notify.error({
+                                title: 'Oops',
+                                message: 'something went wrong please try again',
+                                offset: 100
+                                });
+                                return false
                 }
               })
+          
         },
         history_product_finalization(){
           product_finalization_history_raw_mats(this.taskfinalization.prodcode, this.multipleSelection).then(res => {
@@ -423,9 +499,12 @@ this.page = val
                     loading.close()
                     this.$notify.success({
                       title: 'Yey',
-                      message: 'Successfully added',
+                      message: 'Successfully added to Product Activation',
                       offset: 100
                     });
+                    this.getallcategories()
+                    this.takeallstocks()
+                    this.allrawmats()
                     this.history_product_finalization()
                     this.activesteps = 3;
                   }else if(resolve.data === "empty"){
@@ -444,6 +523,9 @@ this.page = val
                       message: 'Invalid quantity please try again.',
                       offset: 100
                     });
+                    this.getallcategories()
+                    this.takeallstocks()
+                    this.allrawmats()
                     return false
                   }
                 })
@@ -462,6 +544,14 @@ this.page = val
             this.imageData = event.target.files[0]
         },
         onupload(){
+          if(!this.imageData){
+                this.$notify.error({
+                                title: 'Oops',
+                                message: 'Please choose image',
+                                offset: 100
+                                });
+                                return false
+            }
             const loading = this.$loading({
                     lock: true,
                     text: 'Uploading Image, please wait...',
@@ -483,6 +573,7 @@ this.page = val
                                 offset: 100
                                 });
                        this.taskfinalization.productImageUrl = url;
+                       this.img1 = url
                    })
                })
             }).catch((err) => {
@@ -494,7 +585,6 @@ this.page = val
             () => {
                 this.uploadpercent = 100;
                 storageRef.snapshot.ref.getDownloadURL().then((url) => {
-                    this.img1 = url;
                     loading.close()
                     this.$notify.success({
                                 title: 'Yey',
@@ -502,6 +592,7 @@ this.page = val
                                 offset: 100
                                 });
                     this.taskfinalization.productImageUrl = url;
+                    this.img1 = url
                 })
             })
             })
@@ -509,3 +600,18 @@ this.page = val
     }
 }
 </script>
+
+
+<style scoped>
+.el-table .warning-row {
+background: 'rgb(252, 230, 190)';
+}
+
+.el-table .success-row {
+background: 'rgb(252, 230, 190)';
+}
+
+.el-table .other-row {
+background: 'rgb(252, 230, 190)';
+}
+</style>

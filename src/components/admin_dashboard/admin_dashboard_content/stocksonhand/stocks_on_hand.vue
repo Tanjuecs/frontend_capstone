@@ -39,7 +39,7 @@
                                         </el-alert>   
                 <h4>List of products</h4>
                          <div class="row">
-                             <div class="col-md-4">
+                             <div class="col-sm">
                                  <el-input
                                     style="margin-bottom: 5px; width: 100%;"
                                     placeholder="Search"
@@ -48,11 +48,27 @@
                                     </el-input>
                                     
                              </div>
-                             <div class="col-md-4">
+                             <div class="col-sm">
                                  <el-checkbox @change="onsortofexpired" v-model="sortofexpired">Expired products</el-checkbox>
                                  
                              </div>
-                             <div class="col-md-4">
+                             <div class="col-sm">
+                                 
+                                 <el-select style="width: 100%;" @change="onfiltercategory" v-model="optionsfilterval" filterable placeholder="Select category">
+                                        <el-option
+                                        v-for="item in optionscategory"
+                                        :key="item.categoryname"
+                                        :label="item.categoryname"
+                                        :value="item.categoryname">
+                                        </el-option>
+                                    </el-select>
+                             </div>
+                             <div class="col-sm">
+                                 <el-button @click="onfetchall()" type="primary" size="medium" plain round>
+                                     Fetch All
+                                 </el-button>
+                             </div>
+                             <div class="col-sm">
                                  <el-button @click="onredirecttoadding()" type="success" style="float: right; margin-bottom: 10px;"><i class="el-icon-circle-plus-outline"></i> Go to stocks and inventory</el-button>
                              </div>
                          </div>
@@ -93,7 +109,12 @@
                                         </template>
                                     </el-table-column>
 
-                                    
+                                    <el-table-column label="Product Category" align="center">
+                                        <template slot-scope="{row}" >
+                                        <span class="link-type" >{{ row.productcategory }}</span>
+                                        <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
+                                        </template>
+                                    </el-table-column>
 
                                     
                                     <el-table-column label="Quantity Status" class-name="status-col" align="center">
@@ -259,6 +280,7 @@ import {Chart} from 'highcharts-vue'
 import Highcharts from "highcharts";
 import exportingInit from "highcharts/modules/exporting";
 import offlineExporting from "highcharts/modules/offline-exporting";
+import {mapGetters} from "vuex"
 exportingInit(Highcharts)
 offlineExporting(Highcharts)
 export default {
@@ -267,6 +289,8 @@ export default {
   },
     data(){
         return{
+            optionscategory: [],
+            optionsfilterval: '',
             sortofexpired: false,
             loading: true,
          chartOptions: {
@@ -334,7 +358,7 @@ export default {
     created(){
         this.getnotifforcritical()
          this.allstocks()
-      
+      this.getallcategorylist()
     },
     computed: {
           pagedTableData() {
@@ -346,9 +370,36 @@ export default {
         return this.productArray.slice(this.pageSize * this.page - this.pageSize, this.pageSize * this.page)
       }
        
-     }
+     },
+     ...mapGetters({
+         category_mapper: 'get_category_list_mapper',
+         filter_category_mapper: 'get_stocks_by_category'
+     })
     },
     methods: {
+        onfetchall(){
+            this.allstocks()
+        },
+        onfiltercategory(){
+            this.listLoading = true
+            this.$store.dispatch(`actions_filter_category_stocks`, {
+                val: this.optionsfilterval
+            }).then(() => {
+                if(this.filter_category_mapper === "Category not exist"){
+                    this.listLoading = false
+                    this.productArray = []
+                }else{
+                    this.listLoading = false
+                this.productArray = this.filter_category_mapper
+                }
+            })
+        },
+        getallcategorylist(){
+            this.$store.dispatch(`actions_get_all_categories_for_stocks`)
+            .then(() => {
+                this.optionscategory = this.category_mapper
+            })
+        },
         onsortofexpired(){
             const loading = this.$loading({
                     lock: true,

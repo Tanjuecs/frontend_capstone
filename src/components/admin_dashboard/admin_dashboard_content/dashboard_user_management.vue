@@ -291,9 +291,6 @@
                                     
                                     <el-table-column label="First name" align="center" >
 
-
-                                    <el-table-column label="Firstname" >
-
                                         <template slot-scope="{row}">
                                         <span class="link-type" >{{ row.firstname }}</span>
                                         <!-- <el-tag>{{ row.type | typeFilter }}</el-tag> -->
@@ -309,9 +306,6 @@
 
                                     
                                     <el-table-column label="Status"  align="center">
-
-
-                                    <el-table-column label="Status"  >
 
                                         <template slot-scope="{row}">
                                         <div v-if="row.isstatus == 1 && row.isarchive == 0">
@@ -352,16 +346,46 @@
                                         </template>
                                     </el-table-column>
 
+
+                                    <el-table-column label="User Level" width="150" align="center">
+                                        <template slot-scope="{row}">
+                                        <div v-if="row.istype == 1">
+                                            <el-tag effect="dark" type="success">
+                                            Administrator
+                                        </el-tag>
+                                        </div>
+                                        <div v-else>
+                                            <el-tag effect="dark" type="warning">
+                                            Cashier
+                                        </el-tag>
+                                        </div>
+                                        
+                                        </template>
+                                    </el-table-column>
+
                                     <el-table-column label="Created"  align="center">
                                         <template slot-scope="{row}">
                                         <span>{{ row.createdAt | moment("calendar") }}</span>
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column width="400" label="More Actions"  align="center">
+                                    <el-table-column width="300" label="More Actions"  align="center">
                                         <template slot-scope="{row}">
-                                        <el-button @click="onremoveuser(row.id, row.firstname, row.lastname, row.istype)" type="danger" size="small">Remove</el-button>&nbsp;
-                                        <el-button type="warning" size="small">Change Password</el-button>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                     <div v-if="row.isstatus == 1">
+
+                                        </div>
+                                        <div v-else>
+                                            <el-button @click="onremoveuser(row.id, row.firstname, row.lastname, row.istype)" type="danger" size="small">Remove</el-button>&nbsp;
+                                            
+                                        </div>
+                                       
+                                                </div>
+                                                <div class="col-md-6">
+ <el-button type="warning" size="small">Change Password</el-button>
+                                                </div>
+                                            </div>
                                         </template>
                                     </el-table-column>
 
@@ -433,7 +457,7 @@ export default {
                     value: '1',
                     label: 'Administrators'
                     }, {
-                    value: '2',
+                    value: '0',
                     label: 'Cashiers'
                     }, ],
                     value: '',
@@ -819,10 +843,8 @@ export default {
                     this.oopusers = response.data
                     if(this.value === "1"){
                         this.dynamicTitle = "All administrators";
-                    }else if(this.value === "2") {
+                    }else {
                          this.dynamicTitle = "All cashiers";
-                    }else{
-                        this.dynamicTitle = "All customers";
                     }
                    }, 3000)
                 }

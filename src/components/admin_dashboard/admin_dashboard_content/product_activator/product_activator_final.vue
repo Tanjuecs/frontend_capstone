@@ -195,6 +195,7 @@ import exportingInit from "highcharts/modules/exporting";
 import offlineExporting from "highcharts/modules/offline-exporting";
 exportingInit(Highcharts)
 offlineExporting(Highcharts)
+import {mapGetters} from 'vuex'
 export default {
   name: "product_activator_final",
   components:{
@@ -254,6 +255,9 @@ export default {
       }
 
     },
+    ...mapGetters({
+      remove_raws: 'get_response_product_finalization_raw'
+    })
     // pagedtabledataforraw(){
     //   if(this.searchablerawmats){
     //     return this.listofingredients.filter((item) => {
@@ -301,8 +305,18 @@ export default {
                                 }); 
                             this.getallproductfromfinalize()
                             this.trialanderrorgraph()
-                            ascendquantity(pquantity, response.data.getobj).then(res => {
-                              console.log(res.data)
+                            ascendquantity(pquantity, response.data.getobj).then(() => {
+                              this.$store.dispatch(`actions_product_remove_raw`, {
+                                pcode
+                              }).then(() => {
+                                if(this.remove_raws === "success"){
+                                  this.$notify.success({
+                                title: 'Nicely done!',
+                                message: 'Successfully remove raws.',
+                                offset: 100
+                                }); 
+                                }
+                              })
                             })
                       }
                     })
