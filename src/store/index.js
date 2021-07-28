@@ -35,7 +35,12 @@ export default new Vuex.Store({
     },
     category_modify_Object: {
       responseData: '',
-      responseAddingLoop :''
+      responseAddingLoop :'',
+      categoryListArray: [],
+      categoryFilterStocks: []
+    },
+    products_raw_Object: {
+      responseData: ''
     }
   },
   getters: {
@@ -68,9 +73,24 @@ export default new Vuex.Store({
     },
     get_response_category_adding_loop: (state) => {
       return state.category_modify_Object.responseAddingLoop
+    },
+    get_category_list_mapper: (state) => {
+      return state.category_modify_Object.categoryListArray
+    },
+    get_stocks_by_category: (state) => {
+      return state.category_modify_Object.categoryFilterStocks
+    },
+    get_response_product_finalization_raw: (state) => {
+      return state.products_raw_Object.responseData
     }
   },
   mutations: {
+    mutate_product_finalization_raw: (state, data) => {
+      state.products_raw_Object.responseData = data
+    },
+    mutate_get_all_category: (state, data) => {
+      state.category_modify_Object.categoryListArray = data
+    },
     MUTATE_LIST_PRODUCTINVENTORY(state) {
       return httpauth.get("/api/product-inventory/fetchinginventory").then((response) => {
         state.productInventoryResponse.response = response.data
@@ -108,9 +128,45 @@ export default new Vuex.Store({
     },
     MUTATE_CATEGORY_ADD: (state, data) => {
       state.category_modify_Object.responseAddingLoop = data
+    },
+    mutation_filter_by_category_stocks: (state, data) => {
+      state.category_modify_Object.categoryFilterStocks = data
     }
   },
   actions: {
+    actions_product_remove_raw({commit}, {pcode}){
+      try {
+        const promise = new Promise((resolve, reject) => {
+          httpauth.delete(`/api/product-finalization/remove-product-raw-by-pcode?pcode=${pcode}`)
+          .then(res => {
+            resolve(commit(`mutate_product_finalization_raw`, res.data))
+          }, error => {
+            reject(error)
+          })
+        })
+        return promise
+      } catch (error) {
+        alert(error)
+      }
+    },
+    actions_filter_category_stocks({commit}, {val}){
+      return new Promise((resolve, reject) => {
+        httpauth.get(`/api/filter-stocks/Filter-By-category-for-stocks?categoryname=${val}`)
+        .then(res => {
+          resolve(commit(`mutation_filter_by_category_stocks`, res.data))
+        })
+      })
+    },
+    actions_get_all_categories_for_stocks({commit}){
+      return new Promise((resolve, reject) => {
+        httpauth.get(`/api/product-category-management/get-list-category`)
+        .then(response => {
+          resolve(commit(`mutate_get_all_category`, response.data))
+        }, error=> {
+          reject(error)
+        })
+      })
+    },
     ACTIONS_CATEGORY_LOOP_ADD({commit}, {Arrayable}){
       try {
         return new Promise((resolve, reject) => {

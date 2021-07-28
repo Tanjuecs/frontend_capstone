@@ -305,7 +305,7 @@ export default {
                                 loading.close()
                                 this.$notify.success({
                                 title: 'Nice!',
-                                message: 'Successfully Pull!',
+                                message: 'Pulled Successfully',
                                 offset: 100
                                 });
                                 this.getListProductInventory()

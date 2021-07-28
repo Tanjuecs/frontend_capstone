@@ -127,7 +127,7 @@
                                     type="warning" :closable="false">
                                 </el-alert>
                                   <el-timeline style="margin-top: 50px;">
-                                        <el-timeline-item :timestamp="preview.previewData | moment('calendar')" placement="top">
+                                        <el-timeline-item :timestamp="preview.previewData | moment('dddd, MMMM Do YYYY')" placement="top">
                                         <el-card>
                                            <div class="row">
                                                <div class="col-md-3">
@@ -142,7 +142,7 @@
                                                     <div v-show="inventorysupplier">
                                                         <p>Product supplier : {{productTask.productSupplier}}</p>
                                                     </div>
-                                                    <p>Administrator added : {{preview.previewData | moment('calendar')}}</p>
+                                                    <p>Administrator added : {{preview.previewData | moment('dddd, MMMM Do YYYY')}}</p>
                                                     <p>Status : <el-tag effect="dark" type="danger">Inactive</el-tag></p>
                                                     <div style="margin-top: 20px;">
                                                         <!-- <h4>Total Price : {{productTask.productPrice * productTask.productQuantity}}</h4> -->
@@ -320,7 +320,7 @@
                           </div>
                           <div v-else>
                               <el-timeline style="margin-top: 50px;" >
-                                <el-timeline-item v-for="item in pagedTableData" :key="item.productID" :timestamp="item.createdAt | moment('calendar')" placement="top">
+                                <el-timeline-item v-for="item in pagedTableData" :key="item.productID" :timestamp="item.createdAt | moment('dddd, MMMM Do YYYY')" placement="top">
                                 <el-card style="padding: 15px;">
                                     <div class="row">
                                         <div class="col-md-3">
@@ -342,7 +342,7 @@
                                                     <div v-show="inventorysupplier">
                                                         <p>Product supplier : {{item.product_supplier}}</p>
                                                     </div>
-                                                    <p>Administrator added : {{item.createdAt | moment('calendar')}}</p>
+                                                    <p>Administrator added : {{item.createdAt | moment('dddd, MMMM Do YYYY')}}</p>
                                                     <p>Status : <el-tag effect="dark" type="danger">Inactive</el-tag></p>
                                                     <div style="margin-top: 20px;">
                                                         <!-- <h4>Total Price : &#8369; {{item.product_price * item.product_quantity}}</h4> -->
@@ -542,7 +542,7 @@
                                     
                                     <el-table-column label="Created"  align="center">
                                         <template slot-scope="{row}">
-                                        <span>{{ row.createdAt | moment("calendar") }}</span>
+                                        <span>{{ row.createdAt | moment("dddd, MMMM Do YYYY") }}</span>
                                         </template>
                                     </el-table-column>
 
@@ -712,11 +712,22 @@ export default {
                 setTimeout(() => {
                     viewingexpirationdate(pcode)
                     .then(response => {
-                        console.log(response.data)
+                        if(response.data === "no expiration"){
+                            console.log(response.data)
+                            loading.close()
+                            this.$notify.error({
+                                title: 'Oops',
+                                message: 'There is no expiration date for this product.',
+                                offset: 100
+                                });   
+                                return false;
+                        }else{
+                            console.log(response.data)
                         this.getexpirydatearry = response.data[0].expirydate
                         loading.close()
                          this.drawerviewexpiration = true;
             this.dynamicTitle = "Expiration date for " + " " + pname;
+                        }
                     })
                 }, 2000)
         },
@@ -762,18 +773,10 @@ export default {
 this.page = val
         },
         onmodifysave(){
-             if(!this.modifyTask.modifyproductname ||  !this.modifyTask.modifyproductquantity
-            || !this.modifyTask.modifyproductprice){
+             if(!this.modifyTask.modifyproductname ||  !this.modifyTask.modifyproductquantity){
                  this.$notify.error({
                                 title: 'Oops',
                                 message: 'Something is empty, please try again.',
-                                offset: 100
-                                });   
-                                return false;
-            } else if(this.modifyTask.modifyproductquantity <= 0 || this.modifyTask.modifyproductprice <= 0){
-                 this.$notify.error({
-                                title: 'Oops',
-                                message: 'This is invalid quantity or product price.',
                                 offset: 100
                                 });   
                                 return false;
@@ -967,7 +970,7 @@ this.page = val
         },
         
         onsaveproduct(){
-            if(!this.productTask.productName ||  !this.productTask.productQuantity || !this.productTask.productImageUrl || !this.productTask.productExpiration){
+            if(!this.productTask.productName ||  !this.productTask.productQuantity || !this.productTask.productImageUrl){
                  this.$notify.error({
                                 title: 'Oops',
                                 message: 'Something is empty, please try again.',
@@ -999,8 +1002,8 @@ this.page = val
                         if(resp.data === "success product inventory"){
                             loading.close()
                             this.$notify.success({
-                                title: 'Yey',
-                                message: 'Successfully Added',
+                                title: 'Yey!',
+                                message: 'Successfully Added to Stock on Hand',
                                 offset: 100
                                 });
                                 this.getListProductInventory()
@@ -1018,6 +1021,7 @@ this.page = val
                     })
                 }, 3000)
                 }).catch(() => {
+                    
                     this.$notify.info({
                     title: 'Info',
                     message: 'No Action',

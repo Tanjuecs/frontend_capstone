@@ -80,10 +80,12 @@
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column label="More Actions" align="center"class-name="status-col" >
+                                    <el-table-column label="More Actions" align="center">
                                         <template slot-scope="{row}">
                                         <div v-if="row.product_status == 1">
-                                           
+                                           <el-button @click="ondeactivate(row.productID)" type="danger" style="width: 100%;" size="medium">
+                                                   Deactivate
+                                               </el-button>
                                         </div>
                                         <div v-else>
                                                <el-button @click="onactivate(row.productID)" type="success" style="width: 100%;" size="medium">
@@ -200,6 +202,14 @@ export default {
                                 self: this,
                                 code: this.activitylog_code
                             })
+                    } else if(response.data === "cant activate"){
+                        this.$notify.error({
+                                title: 'Oops',
+                                message: 'Sorry but this product cant activate',
+                                offset: 100
+                                });
+                                loading.close();
+                                return false
                     }
                 })
             }, 3000)

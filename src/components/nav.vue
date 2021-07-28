@@ -55,6 +55,7 @@
   :before-close="handleClose">
   
  <el-input
+ @keyup.enter.native="checkEnter"
  style="margin-bottom: 10px;"
   placeholder="Please input email"
   v-model="task.email"
@@ -62,6 +63,7 @@
 </el-input>
 
 <el-input
+@keyup.enter.native="checkEnter"
   placeholder="Please input password"
   v-model="task.password"
   type="password"
@@ -81,7 +83,7 @@
 </center>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">Cancel</el-button>
-    <el-button type="primary" @click="onsignin()">Confirm</el-button>
+    <el-button type="primary" v-on:keyup="validateconfirm" @click="onsignin()">Confirm</el-button>
   </span>
 </el-dialog>
 <!-- End Dialog Box -->
@@ -125,6 +127,9 @@ export default {
     this.makeid(5)
   },
   methods: {
+    checkEnter(e){
+      this.onsignin()
+    },
     historyloginmanagement(){
       loginhistory(this.task.email).then(response => {
         if(response.data.message === "success"){

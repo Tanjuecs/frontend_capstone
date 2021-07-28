@@ -183,7 +183,7 @@ methods: {
         })
     },
     onrecoveruser(id, cliendid){
-        this.$confirm('This will permanently delete the data. Continue?', 'Warning', {
+        this.$confirm('This will recover the data. Continue?', 'Warning', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
           type: 'warning'

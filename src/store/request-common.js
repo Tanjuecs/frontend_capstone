@@ -67,7 +67,7 @@ export function userLogout(email){
 //getall users admin sire
 
 export function listofuseres(){
-    return httpauth.get("/api/user-management/getall-users?email=" + localStorage.getItem("oauth2_ss::_ss_"))
+    return httpauth.get("/api/user-management/getall-users")
 }
 
 //user updater
@@ -579,6 +579,14 @@ export function pullrequestforproduct(obj){
         var data = new FormData();
         data.append("prodimg", obj.prodimg)
         return httpauth.post(`/api/pull-request-product/sync-data-to-product-inventory?id=${obj.stockID}&pname=${obj.prodname}&pcode=${obj.stocknum}&pquantity=${obj.pquantity}&pprice=${obj.prodprice}&supplier=${obj.prodsupplier}&category=${obj.prodcategory}&expiration=${obj.expirationprod}`, data)
+       
+        
+        // if(obj.expirationprod === null || obj.expirationprod === ''){
+            
+        // }else{
+
+        // }
+        
 }
 
 /*
@@ -695,6 +703,7 @@ export function addproductfinal(obj){
     try {
         var data = new FormData();
         data.append("prodimg", obj.productImageUrl)
+        
         return httpauth.post(`/api/product-finalization/product-add?prodname=${obj.prodname}&prodquantity=${obj.prodquantity}&prodcategory=${obj.prodcategory}&prodprice=${obj.prodprice}&prodcode=${obj.prodcode}`, data)
     } catch (error) {
         console.log(error)
