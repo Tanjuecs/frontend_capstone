@@ -1194,3 +1194,12 @@ export function profile_update(obj){
         alert(error)
     }
 }
+
+export function getalllistfinalcateg(){
+    try {
+        return httpauth.get(`/api/product-category-management/get-list-category-final`)
+    } catch (error) {
+        alert(error)
+    }
+}
+
