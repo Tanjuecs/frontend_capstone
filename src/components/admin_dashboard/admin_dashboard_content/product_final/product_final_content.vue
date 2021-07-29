@@ -216,7 +216,7 @@
 </template>
 
 <script>
-import {prod_final_get_all_categories, filterrawmats, addproductfinal, getallstocksfinalization, selectedrawmat, listofselectedrawmat, getridselection, getallpcodeforselectedraw, product_quantity_deduction, clearallraws, product_finalization_history_raw_mats} from "@/store/request-common"
+import {prod_final_get_all_categories, getalllistfinalcateg, filterrawmats, addproductfinal, getallstocksfinalization, selectedrawmat, listofselectedrawmat, getridselection, getallpcodeforselectedraw, product_quantity_deduction, clearallraws, product_finalization_history_raw_mats} from "@/store/request-common"
 import firebase  from "firebase"
 export default {
     data(){
@@ -270,10 +270,12 @@ export default {
      }
     },
     created(){
+      this.getallprodcategfinal()
         this.getallcategories()
         this.makeid(10)
         this.takeallstocks()
         this.allrawmats()
+        
     },
     methods: {
       ongetall: function(){
@@ -532,10 +534,15 @@ this.page = val
               }, 3000)
             }
         },
+        getallprodcategfinal(){
+          getalllistfinalcateg().then(response => {
+            this.options = response.data
+          })
+        },
         getallcategories(){
             prod_final_get_all_categories().then(response => {
                 this.filteroptions = response.data
-                this.options = response.data
+                
             })
         },
         previewImage(event){

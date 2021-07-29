@@ -115,6 +115,11 @@ const routes = [
         path: '/return_orders' + makeid(200),
         name: 'Return Orders',
         component: () => import("@/views/admin/dashboard_content/admin_return_orders")
+      },
+      {
+        path: '/profile' + makeid(200),
+        name: 'Profile',
+        component: () => import("@/views/admin/dashboard_content/admin_profile_management")
       }
     ]
   }

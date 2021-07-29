@@ -41,6 +41,11 @@ export default new Vuex.Store({
     },
     products_raw_Object: {
       responseData: ''
+    },
+    emailObject: {
+      client_email: localStorage.getItem("oauth2_ss::_ss_"),
+      passParams: '',
+      get_full_client_details: []
     }
   },
   getters: {
@@ -82,9 +87,21 @@ export default new Vuex.Store({
     },
     get_response_product_finalization_raw: (state) => {
       return state.products_raw_Object.responseData
+    },
+    getemail:(state) => {
+      return state.emailObject.client_email
+    },
+    getpassparams:(state) => {
+      return state.emailObject.passParams
+    },
+    get_full_details:(state) => {
+      return state.emailObject.get_full_client_details
     }
   },
   mutations: {
+    mutate_get_full_client_details: (state, data) => {
+      state.emailObject.get_full_client_details = data
+    },
     mutate_product_finalization_raw: (state, data) => {
       state.products_raw_Object.responseData = data
     },
@@ -134,12 +151,39 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    actions_fetch_full_client_details({commit}, {email}){
+      try {
+        return new Promise((resolve, reject) => {
+          httpauth.get(`/api/get-details-profile/profile-catcher?email=${email}`)
+          .then(response => {
+            resolve(response)
+          })
+        })
+      } catch (error) {
+        alert(error)
+      }
+    },
     actions_product_remove_raw({commit}, {pcode}){
       try {
         const promise = new Promise((resolve, reject) => {
           httpauth.delete(`/api/product-finalization/remove-product-raw-by-pcode?pcode=${pcode}`)
           .then(res => {
             resolve(commit(`mutate_product_finalization_raw`, res.data))
+          }, error => {
+            reject(error)
+          })
+        })
+        return promise
+      } catch (error) {
+        alert(error)
+      }
+    },
+    actions_final_categories(){
+      try {
+        const promise = new Promise((resolve, reject) => {
+          httpauth.get(`/api/product-finalization/get-all-category-prodfinal`)
+          .then(res => {
+            resolve(res)
           }, error => {
             reject(error)
           })
@@ -183,12 +227,44 @@ export default new Vuex.Store({
         alert("error in adding loop" + error)
       }
     },
+    ACTIONS_CATEGORY_LOOP_ADD_FINAL({commit}, {Arrayable}){
+      try {
+        return new Promise((resolve, reject) => {
+          for(var x = 0; x < Arrayable.length; x++){
+            var result = httpauth.post(`/api/product-category-management/add-category-final?categoryname=${Arrayable[x].categoryname}`)
+          }
+          result.then(response => {
+            resolve(response)
+          }, error => {
+            reject(error)
+          })
+        })
+      } catch (error) {
+        alert("error in adding loop" + error)
+      }
+    },
      ACTIONS_EDIT_CATEGORY({commit}, {object}){
       try {
         var data = new FormData()
         data.append("categ", object.categoryname)
         return new Promise((resolve, reject) => {
           httpauth.put(`/api/product-category-management/update-category-name?id=${object.id}`, data)
+          .then(response => {
+            resolve(commit(`MUTATE_EDIT_CATEGORY`, response.data))
+          }, error => {
+            reject(error)
+          })
+        })
+      } catch (error) {
+        alert("error in updating category" + error)
+      }
+    },
+    ACTIONS_EDIT_CATEGORY_FINAL({commit}, {object}){
+      try {
+        var data = new FormData()
+        data.append("categ", object.categoryname)
+        return new Promise((resolve, reject) => {
+          httpauth.put(`/api/product-category-management/update-category-name-final?id=${object.id}`, data)
           .then(response => {
             resolve(commit(`MUTATE_EDIT_CATEGORY`, response.data))
           }, error => {
