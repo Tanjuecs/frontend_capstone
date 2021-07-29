@@ -274,6 +274,7 @@ export default {
         this.makeid(10)
         this.takeallstocks()
         this.allrawmats()
+        this.getallprodcategfinal()
     },
     methods: {
       ongetall: function(){
@@ -532,10 +533,15 @@ this.page = val
               }, 3000)
             }
         },
+        getallprodcategfinal(){
+          this.$store.dispatch(`actions_final_categories`).then(response => {
+            this.options = response.data
+          })
+        },
         getallcategories(){
             prod_final_get_all_categories().then(response => {
                 this.filteroptions = response.data
-                this.options = response.data
+                
             })
         },
         previewImage(event){

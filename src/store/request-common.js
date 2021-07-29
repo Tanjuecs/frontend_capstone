@@ -395,6 +395,10 @@ export function listcategory(){
     return httpauth.get(`/api/product-category-management/get-list-category`)
 }
 
+export function listcategoryfinal(){
+    return httpauth.get(`/api/product-category-management/get-list-category-final`)
+}
+
 /*
 system settings
 created at : 22/06/2021
@@ -442,6 +446,10 @@ created at : 22/06/2021
 
 export function onremovecategory(id){
     return httpauth.post(`/api/product-category-management/remove-category?id=${id}`)
+}
+
+export function onremovecategoryfinal(id){
+    return httpauth.delete(`/api/product-category-management/remove-category-final?id=${id}`)
 }
 
 /*
@@ -1171,4 +1179,18 @@ export function getallarchivesusers(){
   } finally {
     alert("fetch in finally")
   }
+}
+
+export function profile_update(obj){
+    try {
+        var data = new FormData()
+        data.append("firstname", obj.firstname)
+        data.append("lastname", obj.lastname)
+        data.append("email", obj.email)
+        data.append("password", obj.password)
+        data.append("image", obj.imageurl)
+       return httpauth.put(`/api/get-details-profile/update-profile?id=${obj.id}`, data)
+    } catch (error) {
+        alert(error)
+    }
 }

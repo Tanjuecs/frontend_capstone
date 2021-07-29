@@ -19,8 +19,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown"  href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-2x "></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" >
-                        <li><a class="dropdown-item" href="#!"><font size="3px;">Settings</font></a></li>
-                        <li><a class="dropdown-item" href="#!"><font size="3px;">Activity Log</font></a></li>
+                        <li><router-link class="dropdown-item" :to="{name: 'More Settings'}"><font size="3px;">Settings</font></router-link></li>
+                        <li><router-link class="dropdown-item" :to="{name: 'Product History'}"><font size="3px;">Activity Log</font></router-link></li>
+                         <li><router-link class="dropdown-item" :to="{name: 'Profile', query: {email: getemail}}"><font size="3px;">Profile</font></router-link></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
                             <center>
@@ -36,12 +37,18 @@
 
 <script>
 import {userLogout, logouthistory} from "@/store/request-common"
-// import {mapGetters} from 'vuex';
+import {mapGetters} from 'vuex';
 export default {
     computed: {
         fullnameSetter(){
             return JSON.parse(localStorage.getItem("oauth2_ss::_profileinfo_")).firstname + " " + JSON.parse(localStorage.getItem("oauth2_ss::_profileinfo_")).lastname
-        }
+        },
+        ...mapGetters({
+            getemail: 'getemail'
+        })
+    },
+    created(){
+       this.$store.state.emailObject.passParams = this.$route.query.email
     },
    methods: {
       addinglogouthistory(email){
