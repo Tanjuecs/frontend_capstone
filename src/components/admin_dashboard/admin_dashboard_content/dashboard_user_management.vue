@@ -305,7 +305,7 @@
                                     </el-table-column>
 
                                     
-                                    <el-table-column label="Status"  align="center">
+                                    <!-- <el-table-column label="Status"  align="center">
 
                                         <template slot-scope="{row}">
                                         <div v-if="row.isstatus == 1 && row.isarchive == 0">
@@ -344,7 +344,7 @@
                                         </el-tag>
                                         </div>
                                         </template>
-                                    </el-table-column>
+                                    </el-table-column> -->
 
 
                                     <el-table-column label="User Level" width="150" align="center">

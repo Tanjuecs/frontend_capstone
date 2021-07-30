@@ -12,6 +12,7 @@
                 
             <el-button  type="primary" plain @click="onimportexcel()">Import Excel</el-button>
             <el-button  type="warning" plain @click="pullproductsdialogVisible = true">Pull Products from Stocks</el-button>
+            <el-button  type="success" plain @click="onnavigatefinal()">Navigate to product finalization</el-button>
             <!-- Dialog for pull product from stocks -->
                 <el-dialog
                     title="Pull products from stocks"
@@ -237,6 +238,9 @@ export default {
         this.getallstocks();
     },
     methods: {
+        onnavigatefinal(){
+            this.$router.push({name : 'Product Final'}).catch(() => {})
+        },
         onrefresh(){
            
              const loading = this.$loading({

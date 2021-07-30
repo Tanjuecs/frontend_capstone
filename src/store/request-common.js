@@ -166,12 +166,13 @@ Created date : 15/06/2021
 
 export function adding_product_inventory(obj){
     var productdata = new FormData();
-    if(obj.decisionval === true){
-        productdata.append("productsync", 1)
-    }
-    else{
-        productdata.append("productsync", 0)
-    }
+    // if(obj.decisionval === true){
+    //     productdata.append("productsync", 1)
+    // }
+    // else{
+        
+    // }
+    productdata.append("productsync", 1)
     productdata.append("productName", obj.productName)
     productdata.append("productCode", obj.productCode)
     productdata.append("productQuantity", obj.productQuantity)
@@ -241,6 +242,7 @@ export function product_modify(obj){
     modifieddata.append("modifyproductimageurl", obj.modifyproductimageurl)
     modifieddata.append("modifyPID", obj.modifyPID)
     modifieddata.append("modifycategory", obj.modifycategory)
+    modifieddata.append("expireddate", obj.modifyexpired)
     return httpauth.post(`/api/product-inventory/product-inventory-modification?tagalert=${obj.tagalert}`, modifieddata)
 }
 

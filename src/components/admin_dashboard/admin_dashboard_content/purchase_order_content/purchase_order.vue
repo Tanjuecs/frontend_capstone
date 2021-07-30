@@ -271,7 +271,7 @@ import {purchasesorder, fetchaddedsuppliers, listofpurchase, bulkentrypurchaseor
         //   invoice
     company: {
         name: "Burger Mania",
-        address: "38, Bayreuther Straße, 60306, Frankfurt, Hesse."
+        address: ""
       },
       invoice: {
         id: "",
