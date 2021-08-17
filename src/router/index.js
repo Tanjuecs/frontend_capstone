@@ -37,6 +37,11 @@ const routes = [
     component: () => import("@/views/forgot")
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import("@/views/login")
+  },
+  {
     path: '/admindashboard' + makeid(200),
     name: 'admindashboard',
     component: () => import('@/views/admin/admin'),

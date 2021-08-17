@@ -1202,4 +1202,15 @@ export function getalllistfinalcateg(){
         alert(error)
     }
 }
-
+import axios from 'axios'
+export function getcontent(queryparams) {
+    try {
+        return axios.get(`https://capstonebackend20210817141609.azurewebsites.net/api/dynamicpage/get-by-title?title=${queryparams}`
+        , headers = {
+            "Content-type" : "application/json",
+            "authapp" : "Basic:793bb6c2-4807-4805-a092-0a91d5ff62d7"
+        })
+    } catch (error) {
+        
+    }
+}
