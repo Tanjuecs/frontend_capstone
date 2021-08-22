@@ -325,6 +325,7 @@ export default {
         },
     onlogin(){
       this.dialogVisible = true
+      // this.$router.push({name: 'Login'}).catch(() => {})
     },
      handleClose(done) {
         this.$confirm('Are you sure to close this dialog?')
