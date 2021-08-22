@@ -45,13 +45,13 @@
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                     <span>Stock on Hand</span></el-menu-item>
 
-                                    <el-menu-item index="3-3" @click="productinventory()">
+                                    <!-- <el-menu-item index="3-3" @click="productinventory()">
                                         <img src="https://cdn1.iconfinder.com/data/icons/e-commerce-retro-pack-vol-1/115/inventory_management-256.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                         Inventory Activation
-                                        </el-menu-item>
+                                        </el-menu-item> -->
                                     
-                                    <el-menu-item index="3-4" @click="onproductcategory()">
+                                    <el-menu-item index="3-3" @click="onproductcategory()">
                                         <img src="../../assets/category.png"
                                      alt="no image" style="width: 15%; height:auto;">&nbsp;
                                        Product Category
@@ -74,7 +74,7 @@
                                   <el-menu-item index="5-2" @click="onproductactivator()">
                                     <img src="https://cdn3.iconfinder.com/data/icons/marketing-management-7/64/activation-marketing-process-business-256.png"
                                          alt="no image" style="width: 15%; height:auto;">&nbsp;
-                                    Product Activation
+                                    Product Finalized
                                   </el-menu-item>
                                    
                                 </el-submenu>

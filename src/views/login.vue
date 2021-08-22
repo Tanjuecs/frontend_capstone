@@ -1,3 +1,4 @@
+
 <script>
 import navigation from "@/components/nav";
 import {scanSession} from "@/store/request-common";
@@ -27,3 +28,4 @@ export default {
         <Login />
     </div>
 </template>
+

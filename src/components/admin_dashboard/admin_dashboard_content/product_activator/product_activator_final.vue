@@ -29,7 +29,7 @@
           clearable>
       </el-input>
       
-      <el-popover
+      <!-- <el-popover
         placement="right"
         width="400"
         trigger="click">
@@ -58,7 +58,7 @@
           </el-card>
         </div>
         <el-button slot="reference" type="danger"><i class="el-icon-setting"></i> Actions</el-button>
-      </el-popover>
+      </el-popover> -->
       <el-table
           v-loading="listLoading"
           ref="filterTable"
@@ -85,16 +85,11 @@
             <span>{{ row.prodname }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Product Quantity" sortable="custom" align="center"  >
-          <template slot-scope="{row}">
-            <span>{{ row.prodquantity }}</span>
-          </template>
-        </el-table-column>
         <el-table-column width="350" fixed="right" label="Operations" sortable="custom" align="center"  >
           <template slot-scope="{row}">
             <div v-if="row.prodstatus == 1">
-              <el-button size="small" type="danger" @click="ondeactivate(row.id)">Deactivate</el-button>&nbsp;
-              <el-button size="small" type="danger" @click="onremove(row.id, row.productCode, row.prodquantity)">Remove</el-button>&nbsp;
+              <!-- <el-button size="small" type="danger" @click="ondeactivate(row.id)">Deactivate</el-button>&nbsp; -->
+              <!-- <el-button size="small" type="danger" @click="onremove(row.id, row.productCode, row.prodquantity)">Remove</el-button>&nbsp; -->
               <el-popover
                   placement="left"
                   width="550"
@@ -122,8 +117,8 @@
                 </el-popover>
             </div>
             <div v-else>
-              <el-button size="small" @click="onactivate(row.id)" type="success">Activate</el-button>&nbsp;
-              <el-button size="small" @click="onremove(row.id, row.productCode, row.prodquantity)" type="danger">Remove</el-button>&nbsp;
+              <!-- <el-button size="small" @click="onactivate(row.id)" type="success">Activate</el-button>&nbsp; -->
+              <!-- <el-button size="small" @click="onremove(row.id, row.productCode, row.prodquantity)" type="danger">Remove</el-button>&nbsp; -->
               
               <el-popover
                   placement="left"
@@ -164,7 +159,7 @@ prop="prodstatus"
             filter-placement="bottom-end">
           <template slot-scope="scope">
             <el-tag
-                :type="scope.row.prodstatus === 1 ? 'primary' : 'danger'"
+                :type="scope.row.prodstatus === 1 ? 'primary' : 'success'"
                 disable-transitions>
               <div v-if="scope.row.prodstatus == 1">
                 Active

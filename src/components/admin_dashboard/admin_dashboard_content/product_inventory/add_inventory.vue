@@ -5,7 +5,7 @@
                 <div class="col-sm" v-show="inventoryform">
                     <el-card shadow="always" style="margin-bottom: 20px;">
                         <h5>Add product form</h5>
-                        <el-switch
+                        <!-- <el-switch
                             style="display: block"
                             v-model="productTask.decisionval"
                             active-color="#13ce66"
@@ -43,7 +43,7 @@
                                             description="After adding the products on your stocks you can simply pull products for your inventory."
                                             show-icon>
                                         </el-alert>
-                            </div>
+                            </div> -->
                     <div style="margin-top: 20px;"><label>Product Code :</label> <el-tag type="danger" effect="dark">{{productTask.productCode}}</el-tag></div>
                     <center>
                         <el-avatar shape="square" :size="100" fit="fill" style="margin-bottom: 3px;" :src="img1"></el-avatar>
@@ -143,7 +143,7 @@
                                                         <p>Product supplier : {{productTask.productSupplier}}</p>
                                                     </div>
                                                     <p>Administrator added : {{preview.previewData | moment('dddd, MMMM Do YYYY')}}</p>
-                                                    <p>Status : <el-tag effect="dark" type="danger">Inactive</el-tag></p>
+                                                    <p>Status : <el-tag effect="dark" type="success">Active</el-tag></p>
                                                     <div style="margin-top: 20px;">
                                                         <!-- <h4>Total Price : {{productTask.productPrice * productTask.productQuantity}}</h4> -->
                                                     </div>
@@ -343,7 +343,7 @@
                                                         <p>Product supplier : {{item.product_supplier}}</p>
                                                     </div>
                                                     <p>Administrator added : {{item.createdAt | moment('dddd, MMMM Do YYYY')}}</p>
-                                                    <p>Status : <el-tag effect="dark" type="danger">Inactive</el-tag></p>
+                                                    <p>Status : <el-tag effect="dark" type="success">Activated</el-tag></p>
                                                     <div style="margin-top: 20px;">
                                                         <!-- <h4>Total Price : &#8369; {{item.product_price * item.product_quantity}}</h4> -->
                                                     </div>
@@ -360,7 +360,8 @@
                                                                     item.product_price,
                                                                     item.product_supplier,
                                                                     item.productimgurl,
-                                                                    item.product_category
+                                                                    item.product_category,
+                                                                    item.expirationprod
                                                                 )"
                                                                 >Modify</el-button>
                                                             
@@ -423,6 +424,29 @@
                                                                                 clearable>
                                                                                 </el-input>
                                                                         </div> -->
+                                                                        <div v-show="inventoryexpiration">
+                                                                                    <div class="col-sm">
+                                                                                    <label>Product Expiration</label> <el-tag type="success" effect="dark" size="mini" style="margin-bottom: 10px; margin-top: 10px; margin-right: 10px;">Enabled from settings</el-tag>
+                                                                                     <el-link v-if="editableexpiry == true" @click="oncancel()" style="margin-bottom: 10px; margin-top: 10px;" type="primary">Cancel</el-link>
+                                                                                     <el-link v-else @click="oneditable()" style="margin-bottom: 10px; margin-top: 10px;" type="primary">Edit</el-link>
+                                                                                    <el-date-picker
+                                                                                            v-if="editableexpiry == true"
+                                                                                            style=" width: 100%; margin-bottom: 5px;"
+                                                                                            v-model="modifyTask.modifyexpired"
+                                                                                            format="yyyy/MM/dd hh:mm:ss A"
+                                                                                            value-format="yyyy/MM/dd hh:mm:ss A"
+                                                                                            type="datetime"
+                                                                                            placeholder="Select date and time">
+                                                                                            </el-date-picker>
+                                                                                            <el-input
+                                                                                            v-else
+                                                                                            placeholder="Product Expiration"
+                                                                                            v-model="modifyTask.modifyexpired"
+                                                                                            disabled
+                                                                                            clearable>
+                                                                                            </el-input>
+                                                                                </div>
+                                                                                </div>
                                                                         <div class="col-sm">
                                     <label>Product category</label>
                                       <el-select v-model="modifyTask.modifycategory" style="width: 100%;" filterable placeholder="Select category">
@@ -578,7 +602,7 @@ export default {
     },
     data(){
         return {
-            
+            editableexpiry: false,
             drawerviewexpiration: false,
             listofsuppliers: [],
              pageSize: 5,
@@ -659,7 +683,9 @@ export default {
                 modifyPID: '',
                 modifycategory: '',
                 tagalert: false,
-                pcode: ''
+                pcode: '',
+                modifyexpired: '',
+                fakeexpired: ''
             },
             
             //preview area
@@ -695,6 +721,13 @@ export default {
         this.listLoading = false;
     },
     methods:{
+        oncancel(){
+            this.editableexpiry = false
+        },
+        oneditable(){
+            this.editableexpiry = true
+            this.modifyTask.modifyexpired = ''
+        },
         producthasexpired(){
             productexpired().then(response => {
                 console.log(response.data)
@@ -824,7 +857,7 @@ this.page = val
                 })
             }
         },
-        onmodifyproduct(pcode,productID,productName, prodquantity,product_price,product_supplier,productimgurl, category){
+        onmodifyproduct(pcode,productID,productName, prodquantity,product_price,product_supplier,productimgurl, category, expirationcheck){
             CHECK_STOCK_BEFORE_MODIFY(pcode)
             .then(response => {
                 if(response.data === "exist"){
@@ -845,6 +878,8 @@ this.page = val
                         this.modifyTask.modifycategory = category
                         this.modifyTask.pcode  = pcode
                         this.modifyTask.tagalert = true;
+                        this.modifyTask.modifyexpired = expirationcheck
+                        this.modifyTask.fakeexpired = expirationcheck
                     })
                 }
                 else{
@@ -859,6 +894,8 @@ this.page = val
             this.modifyimg1 = productimgurl
             this.modifyTask.modifyproductimageurl = productimgurl
             this.modifyTask.modifycategory = category
+            this.modifyTask.modifyexpired = expirationcheck
+            this.modifyTask.fakeexpired = expirationcheck
                 }
             })
             

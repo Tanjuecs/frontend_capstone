@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="margin-top: 30px;" class="container-fluid">
+        <div style="margin-top: 30px;" class="container">
             <el-steps :active="activesteps" align-center>
             <el-step title="Product finalization / adding" description="Create a product finalization"></el-step>
             <el-step title="Select raw products/ingredients" description="Select raw products, this will deduct the quantity based on your input."></el-step>
@@ -34,26 +34,13 @@
                                     clearable>
                                     </el-input>
 
-                                     <div class="row">
-                                         <div class="col-md-6">
-                                             <label>Enter product quantity</label>
-                                                <el-input
-                                                style="margin-bottom: 20px;"
-                                                placeholder="Please input"
-                                                v-model="taskfinalization.prodquantity"
-                                                clearable>
-                                                </el-input>
-                                         </div>
-                                         <div class="col-md-6">
-                                              <label>Enter product final price</label>
+                                      <label>Enter product final price</label>
                                                 <el-input
                                                 style="margin-bottom: 20px;"
                                                 placeholder="Please input"
                                                 v-model="taskfinalization.prodprice"
                                                 clearable>
                                                 </el-input>
-                                         </div>
-                                     </div>
 
                                     <label>select product category</label>
                                     <el-select style="width: 100%;" v-model="taskfinalization.prodcategory" filterable placeholder="Select">
@@ -101,7 +88,6 @@
                     >
                   <el-table-column
                       type="selection"
-                      :selectable="selectable"
                       width="55">
                   </el-table-column>
                   <el-table-column
@@ -128,7 +114,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column
+                  <!-- <el-table-column
                       label="Invalid Quantities"
                       style="width: 100%;">
                     <template slot-scope="scope">
@@ -143,7 +129,7 @@
                         >Quantity Good Condition</el-tag>
                       </div>
                     </template>
-                  </el-table-column>
+                  </el-table-column> -->
 
                 </el-table>
                 <el-pagination layout="prev, pager, next" :page-size="pageSize" :total="this.allstockslist.length" @current-change="setPage">
@@ -161,7 +147,7 @@
                           <h3>Product name : {{taskfinalization.prodname}}</h3>
                         </div>
                         <div class="col-md-6">
-                          <h3>Product Quantity : {{taskfinalization.prodquantity}}</h3>
+                         
                         </div>
                       </div>
                       <div class="row" style="margin-top: 20px;">
@@ -243,7 +229,7 @@ export default {
               page: 1,
               listLoading: true,
               searchable: '',
-              listofrawmats: [], searchableselected: '',
+              listofrawmats: [],
               selectionshit: 'selection'
         }
     },
@@ -251,23 +237,23 @@ export default {
           pagedTableData() {
        if(this.searchable){
       return this.allstockslist.filter((item)=>{
-        return this.searchable.toLowerCase().split(' ').every(v => item.productname.toLowerCase().includes(v) || item.stockID.toString().toLowerCase().includes(v))
+        return this.searchable.toLowerCase().split(' ').every(v => item.productName.toLowerCase().includes(v) || item.productID.toString().toLowerCase().includes(v))
       })
       }else{
         return this.allstockslist.slice(this.pageSize * this.page - this.pageSize, this.pageSize * this.page)
       }
        
      },
-     pagedTableDataselected() {
-       if(this.searchable){
-      return this.allstockslist.filter((item)=>{
-        return this.searchable.toLowerCase().split(' ').every(v => item.prodname.toLowerCase().includes(v) || item.id.toString().toLowerCase().includes(v))
-      })
-      }else{
-        return this.listofrawmats.slice(this.pageSize * this.page - this.pageSize, this.pageSize * this.page)
-      }
+    //  pagedTableDataselected() {
+    //    if(this.searchable){
+    //   return this.allstockslist.filter((item)=>{
+    //     return this.searchable.toLowerCase().split(' ').every(v => item.prodname.toLowerCase().includes(v) || item.id.toString().toLowerCase().includes(v))
+    //   })
+    //   }else{
+    //     return this.listofrawmats.slice(this.pageSize * this.page - this.pageSize, this.pageSize * this.page)
+    //   }
        
-     }
+    //  }
     },
     created(){
       this.getallprodcategfinal()
@@ -330,7 +316,7 @@ export default {
         console.log(this.multipleSelection)
       },
         onnextfinalization(){
-            if(!this.taskfinalization.prodname || !this.taskfinalization.prodquantity
+            if(!this.taskfinalization.prodname 
             || !this.taskfinalization.prodprice || !this.taskfinalization.prodcategory
             || !this.taskfinalization.productImageUrl){
                this.$notify.warning({
@@ -345,27 +331,28 @@ export default {
             
         },
         onnextfinalization1(){
-           product_quantity_deduction(this.taskfinalization.prodquantity, this.multipleSelection)
-              .then(resp => {
-                if(resp.data === "success"){
-                  this.onsaveproductfinal()
-                } else if(resp.data === "invalid quantity"){
-                  this.$notify.warning({
-                                title: 'Oops',
-                                message: 'Invalid Quantity',
-                                offset: 100
-                                }); 
-                                return false
-                }
-                else{
-                  this.$notify.error({
-                                title: 'Oops',
-                                message: 'something went wrong please try again',
-                                offset: 100
-                                });
-                                return false
-                }
-              })
+          this.onsaveproductfinal()
+          //  product_quantity_deduction(this.taskfinalization.prodquantity, this.multipleSelection)
+          //     .then(resp => {
+          //       if(resp.data === "success"){
+          //         this.onsaveproductfinal()
+          //       } else if(resp.data === "invalid quantity"){
+          //         this.$notify.warning({
+          //                       title: 'Oops',
+          //                       message: 'Invalid Quantity',
+          //                       offset: 100
+          //                       }); 
+          //                       return false
+          //       }
+          //       else{
+          //         this.$notify.error({
+          //                       title: 'Oops',
+          //                       message: 'something went wrong please try again',
+          //                       offset: 100
+          //                       });
+          //                       return false
+          //       }
+          //     })
           
         },
         history_product_finalization(){
@@ -479,7 +466,7 @@ this.page = val
             },
         onsaveproductfinal(){
             
-            if(this.taskfinalization.prodquantity <= 0 || this.taskfinalization.prodprice <= 0){
+            if(this.taskfinalization.prodprice <= 0){
                 this.$notify.error({
                                 title: 'Oops',
                                 message: 'invalid product quantity or price',
