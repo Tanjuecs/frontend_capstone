@@ -33,9 +33,9 @@ Vue.config.productionTip = false
 Vue.use(require('vue-moment'));
 var firebaseConfig = {
   apiKey: "AIzaSyDl1odIRtpB-HVG9n1ylwHvw5O1P7RBB2w",
-  authDomain: "syncteam-a4c69.firebaseapp.com",
-  projectId: "webcapstone-c8c75",
-  storageBucket: "webcapstone-c8c75.appspot.com",
+  authDomain: "burgermania.com",
+  projectId: "capstonefrontend-394b2",
+  storageBucket: "capstonefrontend-394b2.appspot.com",
   messagingSenderId: "1092436291258",
   appId: "1:1092436291258:web:14a33bab0404c047b1dc83"
 };

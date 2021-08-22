@@ -40,7 +40,7 @@
       <div class="d-flex align-items-center">
         <el-button type="text" round size="medium" class="bhome" @click="onhome()">Home</el-button>
         <el-button type="text" round size="medium" class="blog" @click="onlogin()">Login</el-button>
-        <el-button type="text" round size="medium" class="babout" @click="onaboutus()">About us</el-button>
+        <!-- <el-button type="text" round size="medium" class="babout" @click="onsoftwaredev()">{{titleButton}}</el-button> -->
       </div>
     </div>
     <!-- Collapsible wrapper -->
@@ -103,6 +103,7 @@ export default {
         },
   data(){
     return {
+      titleButton: 'Software Development',
       dialogVisible: false,
       task: {
         email: '', password: ''
@@ -324,6 +325,7 @@ export default {
                      
         },
     onlogin(){
+      // this.$router.push({name : 'Login'}).catch(() => {})
       this.dialogVisible = true
       // this.$router.push({name: 'Login'}).catch(() => {})
     },
